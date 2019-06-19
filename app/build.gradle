@@ -1,0 +1,60 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.error.grrravity.go4lunch"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'com.android.support:customtabs:28.0.0'
+    implementation 'com.android.support:support-media-compat:28.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+
+    testImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation "com.android.support.test:rules:1.0.2"
+
+    //ESPRESSO
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation('com.android.support.test.espresso:espresso-contrib:2.2')
+
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    //GLIDE
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+
+    //GLIDE
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+
+    // Firebase
+    implementation 'com.google.firebase:firebase-messaging:18.0.0'
+
+    // FirebaseUI
+    implementation 'com.firebaseui:firebase-ui-storage:3.1.3'
+    implementation 'com.firebaseui:firebase-ui-auth:3.1.3'
+    implementation 'com.firebaseui:firebase-ui-firestore:3.1.3'
+
+    // FACEBOOK LOGIN SUPPORT
+    implementation 'com.facebook.android:facebook-android-sdk:4.42.0'
+
+    apply plugin: 'com.google.gms.google-services'
+}
