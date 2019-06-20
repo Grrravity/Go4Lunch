@@ -2,10 +2,21 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_activity_coordinator_layout"
+    android:id="@+id/ma_coordinator_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/mainBackground"
     tools:context="com.error.grrravity.go4lunch.controlers.MainActivity">
+
+    <Button
+        android:id="@+id/ma_login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:padding="5dp"
+        android:text="Auth"
+        android:background="@color/mainTextHighlight"/>
 
 
 </android.support.design.widget.CoordinatorLayout>
