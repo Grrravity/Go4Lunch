@@ -1,5 +1,11 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Go4Lunch</string>
+
+    <!-- FB -->
+    <string name="facebook_app_id" translatable="false">339289337000848</string>
+    <string name="facebook_login_protocol_scheme" translatable="false"
+        tools:ignore="UnusedResources">fb339289337000848</string>
+
 
     <!-- GLOBAL -->
     <string name="goforfood_logo_description">Go4Food logo</string>

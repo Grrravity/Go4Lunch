@@ -4,6 +4,7 @@
     package="com.error.grrravity.go4lunch">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -12,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity android:name="com.error.grrravity.go4lunch.controlers.MainActivity"
             android:screenOrientation="portrait">
@@ -25,6 +27,8 @@
             android:screenOrientation="portrait"
             android:parentActivityName="com.error.grrravity.go4lunch.controlers.MainActivity"
             />
+        <meta-data android:name="com.error.grrravity.go4lunch"
+            android:value="@string/facebook_app_id"/>
     </application>
 
 </manifest>
