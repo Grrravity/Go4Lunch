@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.error.grrravity.go4lunch">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,8 +15,16 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity android:name="com.error.grrravity.go4lunch.controlers.MainActivity"
             android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity android:name=".utils.auth.ProfileActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.error.grrravity.go4lunch.controlers.MainActivity"
+            />
     </application>
 
 </manifest>

@@ -9,9 +9,9 @@
     <string name="button_login_text_logged">Show profile</string>
     <string name="button_login_text_not_logged">Connecting</string>
     <string name="connection_succeed">Authentication succeed</string>
-    <string name="error_authentication_canceled">Authentication canceled...</string>
+    <string name="error_authentication_canceled">Authentication canceled…</string>
     <string name="error_no_internet">No network</string>
-    <string name="error_unknown_error">Unknown error occured...</string>
+    <string name="error_unknown_error">Unknown error occurred…</string>
 
     <!-- PROFILE ACTIVITY-->
     <string name="text_input_username">User name</string>
@@ -20,4 +20,12 @@
     <string name="button_sign_out">Sign out</string>
     <string name="button_delete_account">Delete account</string>
     <string name="profile_image_description">User profile image</string>
+
+    <!-- LOGIN ACTIVITY -->
+    <string name="toolbar_title_login_activity">Your profile</string>
+    <string name="info_no_email_found">No mail address</string>
+    <string name="info_no_username_found">No user name</string>
+    <string name="popup_confirmation_delete_account">Do you really want to delete your account ?</string>
+    <string name="popup_choice_yes">Yes !</string>
+    <string name="popup_choice_no">No !</string>
 </resources>

@@ -7,6 +7,7 @@ import android.widget.Button;
 
 import com.error.grrravity.go4lunch.R;
 import com.error.grrravity.go4lunch.controlers.base.BaseActivity;
+import com.error.grrravity.go4lunch.utils.auth.ProfileActivity;
 import com.error.grrravity.go4lunch.utils.helper.UserHelper;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
@@ -53,9 +54,7 @@ public class MainActivity extends BaseActivity {
                         .createSignInIntentBuilder()
                         .setTheme(R.style.LoginTheme)
                         .setAvailableProviders(
-                                Arrays.asList(new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER)
-                                                .build(), //EMAIL
-                                        new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER)
+                                Arrays.asList(new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER)
                                                 .build(), //GOOGLE
                                         new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER)
                                                 .build())) // FACEBOOK

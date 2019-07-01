@@ -1,14 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 27
     defaultConfig {
         applicationId "com.error.grrravity.go4lunch"
         minSdkVersion 19
-        targetSdkVersion 28
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -16,45 +17,49 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation 'com.android.support:design:28.0.0'
-    implementation 'com.android.support:customtabs:28.0.0'
-    implementation 'com.android.support:support-media-compat:28.0.0'
-    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.android.support:support-v4:27.1.1'
     testImplementation 'junit:junit:4.12'
-
-    testImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation "com.android.support.test:rules:1.0.2"
-
-    //ESPRESSO
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    androidTestImplementation('com.android.support.test.espresso:espresso-contrib:2.2')
-
-    implementation 'com.google.code.gson:gson:2.8.5'
-
-    //GLIDE
-    implementation 'com.github.bumptech.glide:glide:4.7.1'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
-
-    //BUTTERKNIFE
+    implementation 'com.google.firebase:firebase-core:16.0.9'
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-
-    // Firebase
-    implementation 'com.google.firebase:firebase-messaging:18.0.0'
-
-    // FirebaseUI
-    implementation 'com.firebaseui:firebase-ui-storage:3.1.3'
+    implementation 'com.google.firebase:firebase-auth:17.0.0'
     implementation 'com.firebaseui:firebase-ui-auth:3.1.3'
-    implementation 'com.firebaseui:firebase-ui-firestore:3.1.3'
-
-    // FACEBOOK LOGIN SUPPORT
+    implementation 'com.google.android.gms:play-services-auth:16.0.1'
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+    implementation 'com.google.android.libraries.places:places:1.1.0'
+    implementation 'com.android.support:cardview-v7:27.1.1'
+// FACEBOOK LOGIN SUPPORT
     implementation 'com.facebook.android:facebook-android-sdk:4.42.0'
-
-    apply plugin: 'com.google.gms.google-services'
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+    implementation 'com.google.android.gms:play-services-maps:16.1.0'
+    androidTestImplementation 'com.squareup.okhttp3:mockwebserver:3.10.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+    implementation 'com.firebaseui:firebase-ui-firestore:3.1.3'
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
+    implementation 'com.google.firebase:firebase-firestore:19.0.2'
+    implementation 'com.google.firebase:firebase-messaging:18.0.0'
+    implementation 'com.android.support:multidex:1.0.3'
 }
+apply plugin: 'com.google.gms.google-services'
