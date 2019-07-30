@@ -1,4 +1,4 @@
-package com.error.grrravity.go4lunch.controlers.base;
+package com.error.grrravity.go4lunch.controllers.base;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

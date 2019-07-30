@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -10,17 +10,35 @@
 
     <!-- STYLE SIGN-IN ACTIVITY -->
     <style name="LoginTheme" parent="AppTheme">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/mainBackground</item>
+        <item name="colorPrimaryDark">@color/mainBackgroundSmooth</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorButtonNormal">@color/colorAccent</item>
+        <item name="colorButtonNormal">@color/buttonMainColor</item>
         <item name="colorControlNormal">@android:color/darker_gray</item>
         <item name="colorControlActivated">@android:color/darker_gray</item>
         <item name="colorControlHighlight">@android:color/darker_gray</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textColorPrimary">@android:color/darker_gray</item>
-        <item name="android:textColorSecondary">@android:color/darker_gray</item>
-        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:textColor">@color/mainText</item>
+        <item name="android:textColorPrimary">@color/mainText</item>
+        <item name="android:textColorSecondary">@color/mainTextHighlight</item>
+        <item name="android:windowBackground">@color/backgroundSmoothGrey</item>
+    </style>
+
+    <!-- TOOLBAR THEME -->
+    <style name="ToolbarTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+
+        <!-- Color of the title text in the Toolbar -->
+        <item name="android:textColorPrimary">@color/mainText</item>
+    </style>
+
+    <!-- TOOLBAR TITLE THEME -->
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">21sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="italic" tools:keep="@style/italic">
+        <item name="android:fontStyle" tools:targetApi="o">italic</item>
+        <item name="android:color">#696969</item>
     </style>
 
 </resources>

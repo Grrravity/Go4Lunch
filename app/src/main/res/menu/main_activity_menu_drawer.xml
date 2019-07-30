@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+tools:showIn="navigation_view">
+
+<group android:checkableBehavior="single">
+    <item
+        android:id="@+id/main_activity_drawer_lunch"
+        android:icon="@drawable/restaurant_menu_white"
+        android:title="@string/menu_lunch" />
+    <item
+        android:id="@+id/main_activity_drawer_settings"
+        android:icon="@drawable/settings_white"
+        android:title="@string/menu_settings" />
+    <item
+        android:id="@+id/main_activity_drawer_logout"
+        android:icon="@drawable/power_settings_new_white"
+        android:title="@string/menu_logout" />
+</group>
+</menu>

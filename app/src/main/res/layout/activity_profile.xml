@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:background="@color/backgroundSmoothColor"
+    android:background="@color/backgroundSmoothGrey"
     >
 
     <!-- USER DATA CONTAINER -->

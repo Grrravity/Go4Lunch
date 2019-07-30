@@ -1,11 +1,9 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">Go4Lunch</string>
 
     <!-- FB -->
     <string name="facebook_app_id" translatable="false">339289337000848</string>
-    <string name="facebook_login_protocol_scheme" translatable="false"
-        tools:ignore="UnusedResources">fb339289337000848</string>
-
+    <string name="facebook_login_protocol_scheme" translatable="false">fb339289337000848</string>
 
     <!-- GLOBAL -->
     <string name="goforfood_logo_description">Go4Food logo</string>
@@ -34,4 +32,16 @@
     <string name="popup_confirmation_delete_account">Do you really want to delete your account ?</string>
     <string name="popup_choice_yes">Yes !</string>
     <string name="popup_choice_no">No !</string>
+
+
+    <!-- BOTTOM NAVIGATION VIEW -->
+    <string name="bottom_navigation_menu_map">Map</string>
+    <string name="bottom_navigation_menu_list">List</string>
+    <string name="bottom_navigation_menu_coworkers">Co-Workers</string>
+
+    <!-- DRAWER -->
+    <string name="menu_lunch">Your lunch</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_logout">Logout</string>
+
 </resources>
