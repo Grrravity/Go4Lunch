@@ -1,7 +1,8 @@
 package com.error.grrravity.go4lunch.controllers.base;
 
-import android.app.Fragment;
 import android.content.Context;
+
+import androidx.fragment.app.Fragment;
 
 
 public abstract class BaseFragment extends Fragment {

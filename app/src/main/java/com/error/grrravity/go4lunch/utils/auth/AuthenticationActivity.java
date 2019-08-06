@@ -1,9 +1,16 @@
 package com.error.grrravity.go4lunch.utils.auth;
 
+import android.app.Dialog;
 import android.content.Intent;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.material.snackbar.Snackbar;
+
+import android.util.Log;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.error.grrravity.go4lunch.R;
 import com.error.grrravity.go4lunch.controllers.MainActivity;
@@ -22,6 +29,8 @@ public class AuthenticationActivity extends BaseActivity {
 
         //FOR DATA
         private static final int RC_SIGN_IN = 123;
+        private static final String TAG = "AuthenticationActivity";
+        private static final int ERROR_DIALOG_REQUEST = 9001;
 
         //FOR DESIGN
         @BindView (R.id.ma_login_button) Button mButtonLogin;
@@ -70,7 +79,9 @@ public class AuthenticationActivity extends BaseActivity {
         @OnClick (R.id.ma_login_button)
         public void onClickLoginButton(){
             if (this.isCurrentUserLogged()){
-                this.startMainActivity();
+                if (isServicesOK()){
+                    this.startMainActivity();
+                }
             } else {
                 this.startSignInActivity();
             }
@@ -139,4 +150,27 @@ public class AuthenticationActivity extends BaseActivity {
                 }
             }
         }
+
+        public boolean isServicesOK() {
+            Log.d(TAG, "isServicesOk : checking google services version");
+            int available = GoogleApiAvailability.getInstance()
+                    .isGooglePlayServicesAvailable(AuthenticationActivity.this);
+
+            if (available == ConnectionResult.SUCCESS) {
+                Log.d(TAG, "isServicesOK : Google play services is working");
+
+                return true;
+            } else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)) {
+                Log.d(TAG, "isServiceOK : an error occured but we can fix it.");
+                Dialog dialog = GoogleApiAvailability.getInstance()
+                        .getErrorDialog(AuthenticationActivity.this, available,
+                                ERROR_DIALOG_REQUEST);
+                dialog.show();
+            } else {
+                Toast.makeText(this, "We can't make map requests", Toast.LENGTH_SHORT)
+                        .show();
+            }
+            return false;
+        }
+
     }

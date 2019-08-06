@@ -1,8 +1,8 @@
 package com.error.grrravity.go4lunch.controllers;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
+import androidx.annotation.Nullable;
+import com.google.android.material.navigation.NavigationView;
 import android.widget.Toolbar;
 
 import com.error.grrravity.go4lunch.R;
@@ -16,6 +16,8 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.main_activity_viewpager) ScrollableViewPager mViewPager;
     @BindView(R.id.toolbar) Toolbar mToolbar;
     @BindView(R.id.main_activity_nav_view) NavigationView mNavigationView;
+
+    // TODO BOTTOM BAR
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

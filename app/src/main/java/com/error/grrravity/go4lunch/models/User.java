@@ -1,6 +1,6 @@
 package com.error.grrravity.go4lunch.models;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 public class User {
     private String uid;
