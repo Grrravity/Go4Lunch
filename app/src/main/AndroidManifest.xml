@@ -10,13 +10,17 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="22" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="22" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
+        android:enabled="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -37,9 +41,8 @@
         <activity android:name="com.error.grrravity.go4lunch.controllers.MainActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".utils.auth.ProfileActivity"
+        <activity android:name="com.error.grrravity.go4lunch.utils.auth.ProfileActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName="com.error.grrravity.go4lunch.utils.auth.AuthenticationActivity"
             />
 
         <meta-data android:name="com.facebook.sdk.ApplicationId"
@@ -53,6 +56,8 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"
             />
+
+        
 
     </application>
 

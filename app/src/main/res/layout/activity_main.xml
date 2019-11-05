@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".controllers.MainActivity"
-    tools:openDrawer="start" >
+    tools:openDrawer="start">
     <!-- tools:openDrawer="start" -->
 
     <!-- RootView -->
@@ -39,24 +39,26 @@
                     android:id="@+id/myEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:imeOptions="actionDone"
-                    android:textCursorDrawable="@null"
-                    android:inputType="text"
                     android:drawableEnd="@drawable/search_white"
                     android:hint="Search"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
                     android:textColorHint="#FFF"
+                    android:textCursorDrawable="@null"
 
                     tools:ignore="HardcodedText" />
             </androidx.appcompat.widget.Toolbar>
 
             <!-- Body layout -->
             <RelativeLayout
+                android:id="@+id/fragment_holder"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
 
+                <!-- TODO Put in constraint -->
                 <com.google.android.material.bottomnavigation.BottomNavigationView
-                    android:id="@+id/activity_welcome_bottom_navigation"
+                    android:id="@+id/activity_main_botnav"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -66,19 +68,37 @@
                     app:itemTextColor="@drawable/bottom_navigation_colors"
                     app:menu="@menu/bottom_navigation_menu" />
 
-                <com.example.benja.go4lunch.views.ScrollableViewPager
-                    android:id="@+id/main_activity_viewpager"
+                <FrameLayout
+                    android:id="@+id/AM_container"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_above="@+id/activity_welcome_bottom_navigation"
-                    android:layout_alignParentTop="true"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                    android:layout_height="match_parent" />
+
+
+                <Button
+                    android:id="@+id/btn_find_restaurant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:paddingEnd="5dp"
+                    android:text="find restaurant"
+                    android:textColor="@color/quantum_black_100"
+                    android:drawableStart="@drawable/restaurant_menu_black"
+                    android:background="@color/quantum_yellow"
+                    android:textAllCaps="false"
+                    android:fadingEdge="horizontal"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="80dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="30dp"
+                    android:visibility="gone"
+                    />
 
             </RelativeLayout>
 
         </LinearLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
 
     <!-- NavigationView -->
     <com.google.android.material.navigation.NavigationView

@@ -3,6 +3,8 @@ package com.error.grrravity.go4lunch.utils.auth;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import com.google.android.material.textfield.TextInputEditText;
+
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
@@ -19,6 +21,7 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ProfileActivity extends BaseActivity {
@@ -35,105 +38,115 @@ public class ProfileActivity extends BaseActivity {
     private static final int UPDATE_USERNAME = 30;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.configureToolbar();
-        this.updateUIWhenCreating();
+    public int getFragmentLayout() {
+        return R.layout.activity_profile;
     }
 
     @Override
-    public int getFragmentLayout() { return R.layout.activity_profile; }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        configureToolbar();
+    //    this.updateUIWhenCreating();
+    }
+
+    protected void configureToolbar() {
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
+    }
+
 
     // --------------------
     // ACTIONS
     // --------------------
 
-    @OnClick(R.id.profile_activity_button_update)
-    public void onClickUpdateButton() { this.updateUsernameInFirebase(); }
+    //@OnClick(R.id.profile_activity_button_update)
+    //public void onClickUpdateButton() { this.updateUsernameInFirebase(); }
 
-    @OnClick(R.id.profile_activity_button_sign_out)
-    public void onClickSignOutButton() { this.signOutUserFromFirebase(); }
-
-    @OnClick(R.id.profile_activity_button_delete)
-    public void onClickDeleteButton() {
-        new AlertDialog.Builder(this)
-                .setMessage(R.string.popup_confirmation_delete_account)
-                .setPositiveButton(R.string.popup_choice_yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        deleteUserFromFirebase();
-                    }
-                })
-                .setNegativeButton(R.string.popup_choice_no, null)
-                .show();
-    }
+    //@OnClick(R.id.profile_activity_button_sign_out)
+    //public void onClickSignOutButton() { this.signOutUserFromFirebase(); }
+//
+    //@OnClick(R.id.profile_activity_button_delete)
+    //public void onClickDeleteButton() {
+    //    new AlertDialog.Builder(this)
+    //            .setMessage(R.string.popup_confirmation_delete_account)
+    //            .setPositiveButton(R.string.popup_choice_yes, new DialogInterface.OnClickListener() {
+    //                @Override
+    //                public void onClick(DialogInterface dialogInterface, int i) {
+    ////                    deleteUserFromFirebase();
+    //                }
+    //            })
+    //            .setNegativeButton(R.string.popup_choice_no, null)
+    //            .show();
+    //}
 
     // --------------------
     // REST REQUESTS
     // --------------------
 
-    private void signOutUserFromFirebase(){
-        AuthUI.getInstance()
-                .signOut(this)
-                .addOnSuccessListener(this,
-                        this.updateUIAfterRESTRequestsCompleted(SIGN_OUT_TASK));
-    }
-
-    private void deleteUserFromFirebase(){
-        if (this.getCurrentUser() != null) {
-
-            //4 - We also delete user from firestore storage
-            UserHelper.deleteUser(this.getCurrentUser().getUid())
-                    .addOnFailureListener(this.onFailureListener());
-
-            AuthUI.getInstance()
-                    .delete(this)
-                    .addOnSuccessListener(this,
-                            this.updateUIAfterRESTRequestsCompleted(DELETE_USER_TASK));
-        }
-    }
-
-    // 3 - Update User Username
-    private void updateUsernameInFirebase(){
-
-        this.mProgressBar.setVisibility(View.VISIBLE);
-        String username = this.mTextInputEditTextUsername.getText().toString();
-
-        if (this.getCurrentUser() != null){
-            if (!username.isEmpty() &&
-                    !username.equals(getString(R.string.info_no_username_found))){
-                UserHelper.updateUsername(username,
-                        this.getCurrentUser().getUid())
-                        .addOnFailureListener(this.onFailureListener())
-                        .addOnSuccessListener(this
-                                .updateUIAfterRESTRequestsCompleted(UPDATE_USERNAME));
-            }
-        }
-    }
+    //private void signOutUserFromFirebase(){
+    //    AuthUI.getInstance()
+    //            .signOut(this)
+    //            .addOnSuccessListener(this,
+    //                    this.updateUIAfterRESTRequestsCompleted(SIGN_OUT_TASK));
+    //}
+//
+    //private void deleteUserFromFirebase(){
+    //    if (this.getCurrentUser() != null) {
+//
+    //        //4 - We also delete user from firestore storage
+    //        UserHelper.deleteUser(this.getCurrentUser().getUid())
+    //                .addOnFailureListener(this.onFailureListener());
+//
+    //        AuthUI.getInstance()
+    //                .delete(this)
+    //                .addOnSuccessListener(this,
+    //                        this.updateUIAfterRESTRequestsCompleted(DELETE_USER_TASK));
+    //    }
+    //}
+//
+    //// 3 - Update User Username
+    //private void updateUsernameInFirebase(){
+//
+    //    this.mProgressBar.setVisibility(View.VISIBLE);
+    //    String username = this.mTextInputEditTextUsername.getText().toString();
+    //    String urlPicture = (UserHelper.getCurrentUser().getPhotoUrl() != null) ? UserHelper.getCurrentUser().getPhotoUrl().toString() : null;
+    //    String uid = UserHelper.getCurrentUser().getUid();
+//
+    //    if (this.getCurrentUser() != null){
+    //        if (!username.isEmpty() &&
+    //                !username.equals(getString(R.string.info_no_username_found))){
+    //            UserHelper.updateUsername(username,
+    //                    uid, urlPicture)
+    //                    .addOnFailureListener(this.onFailureListener())
+    //                    .addOnSuccessListener(this
+    //                            .updateUIAfterRESTRequestsCompleted(UPDATE_USERNAME));
+    //        }
+    //    }
+    //}
 
     // --------------------
     // UI
     // --------------------
 
-    private void updateUIWhenCreating(){
+   //private void updateUIWhenCreating(){
 
-        if (this.getCurrentUser() != null){
+   //    if (this.getCurrentUser() != null){
 
-            //Get picture URL from Firebase
-            if (this.getCurrentUser().getPhotoUrl() != null) {
-                Glide.with(this)
-                        .load(this.getCurrentUser().getPhotoUrl())
-                        .apply(RequestOptions.circleCropTransform())
-                        .into(mImageViewProfile);
-            }
+   //        //Get picture URL from Firebase
+   //        if (this.getCurrentUser().getPhotoUrl() != null) {
+   //            Glide.with(this)
+   //                    .load(this.getCurrentUser().getPhotoUrl())
+   //                    .apply(RequestOptions.circleCropTransform())
+   //                    .into(mImageViewProfile);
+   //        }
 
-            //Get email & username from Firebase
-            String email = TextUtils.isEmpty(this.getCurrentUser()
-                    .getEmail()) ? getString(R.string.info_no_email_found) :
-                    this.getCurrentUser().getEmail();
+   //        //Get email & username from Firebase
+   //        String email = TextUtils.isEmpty(this.getCurrentUser()
+   //                .getEmail()) ? getString(R.string.info_no_email_found) :
+   //                this.getCurrentUser().getEmail();
 
-            //Update views with data
-            this.mTextViewMail.setText(email);
+   //        //Update views with data
+   //        this.mTextViewMail.setText(email);
 
           //// 5 - Get additional data from Firestore
           //UserHelper.getUser(this.getCurrentUser().getUid())
@@ -148,27 +161,27 @@ public class ProfileActivity extends BaseActivity {
           //        mTextInputEditTextUsername.setText(username);
           //    }
           //});
-        }
-    }
+    //    }
+    //}
 
-    private OnSuccessListener<Void> updateUIAfterRESTRequestsCompleted(final int origin){
-        return new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                switch (origin){
-                    case UPDATE_USERNAME:
-                        mProgressBar.setVisibility(View.INVISIBLE);
-                        break;
-                    case SIGN_OUT_TASK:
-                        finish();
-                        break;
-                    case DELETE_USER_TASK:
-                        finish();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        };
-    }
+    //private OnSuccessListener<Void> updateUIAfterRESTRequestsCompleted(final int origin){
+    //    return new OnSuccessListener<Void>() {
+    //        @Override
+    //        public void onSuccess(Void aVoid) {
+    //            switch (origin){
+    //                case UPDATE_USERNAME:
+    //                    mProgressBar.setVisibility(View.INVISIBLE);
+    //                    break;
+    //                case SIGN_OUT_TASK:
+    //                    finish();
+    //                    break;
+    //                case DELETE_USER_TASK:
+    //                    finish();
+    //                    break;
+    //                default:
+    //                    break;
+    //            }
+    //        }
+    //    };
+    //}
 }

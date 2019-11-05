@@ -4,6 +4,8 @@ import android.content.Context;
 
 import androidx.fragment.app.Fragment;
 
+import io.reactivex.disposables.Disposable;
+
 
 public abstract class BaseFragment extends Fragment {
 
@@ -11,6 +13,10 @@ public abstract class BaseFragment extends Fragment {
     public static final int RESTAURANTS_FRAGMENT = 1;
     public static final int LIKED_RESTAURANTS_FRAGMENT = 2;
     public static final int USER_FRAGMENT = 3;
+
+    protected Disposable mDisposable;
+    public static final String RESTAURANT = "restaurant";
+    public static final String ID = "ID";
 
 
     @Override
@@ -22,5 +28,15 @@ public abstract class BaseFragment extends Fragment {
       //      getActivity().finish();
       //      getActivity().recreate();
       //  }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.disposeWhenDestroy();
+    }
+
+    protected void disposeWhenDestroy(){
+        if (this.mDisposable != null && !this.mDisposable.isDisposed()) this.mDisposable.dispose();
     }
 }
