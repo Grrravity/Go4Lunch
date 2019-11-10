@@ -44,6 +44,7 @@
         <activity android:name="com.error.grrravity.go4lunch.utils.auth.ProfileActivity"
             android:screenOrientation="portrait"
             />
+        <activity android:name=".controllers.RestaurantDetailActivity" />
 
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"

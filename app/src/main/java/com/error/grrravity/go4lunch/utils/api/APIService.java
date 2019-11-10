@@ -1,7 +1,5 @@
 package com.error.grrravity.go4lunch.utils.api;
 
-import android.telecom.Call;
-
 import com.error.grrravity.go4lunch.models.details.Details;
 import com.error.grrravity.go4lunch.models.places.Google;
 

@@ -59,5 +59,6 @@
     <!-- SUCCESS-->
 
     <string name="success_connection">Connection succeed</string>
+    <string name="will_eat">%1$s déjeunera ici %2$s</string>
 
 </resources>

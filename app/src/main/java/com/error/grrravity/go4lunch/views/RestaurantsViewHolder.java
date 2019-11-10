@@ -1,5 +1,6 @@
 package com.error.grrravity.go4lunch.views;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -119,8 +120,7 @@ public class RestaurantsViewHolder extends RecyclerView.ViewHolder {
 
     private void displayRating(NearbyResult result) {
         if (result.getRating() != 0) {
-            double googleRating = result.getRating();
-            double rating = googleRating / 5 * 3;
+            double rating = result.getRating();
             this.restaurantRatingBar.setRating((float) rating);
             this.restaurantRatingBar.setVisibility(View.VISIBLE);
         } else {

@@ -9,8 +9,9 @@ public class User implements Parcelable {
 
     private String uid;
     private String username;
-    @Nullable
     private String urlPicture;
+    private String joinedRestaurant;
+    private String restaurantId;
 
     public User() { }
 
@@ -24,6 +25,8 @@ public class User implements Parcelable {
         uid = in.readString();
         username = in.readString();
         urlPicture = in.readString();
+        joinedRestaurant = in.readString();
+        restaurantId = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -42,11 +45,14 @@ public class User implements Parcelable {
     public String getUid() { return uid; }
     public String getUsername() { return username; }
     public String getUrlPicture() { return urlPicture; }
+    public String getJoinedRestaurant() { return joinedRestaurant; }
 
     // --- SETTERS ---
     public void setUsername(String username) { this.username = username; }
     public void setUid(String uid) { this.uid = uid; }
     public void setUrlPicture(String urlPicture) { this.urlPicture = urlPicture; }
+    public void setJoinedRestaurant(String joinedRestaurant) { this.joinedRestaurant = joinedRestaurant; }
+    public void setRestaurantId(String restaurantId) { this.restaurantId = restaurantId; }
 
     @Override
     public int describeContents() {
@@ -58,6 +64,8 @@ public class User implements Parcelable {
         dest.writeString(uid);
         dest.writeString(username);
         dest.writeString(urlPicture);
+        dest.writeString(joinedRestaurant);
+        dest.writeString(restaurantId);
     }
 
 }

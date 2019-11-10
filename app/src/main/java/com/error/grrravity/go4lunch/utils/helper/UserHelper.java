@@ -2,31 +2,41 @@ package com.error.grrravity.go4lunch.utils.helper;
 
 import androidx.annotation.Nullable;
 
+import com.error.grrravity.go4lunch.models.details.Result;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserHelper {
 
-    public interface OnRequestListener{
-        void onResult(List<User> userList);
-    }
-
-    private static final String COLLECTION_NAME = "users";
-    private static final String COLLECTION_RESTAURANTID = "restaurantId";
+    private static final String COLLECTION_USER = "users";
+    private static final String COLLECTION_LIKED = "restaurantLike";
+    private static final String GET_RESTAURANTID = "restaurantId";
+    private static final String GET_JOINED_RESTAURANT = "joinedRestaurant";
+    private static final String GET_VICINITY = "vicinity";
+    private static final String GET_URL_PICTURE = "urlPicture";
+    private static final String GET_USERNAME = "username";
 
     // --- COLLECTION REFERENCE ---
 
     public static CollectionReference getUsersCollection(){
-        return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
+        return FirebaseFirestore.getInstance().collection(COLLECTION_USER);
     }
 
+    private static CollectionReference getLikedCollection() {
+        return FirebaseFirestore.getInstance().collection(COLLECTION_LIKED);
+    }
 
 
     // --- CREATE ---
@@ -40,7 +50,11 @@ public class UserHelper {
                 .set(userToCreate);
     }
 
-
+    public static Task<Void> createLike(String restaurantId, String userId) {
+        Map<String, Object> user = new HashMap<>();
+        user.put(userId, true);
+        return UserHelper.getLikedCollection().document(restaurantId).set(user, SetOptions.merge());
+    }
 
     // --- GET ---
 
@@ -49,24 +63,101 @@ public class UserHelper {
     }
 
     public static Task<QuerySnapshot> getRestaurant(String restaurantId){
-        return UserHelper.getUsersCollection().whereEqualTo("restaurantId", restaurantId).get();
+        return UserHelper.getUsersCollection().whereEqualTo(GET_RESTAURANTID, restaurantId).get();
     }
 
+    private static Task<DocumentSnapshot> getRestaurantLike(String restaurantId) {
+        return UserHelper.getLikedCollection().document(restaurantId).get();
+    }
 
+    public static Task<QuerySnapshot> getLike(String uid) {
+        return UserHelper.getLikedCollection().whereEqualTo(uid, true).get();
+    }
+
+    public static Task<DocumentSnapshot> getBookingRestaurant(String uid) {
+        return UserHelper.getUsersCollection().document(uid).get();
+    }
+
+    public static Task<QuerySnapshot> getAllUsernames() {
+        return UserHelper.getUsersCollection().get();
+    }
+
+    public static void getRestaurantInfo(Result result, OnRequestListener onRequestListener) {
+        List<User> users = new ArrayList<>();
+        FirebaseFirestore.getInstance()
+                .collection(COLLECTION_USER)
+                .whereEqualTo(GET_RESTAURANTID, result.getPlaceId())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
+                        for (DocumentSnapshot documentSnapshot : myListOfDocuments) {
+                            User user = documentSnapshot.toObject(User.class);
+                            user.setJoinedRestaurant(result.getName());
+                            user.setRestaurantId(result.getPlaceId());
+                            if (!user.getUid().equals(getCurrentUser().getUid())) {
+                                users.add(user);
+                            }
+                        }
+                        onRequestListener.onResult(users);
+                    }
+                });
+    }
+
+    public static void getCoworkers(OnRequestListener onRequestListener) {
+        List<User> users = new ArrayList<>();
+        FirebaseFirestore.getInstance()
+                .collection(COLLECTION_USER)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
+                        for (DocumentSnapshot documentSnapshot : myListOfDocuments) {
+                            User user = documentSnapshot.toObject(User.class);
+                            if (!user.getUid().equals(getCurrentUser().getUid())) {
+                                users.add(user);
+                            }
+                        }
+                        onRequestListener.onResult(users);
+                    }
+                });
+    }
 
     // --- UPDATE ---
 
     public static Task<Void> updateUsername(String username, String uid, String urlPicture) {
-        return UserHelper.getUsersCollection().document(uid).update("username", username, "urlPicture", urlPicture);
+        return UserHelper.getUsersCollection().document(uid).update(GET_USERNAME, username, GET_URL_PICTURE, urlPicture);
     }
 
-
+    public static Task<Void> updateUserAtRestaurant(String userId, String joinedRestaurant, String restaurantId, String vicinity) {
+        return UserHelper.getUsersCollection().document(userId).update(GET_JOINED_RESTAURANT, joinedRestaurant, GET_RESTAURANTID, restaurantId, GET_VICINITY, vicinity);
+    }
 
     // --- DELETE ---
 
     public static Task<Void> deleteUser(String uid) {
         return UserHelper.getUsersCollection().document(uid).delete();
     }
+
+    public static Boolean deleteLike(String restaurantId, String userId) {
+        UserHelper.getRestaurantLike(restaurantId).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Map<String, Object> update = new HashMap<>();
+                update.put(userId, FieldValue.delete());
+                UserHelper.getLikedCollection().document(restaurantId).update(update);
+            }
+        });
+        return true;
+    }
+
+    public static Task<Void> deleteUserAtRestaurant(String userId) {
+        Map<String, Object> update = new HashMap<>();
+        update.put(GET_JOINED_RESTAURANT, FieldValue.delete());
+        update.put(GET_RESTAURANTID, FieldValue.delete());
+        update.put(GET_VICINITY, FieldValue.delete());
+        return UserHelper.getUsersCollection().document(userId).update(update);
+    }
+
 
 
     // FIREBASE
@@ -75,6 +166,10 @@ public class UserHelper {
     public static FirebaseUser getCurrentUser(){return FirebaseAuth.getInstance().getCurrentUser(); }
 
     public static boolean isCurrentUserLogged(){return (getCurrentUser() != null); }
+
+    public interface OnRequestListener{
+        void onResult(List<User> userList);
+    }
 
 
 }

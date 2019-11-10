@@ -1,13 +1,11 @@
 package com.error.grrravity.go4lunch.controllers.fragments;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +19,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.error.grrravity.go4lunch.R;
-
 import com.error.grrravity.go4lunch.controllers.MainActivity;
 import com.error.grrravity.go4lunch.controllers.base.BaseFragment;
 import com.error.grrravity.go4lunch.models.places.Google;
@@ -29,7 +26,6 @@ import com.error.grrravity.go4lunch.models.places.NearbyResult;
 import com.error.grrravity.go4lunch.utils.GPS;
 import com.error.grrravity.go4lunch.utils.api.APIStreams;
 import com.error.grrravity.go4lunch.utils.helper.UserHelper;
-
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -40,15 +36,13 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import io.reactivex.observers.DisposableObserver;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import butterknife.ButterKnife;
-
-import static com.google.android.libraries.places.api.model.Place.Type.RESTAURANT;
+import io.reactivex.observers.DisposableObserver;
 
 public class GoogleMapsFragment extends BaseFragment implements
         GoogleMap.OnMyLocationClickListener, GoogleMap.OnMyLocationButtonClickListener,
@@ -60,7 +54,7 @@ public class GoogleMapsFragment extends BaseFragment implements
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
-    private static final String apiKey = "AIzaSyDVaDt05euLhIr1cO1A88iUb4lj8vdA5J0";
+    private static final String apiKey = "AIzaSyBLNawqR6INuBQAcUd3ljzjnVkBWOhtHhA";
 
     //vars
     private boolean mLocationPermissionsGranted = false;
@@ -165,6 +159,8 @@ public class GoogleMapsFragment extends BaseFragment implements
         return null;
     }
 
+
+    //TODO trouver comment gérer le onclick : un clic montre les détail, un deuxieme clic lance l'activité détail.
     @Override
     public boolean onMarkerClick(Marker marker) {
         return false;

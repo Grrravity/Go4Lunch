@@ -41,4 +41,11 @@
         <item name="android:color">#696969</item>
     </style>
 
+    <!-- Rating style -->
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/quantum_grey700</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+    </style>
+
+
 </resources>

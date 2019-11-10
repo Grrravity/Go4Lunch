@@ -1,5 +1,6 @@
 package com.error.grrravity.go4lunch.controllers.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,10 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.error.grrravity.go4lunch.R;
+import com.error.grrravity.go4lunch.controllers.RestaurantDetailActivity;
 import com.error.grrravity.go4lunch.controllers.base.BaseFragment;
 import com.error.grrravity.go4lunch.models.places.Google;
 import com.error.grrravity.go4lunch.models.places.NearbyResult;
 import com.error.grrravity.go4lunch.utils.GPS;
+import com.error.grrravity.go4lunch.utils.ItemClickHelper;
 import com.error.grrravity.go4lunch.utils.api.APIStreams;
 import com.error.grrravity.go4lunch.views.RestaurantsAdapter;
 
@@ -29,7 +32,7 @@ import io.reactivex.observers.DisposableObserver;
 
 public class RestaurantsFragment extends BaseFragment {
 
-    private static final String apiKey = "AIzaSyDVaDt05euLhIr1cO1A88iUb4lj8vdA5J0";
+    private static final String apiKey = "AIzaSyBLNawqR6INuBQAcUd3ljzjnVkBWOhtHhA";
 
     @BindView(R.id.restaurants_rv)
     RecyclerView mRecyclerView;
@@ -61,13 +64,24 @@ public class RestaurantsFragment extends BaseFragment {
         mPosition = gps.getLatitude() + "," + gps.getLongitude();
 
         this.configureRecyclerView();
-
-            this.executeHttpRequestWithRetrofit();
+        this.configureClickOnRecyclerViewItem();
+        this.executeHttpRequestWithRetrofit();
 
         showRestaurants();
         setHasOptionsMenu(true);
 
         return view;
+    }
+
+    private void configureClickOnRecyclerViewItem() {
+        ItemClickHelper.addTo(mRecyclerView)
+                .setOnItemClickListener((mRecyclerView, position, v) -> {
+                    String placeID = mRestaurantsAdapter.getmResultList().get(position).getPlaceId();
+                    Intent restaurantDetailActivity = new Intent(getContext(),
+                            RestaurantDetailActivity.class);
+                    restaurantDetailActivity.putExtra(ID, placeID);
+                    startActivity(restaurantDetailActivity);
+                });
     }
 
 
