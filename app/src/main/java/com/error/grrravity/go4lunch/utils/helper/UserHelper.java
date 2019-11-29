@@ -22,15 +22,17 @@ public class UserHelper {
 
     private static final String COLLECTION_USER = "users";
     private static final String COLLECTION_LIKED = "restaurantLike";
-    private static final String GET_RESTAURANTID = "restaurantId";
+
+    private static final String GET_RESTAURANT_ID = "restaurantId";
     private static final String GET_JOINED_RESTAURANT = "joinedRestaurant";
     private static final String GET_VICINITY = "vicinity";
     private static final String GET_URL_PICTURE = "urlPicture";
     private static final String GET_USERNAME = "username";
 
+
     // --- COLLECTION REFERENCE ---
 
-    public static CollectionReference getUsersCollection(){
+    private static CollectionReference getUsersCollection(){
         return FirebaseFirestore.getInstance().collection(COLLECTION_USER);
     }
 
@@ -63,7 +65,7 @@ public class UserHelper {
     }
 
     public static Task<QuerySnapshot> getRestaurant(String restaurantId){
-        return UserHelper.getUsersCollection().whereEqualTo(GET_RESTAURANTID, restaurantId).get();
+        return UserHelper.getUsersCollection().whereEqualTo(GET_RESTAURANT_ID, restaurantId).get();
     }
 
     private static Task<DocumentSnapshot> getRestaurantLike(String restaurantId) {
@@ -86,7 +88,7 @@ public class UserHelper {
         List<User> users = new ArrayList<>();
         FirebaseFirestore.getInstance()
                 .collection(COLLECTION_USER)
-                .whereEqualTo(GET_RESTAURANTID, result.getPlaceId())
+                .whereEqualTo(GET_RESTAURANT_ID, result.getPlaceId())
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -130,7 +132,7 @@ public class UserHelper {
     }
 
     public static Task<Void> updateUserAtRestaurant(String userId, String joinedRestaurant, String restaurantId, String vicinity) {
-        return UserHelper.getUsersCollection().document(userId).update(GET_JOINED_RESTAURANT, joinedRestaurant, GET_RESTAURANTID, restaurantId, GET_VICINITY, vicinity);
+        return UserHelper.getUsersCollection().document(userId).update(GET_JOINED_RESTAURANT, joinedRestaurant, GET_JOINED_RESTAURANT, restaurantId, GET_VICINITY, vicinity);
     }
 
     // --- DELETE ---
@@ -153,7 +155,7 @@ public class UserHelper {
     public static Task<Void> deleteUserAtRestaurant(String userId) {
         Map<String, Object> update = new HashMap<>();
         update.put(GET_JOINED_RESTAURANT, FieldValue.delete());
-        update.put(GET_RESTAURANTID, FieldValue.delete());
+        update.put(GET_RESTAURANT_ID, FieldValue.delete());
         update.put(GET_VICINITY, FieldValue.delete());
         return UserHelper.getUsersCollection().document(userId).update(update);
     }

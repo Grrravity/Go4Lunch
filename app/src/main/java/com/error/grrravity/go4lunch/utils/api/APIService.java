@@ -15,7 +15,7 @@ public interface APIService {
                                            @Query("type") String type,
                                            @Query("key") String key);
 
-    @GET("maps/api/place/details/json?key=AIzaSyC4kQI5ukhgfpDzYF8S4aRqDq9Ppq1H3K0")
+    @GET("maps/api/place/details/json?")
     Observable<Details> getGoogleDetailsInfo (@Query("placeid") String placeId,
                                               @Query("key") String key);
 

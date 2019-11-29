@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.error.grrravity.go4lunch.BuildConfig;
 import com.error.grrravity.go4lunch.R;
 import com.error.grrravity.go4lunch.controllers.RestaurantDetailActivity;
 import com.error.grrravity.go4lunch.controllers.base.BaseFragment;
@@ -32,7 +33,7 @@ import io.reactivex.observers.DisposableObserver;
 
 public class RestaurantsFragment extends BaseFragment {
 
-    private static final String apiKey = "AIzaSyBLNawqR6INuBQAcUd3ljzjnVkBWOhtHhA";
+    private static final String apiKey = BuildConfig.API_KEY;
 
     @BindView(R.id.restaurants_rv)
     RecyclerView mRecyclerView;
@@ -67,7 +68,7 @@ public class RestaurantsFragment extends BaseFragment {
         this.configureClickOnRecyclerViewItem();
         this.executeHttpRequestWithRetrofit();
 
-        showRestaurants();
+        //showRestaurants();
         setHasOptionsMenu(true);
 
         return view;
@@ -76,7 +77,7 @@ public class RestaurantsFragment extends BaseFragment {
     private void configureClickOnRecyclerViewItem() {
         ItemClickHelper.addTo(mRecyclerView)
                 .setOnItemClickListener((mRecyclerView, position, v) -> {
-                    String placeID = mRestaurantsAdapter.getmResultList().get(position).getPlaceId();
+                    String placeID = mRestaurantsAdapter.getResultList().get(position).getPlaceId();
                     Intent restaurantDetailActivity = new Intent(getContext(),
                             RestaurantDetailActivity.class);
                     restaurantDetailActivity.putExtra(ID, placeID);
@@ -104,6 +105,7 @@ public class RestaurantsFragment extends BaseFragment {
         }
 
     private void executeHttpRequestWithRetrofit() {
+        Log.d("mPosition fragments", "executeHttpRequestWithRetrofit: " + mPosition + " " + RESTAURANT );
         mDisposable = APIStreams.getInstance().streamFetchGooglePlaces(mPosition, 1000, RESTAURANT, apiKey).subscribeWith(new DisposableObserver<Google>() {
             @Override
             public void onNext(Google google) {

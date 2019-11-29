@@ -1,7 +1,9 @@
 package com.error.grrravity.go4lunch.controllers.base;
 
 import android.content.Context;
+import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import io.reactivex.disposables.Disposable;
@@ -9,15 +11,15 @@ import io.reactivex.disposables.Disposable;
 
 public abstract class BaseFragment extends Fragment {
 
-    public static final int GOOGLE_MAPS_FRAGMENT = 0;
-    public static final int RESTAURANTS_FRAGMENT = 1;
-    public static final int LIKED_RESTAURANTS_FRAGMENT = 2;
-    public static final int USER_FRAGMENT = 3;
-
     protected Disposable mDisposable;
     public static final String RESTAURANT = "restaurant";
     public static final String ID = "ID";
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public void onAttach(Context context) {

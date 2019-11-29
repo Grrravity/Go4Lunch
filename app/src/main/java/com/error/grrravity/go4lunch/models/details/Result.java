@@ -1,6 +1,5 @@
 package com.error.grrravity.go4lunch.models.details;
 
-import com.google.android.libraries.places.api.model.AddressComponent;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

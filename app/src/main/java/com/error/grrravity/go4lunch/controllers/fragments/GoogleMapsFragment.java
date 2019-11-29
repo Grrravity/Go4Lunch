@@ -1,6 +1,7 @@
 package com.error.grrravity.go4lunch.controllers.fragments;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -20,6 +21,7 @@ import androidx.core.content.ContextCompat;
 
 import com.error.grrravity.go4lunch.R;
 import com.error.grrravity.go4lunch.controllers.MainActivity;
+import com.error.grrravity.go4lunch.controllers.RestaurantDetailActivity;
 import com.error.grrravity.go4lunch.controllers.base.BaseFragment;
 import com.error.grrravity.go4lunch.models.places.Google;
 import com.error.grrravity.go4lunch.models.places.NearbyResult;
@@ -114,6 +116,21 @@ public class GoogleMapsFragment extends BaseFragment implements
         super.onViewCreated(view, savedInstanceState);
 
         mMapFragment.getMapAsync(this);
+        mMapFragment.getMapAsync(googleMap -> {
+            googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                @Override
+                public void onInfoWindowClick(Marker marker) {
+
+                    //TODO lui passer le placeID
+                    //String placeID = mResult.getPlaceId();
+                    //User user = (User) marker.getTag();
+                    //Intent restaurantDetailActivity = new Intent(getContext(),
+                    //        RestaurantDetailActivity.class);
+                    //restaurantDetailActivity.putExtra(ID, placeID);
+                    //startActivity(restaurantDetailActivity);
+                }
+            });
+        });
     }
 
     private void getLocationPermission() {
@@ -165,6 +182,8 @@ public class GoogleMapsFragment extends BaseFragment implements
     public boolean onMarkerClick(Marker marker) {
         return false;
     }
+
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {

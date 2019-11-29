@@ -48,7 +48,7 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsViewHold
         notifyDataSetChanged();
     }
 
-    public List<NearbyResult> getmResultList() {
+    public List<NearbyResult> getResultList() {
         return mResultList;
     }
 }

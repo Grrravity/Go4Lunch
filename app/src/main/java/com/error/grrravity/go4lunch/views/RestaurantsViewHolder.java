@@ -120,7 +120,8 @@ public class RestaurantsViewHolder extends RecyclerView.ViewHolder {
 
     private void displayRating(NearbyResult result) {
         if (result.getRating() != 0) {
-            double rating = result.getRating();
+            double googleRating = result.getRating();
+            double rating = googleRating / 5 * 3;
             this.restaurantRatingBar.setRating((float) rating);
             this.restaurantRatingBar.setVisibility(View.VISIBLE);
         } else {

@@ -53,7 +53,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private static final int SIGN_OUT_TASK = 10;
     public static final String ID = "ID";
-    private static final String GET_RESTAURANTID = "restaurantId";
+    private static final String GET_RESTAURANT_ID = "restaurantId";
 
     private LatLngBounds latLngBounds;
 
@@ -75,8 +75,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         btnFindRest.setVisibility(View.GONE);
 
-        showFragment(GoogleMapsFragment.newInstance());
-
         if (!NetworkChecker.isNetworkAvailable(this)) {
 
         } else {
@@ -85,6 +83,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
 
         }
+
+        showFragment(GoogleMapsFragment.newInstance());
     }
 
     private void showFragment(Fragment newInstante) {
@@ -153,7 +153,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.main_activity_drawer_lunch:
                 UserHelper.getBookingRestaurant(UserHelper.getCurrentUser().getUid()).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        String restaurantId = task.getResult().getString(GET_RESTAURANTID);
+                        String restaurantId = task.getResult().getString(GET_RESTAURANT_ID);
                         if (restaurantId != null) {
                             Intent intent = new Intent(this, RestaurantDetailActivity.class);
                             intent.putExtra(ID, restaurantId);

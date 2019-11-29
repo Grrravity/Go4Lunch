@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.error.grrravity.go4lunch.BuildConfig;
 import com.error.grrravity.go4lunch.R;
 import com.error.grrravity.go4lunch.controllers.base.BaseActivity;
 import com.error.grrravity.go4lunch.models.details.Details;
@@ -41,7 +42,8 @@ public class RestaurantDetailActivity extends BaseActivity {
     private static final String TEL = "TEL";
     private static final String PICTURE_URL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&maxheight=150&key=";
     private static final String RESTAURANT_ID = "RESID";
-    private static final String APIKEY = "AIzaSyBLNawqR6INuBQAcUd3ljzjnVkBWOhtHhA";
+    private static final String GET_RESTAURANT_ID = "restaurantId";
+    private static final String APIKEY = BuildConfig.API_KEY;
 
     @BindView(R.id.resdetail_respict) ImageView mResPicture;
     @BindView(R.id.resdetail_resadress) TextView mResAdress;
@@ -66,6 +68,7 @@ public class RestaurantDetailActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         placeID = getIntent().getStringExtra(ID);
+        Log.d("resdetail activity", "onCreate: " + placeID);
 
         this.configureRecyclerView();
         this.executeHttpRequestWithRetrofit();
@@ -89,6 +92,7 @@ public class RestaurantDetailActivity extends BaseActivity {
             @Override
             public void onNext(Details details) {
                 mResult = details.getResult();
+                Log.d("resdetail activity", "executeHttpRequestWithRetrofit: " + mResult);
                 UserHelper.getRestaurantInfo(mResult, mUserList ->{
                     RestaurantDetailActivity.this.mUserList = mUserList;
                     mCoworkerAdapter.refreshAdapter(mUserList);
@@ -109,6 +113,7 @@ public class RestaurantDetailActivity extends BaseActivity {
 
     private void updateUI() {
 
+        Log.d("test debug", "updateUI: " + mResult);
         //restaurant name
         mResName.setText(mResult.getName());
 
@@ -118,7 +123,8 @@ public class RestaurantDetailActivity extends BaseActivity {
 
         //restaurant rating
         if(mResult.getRating() != 0){
-            double rating = mResult.getRating();
+            double googleRating = mResult.getRating();
+            double rating = googleRating / 5 * 3;
             this.mRatingBar.setRating((float) rating);
             this.mRatingBar.setVisibility(View.VISIBLE);
         }
@@ -144,7 +150,7 @@ public class RestaurantDetailActivity extends BaseActivity {
     private void updateJoin() {
         UserHelper.getBookingRestaurant(UserHelper.getCurrentUser().getUid()).addOnCompleteListener(task -> {
             if(task.isSuccessful()){
-                String restaurantId = task.getResult().getString("restaurantId");
+                String restaurantId = task.getResult().getString(GET_RESTAURANT_ID);
                 if(restaurantId != null && restaurantId.equals(mResult.getPlaceId())){
                     mJoinFAB.setImageDrawable(getResources().getDrawable(R.drawable.check_circle_black));
                     mJoinFAB.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
