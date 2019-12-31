@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:background="@color/backgroundSmoothGrey"
+    android:background="@color/mainBackground"
     >
 
     <!-- USER DATA CONTAINER -->
@@ -56,13 +56,14 @@
             android:id="@+id/profile_activity_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="20sp"
             android:text="@string/text_input_username"
             android:layout_margin="20dip"
+            android:padding="10dp"
             android:background="@color/white"/>
 
-        <!-- PROFILE EMAIL CONTAINER -->
-        <LinearLayout
+        <!-- PROFILE EMAIL CONTAINER
+         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -76,7 +77,7 @@
                 android:textSize="15sp"
                 />
 
-            <!-- PROFILE EMAIL -->
+            PROFILE EMAIL
             <TextView
                 android:id="@+id/profile_activity_mail"
                 android:layout_width="match_parent"
@@ -85,7 +86,7 @@
                 android:paddingStart="20dip"
                 tools:ignore="RtlSymmetry"/>
 
-        </LinearLayout>
+        </LinearLayout> -->
 
 
     </LinearLayout>

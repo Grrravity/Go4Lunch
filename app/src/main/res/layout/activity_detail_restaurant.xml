@@ -19,9 +19,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginTop="20dp"
             android:paddingBottom="20dp"
-            android:background="@color/white">
+            android:layout_marginTop="20dp"
+            android:background="@color/mainBackground">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -33,61 +33,66 @@
                     android:id="@+id/resdetail_respict"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
-                    tools:background="@drawable/ic_launcher_background"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:background="@drawable/borders"
+                    />
 
                 <LinearLayout
                     android:id="@+id/resdetail_banner_lin"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@color/white"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/resdetail_respict">
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <TextView
                             android:id="@+id/resdetail_resname"
                             android:textSize="15sp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginEnd="8dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
                             android:layout_marginBottom="8dp"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:textColor="@color/quantum_black_100"
-                            tools:text="Le Baron"/>
+                            tools:text="Le Baron"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/resdetail_resrate"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
 
                         <androidx.appcompat.widget.AppCompatRatingBar
                             android:id="@+id/resdetail_resrate"
                             android:theme="@style/RatingBar"
-                            android:layout_width="wrap_content"
+                            android:layout_width="50dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:layout_marginStart="8dp"
+                            android:layout_marginEnd="100dp"
                             android:numStars="3"
                             tools:rating="1"
-                            style="?android:attr/ratingBarStyleSmall"/>
+                            style="?android:attr/ratingBarStyleSmall"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/resdetail_resname"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
 
-                    </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
                         android:id="@+id/resdetail_resadress"
                         android:textSize="15sp"
                         android:layout_marginTop="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/quantum_black_100"
@@ -120,14 +125,13 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Tel"
-                            android:drawableTop="@drawable/fui_ic_phone_white_24dp"
+                            android:drawableTop="@drawable/call_black"
                             android:background="@color/fui_transparent"
                             android:layout_marginStart="12dp"
                             android:layout_marginTop="12dp"
                             android:layout_marginEnd="12dp"
                             android:layout_marginBottom="12dp"
                             android:textColor="@color/quantum_grey700"
-                            android:drawableTint="@color/quantum_grey700"
                             />
 
                         <Button
@@ -143,7 +147,6 @@
                             android:layout_marginEnd="12dp"
                             android:layout_marginBottom="12dp"
                             android:textColor="@color/quantum_grey700"
-                            android:drawableTint="@color/quantum_grey700"
                             />
 
                         <Button
@@ -159,7 +162,6 @@
                             android:layout_marginEnd="12dp"
                             android:layout_marginBottom="12dp"
                             android:textColor="@color/quantum_grey700"
-                            android:drawableTint="@color/quantum_grey700"
                             />
                     </TableRow>
 
@@ -177,6 +179,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/recycler_linlay"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="40"
@@ -185,6 +188,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
+                    android:paddingBottom="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/resdetail_separator">
@@ -206,15 +210,16 @@
                     android:id="@+id/resdetail_join_FAB"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/goforfood_front_logo"
+                    app:backgroundTint="@color/white"
                     android:clickable="true"
                     android:focusable="true"
-                    android:backgroundTint="@color/white"
-                    android:tag="JOIN"
                     android:src="@drawable/goforfood_front_logo"
-                    android:background="@drawable/goforfood_front_logo"
-                    app:layout_constraintEnd_toEndOf="@+id/resdetail_respict"
+                    android:tag="JOIN"
                     app:layout_constraintBottom_toBottomOf="@id/resdetail_respict"
+                    app:layout_constraintEnd_toEndOf="@+id/resdetail_respict"
+                    app:layout_constraintTop_toBottomOf="@+id/resdetail_respict"
                     tools:targetApi="lollipop" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -32,7 +32,7 @@ public class CoworkerViewHolder extends RecyclerView.ViewHolder {
     @SuppressLint("NewApi")
     void updateData(User user) {
         if (user.getJoinedRestaurant() != null) {
-            mCoworkerName.setText(itemView.getContext().getString(R.string.will_eat, user.getUsername(), user.getJoinedRestaurant()));
+            mCoworkerName.setText(itemView.getContext().getString(R.string.will_eat, user.getUsername()));
             mCoworkerName.setTypeface(mCoworkerName.getTypeface(), Typeface.NORMAL);
             mCoworkerName.setTextColor(itemView.getContext().getColor(R.color.quantum_black_100));
             mCoworkerName.setAlpha((float) 1);

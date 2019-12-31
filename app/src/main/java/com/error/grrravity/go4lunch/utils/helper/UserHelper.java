@@ -68,6 +68,10 @@ public class UserHelper {
         return UserHelper.getUsersCollection().whereEqualTo(GET_RESTAURANT_ID, restaurantId).get();
     }
 
+    public static Task<QuerySnapshot> getRestaurantForList(String restaurantId){
+        return UserHelper.getUsersCollection().whereEqualTo(GET_RESTAURANT_ID, restaurantId).get(); // GET_JOINED _RESTAURANT
+    }
+
     private static Task<DocumentSnapshot> getRestaurantLike(String restaurantId) {
         return UserHelper.getLikedCollection().document(restaurantId).get();
     }
@@ -132,7 +136,7 @@ public class UserHelper {
     }
 
     public static Task<Void> updateUserAtRestaurant(String userId, String joinedRestaurant, String restaurantId, String vicinity) {
-        return UserHelper.getUsersCollection().document(userId).update(GET_JOINED_RESTAURANT, joinedRestaurant, GET_JOINED_RESTAURANT, restaurantId, GET_VICINITY, vicinity);
+        return UserHelper.getUsersCollection().document(userId).update(GET_JOINED_RESTAURANT, joinedRestaurant, GET_RESTAURANT_ID, restaurantId, GET_VICINITY, vicinity);
     }
 
     // --- DELETE ---

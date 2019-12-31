@@ -33,6 +33,8 @@ import io.reactivex.observers.DisposableObserver;
 
 public class RestaurantsFragment extends BaseFragment {
 
+    //TODO collection.sort pour sort les restaurants suivant la distance
+
     private static final String apiKey = BuildConfig.API_KEY;
 
     @BindView(R.id.restaurants_rv)

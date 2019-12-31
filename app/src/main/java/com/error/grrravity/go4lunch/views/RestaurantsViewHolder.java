@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.error.grrravity.go4lunch.BuildConfig;
 import com.error.grrravity.go4lunch.R;
 import com.error.grrravity.go4lunch.models.places.Location;
 import com.error.grrravity.go4lunch.models.places.NearbyResult;
@@ -41,6 +42,8 @@ public class RestaurantsViewHolder extends RecyclerView.ViewHolder {
     ImageView imageViewMates;
     @BindView(R.id.item_textview_mates)
     TextView textViewMates;
+
+    private static final String APIKEY2 = BuildConfig.API_KEY2;
 
     private float[] distanceResults = new float[3];
 
@@ -79,7 +82,7 @@ public class RestaurantsViewHolder extends RecyclerView.ViewHolder {
         if (!(result.getPhotos() == null)) {
             if (!(result.getPhotos().isEmpty())) {
                 Glide.with(itemView)
-                        .load("https://maps.googleapis.com/maps/api/place/photo" + "?maxwidth=" + 75 + "&maxheight=" + 75 + "&photoreference=" + result.getPhotos().get(0).getPhotoReference() + "&key=AIzaSyDXI74hOiHLi4l2vhUEs23260f055xyXvI")
+                        .load("https://maps.googleapis.com/maps/api/place/photo" + "?maxwidth=" + 75 + "&maxheight=" + 75 + "&photoreference=" + result.getPhotos().get(0).getPhotoReference() + "&key="+ APIKEY2 )
                         .into(restaurantPicture);
             }
         } else {
@@ -90,7 +93,7 @@ public class RestaurantsViewHolder extends RecyclerView.ViewHolder {
         }
 
         // ----------- MATES -----------
-        UserHelper.getRestaurant(result.getPlaceId()).addOnCompleteListener(task -> {
+        UserHelper.getRestaurantForList(result.getPlaceId()).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 if (task.getResult().size() > 0) {
                     List<String> resultList = new ArrayList<>();

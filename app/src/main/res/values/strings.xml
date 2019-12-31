@@ -2,7 +2,7 @@
     <string name="app_name">Go4Lunch</string>
 
     <!-- FB -->
-    <string name="facebook_app_id" translatable="false">339289337000848</string>
+    <string name="facebook_application_id" translatable="false">339289337000848</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb339289337000848</string>
 
     <!-- GLOBAL -->
@@ -59,6 +59,10 @@
     <!-- SUCCESS-->
 
     <string name="success_connection">Connection succeed</string>
-    <string name="will_eat">%1$s déjeunera ici %2$s</string>
+    <string name="will_eat">%1$s déjeunera ici.</string>
+    <string name="joining">Votre participation est bien prise en compte</string>
+    <string name="leaving">Votre participation a bien été annulée</string>
+    <string name="liked">Restaurant liké !</string>
+    <string name="unliked">Like du restaurant retiré :(</string>
 
 </resources>

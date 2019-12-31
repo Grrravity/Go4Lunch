@@ -1,27 +1,23 @@
 package com.error.grrravity.go4lunch.utils.auth;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
-import android.text.TextUtils;
-import android.view.View;
+
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.error.grrravity.go4lunch.R;
 import com.error.grrravity.go4lunch.controllers.base.BaseActivity;
-import com.error.grrravity.go4lunch.utils.helper.UserHelper;
 import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ProfileActivity extends BaseActivity {
@@ -29,7 +25,7 @@ public class ProfileActivity extends BaseActivity {
     //FOR DESIGN
     @BindView(R.id.profile_activity_profile_image) ImageView mImageViewProfile;
     @BindView(R.id.profile_activity_username) TextInputEditText mTextInputEditTextUsername;
-    @BindView(R.id.profile_activity_mail) TextView mTextViewMail;
+    //@BindView(R.id.profile_activity_mail) TextView mTextViewMail;
     @BindView(R.id.profile_activity_progress_bar) ProgressBar mProgressBar;
 
     //FOR DATA
@@ -62,9 +58,9 @@ public class ProfileActivity extends BaseActivity {
     //@OnClick(R.id.profile_activity_button_update)
     //public void onClickUpdateButton() { this.updateUsernameInFirebase(); }
 
-    //@OnClick(R.id.profile_activity_button_sign_out)
-    //public void onClickSignOutButton() { this.signOutUserFromFirebase(); }
-//
+    @OnClick(R.id.profile_activity_button_sign_out)
+    public void onClickSignOutButton() { this.logOut(); }
+
     //@OnClick(R.id.profile_activity_button_delete)
     //public void onClickDeleteButton() {
     //    new AlertDialog.Builder(this)
@@ -72,7 +68,7 @@ public class ProfileActivity extends BaseActivity {
     //            .setPositiveButton(R.string.popup_choice_yes, new DialogInterface.OnClickListener() {
     //                @Override
     //                public void onClick(DialogInterface dialogInterface, int i) {
-    ////                    deleteUserFromFirebase();
+    //                    deleteUserFromFirebase();
     //                }
     //            })
     //            .setNegativeButton(R.string.popup_choice_no, null)
@@ -83,13 +79,22 @@ public class ProfileActivity extends BaseActivity {
     // REST REQUESTS
     // --------------------
 
-    //private void signOutUserFromFirebase(){
-    //    AuthUI.getInstance()
-    //            .signOut(this)
-    //            .addOnSuccessListener(this,
-    //                    this.updateUIAfterRESTRequestsCompleted(SIGN_OUT_TASK));
-    //}
-//
+    private void logOut(){
+        AuthUI.getInstance()
+                .signOut(this)
+                .addOnSuccessListener(this, this.updateUI(SIGN_OUT_TASK));
+    }
+
+    private OnSuccessListener<Void> updateUI(final int origin){
+        return aVoid -> {
+            if (origin == SIGN_OUT_TASK) {
+                Intent intent = new Intent(this, AuthenticationActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        };
+    }
+
     //private void deleteUserFromFirebase(){
     //    if (this.getCurrentUser() != null) {
 //
@@ -103,7 +108,7 @@ public class ProfileActivity extends BaseActivity {
     //                        this.updateUIAfterRESTRequestsCompleted(DELETE_USER_TASK));
     //    }
     //}
-//
+
     //// 3 - Update User Username
     //private void updateUsernameInFirebase(){
 //

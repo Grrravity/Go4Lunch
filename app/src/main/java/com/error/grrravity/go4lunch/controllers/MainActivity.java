@@ -58,7 +58,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private LatLngBounds latLngBounds;
 
 
-    // TODO BOTTOM BAR
+    // TODO Actionbar avec recherche (penser à l'ouvrir ET la refermer)
 
     @Override
     public int getFragmentLayout() {

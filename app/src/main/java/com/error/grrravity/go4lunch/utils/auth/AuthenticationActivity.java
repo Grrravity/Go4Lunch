@@ -18,6 +18,8 @@ import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.Arrays;
 import java.util.Collections;
 import butterknife.OnClick;
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -53,17 +55,8 @@ public class AuthenticationActivity extends BaseActivity {
         if (UserHelper.isCurrentUserLogged()) {
             this.logSucceed();
         } else {
-            this.startSignInActivityForGoogle();
-        }
-    }
-
-    // Launch Facebook Sign-in
-    @OnClick(R.id.auth_facebook_login_btn)
-    public void onClickFacebookButton() {
-        if (UserHelper.isCurrentUserLogged()) {
-            this.logSucceed();
-        } else {
-            this.startSignInActivityForFacebook();
+            //this.startSignInActivityForGoogle();
+            this.signInInitiate();
         }
     }
 
@@ -74,26 +67,37 @@ public class AuthenticationActivity extends BaseActivity {
         this.handleResponseAfterSignIn(requestCode, resultCode, data);
     }
 
-    private void startSignInActivityForGoogle(){
+    private void signInInitiate(){
         startActivityForResult(
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
-                        .setAvailableProviders(
-                                Collections.singletonList(new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build())) //GOOGLE
-                        .setIsSmartLockEnabled(false, true)
-                        .build(), RC_SIGN_IN);
+                        .setAvailableProviders(Arrays.asList(
+                                new AuthUI.IdpConfig.GoogleBuilder().build(),
+                                new AuthUI.IdpConfig.FacebookBuilder().build()))
+                        .build(),
+                RC_SIGN_IN);
     }
 
-    // - Launch Sign-In Activity for Facebook
-    private void startSignInActivityForFacebook(){
-        startActivityForResult(
-                AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setAvailableProviders(
-                                Collections.singletonList(new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build())) //FACEBOOK
-                        .setIsSmartLockEnabled(false, true)
-                        .build(), RC_SIGN_IN);
-    }
+    //private void startSignInActivityForGoogle(){
+    //    startActivityForResult(
+    //            AuthUI.getInstance()
+    //                    .createSignInIntentBuilder()
+    //                    .setAvailableProviders(
+    //                            Collections.singletonList(new AuthUI.IdpConfig.Builder(AuthUI.GOOOGLE_PROVIDER).build())) //GOOGLE
+    //                    .setIsSmartLockEnabled(false, true)
+    //                    .build(), RC_SIGN_IN);
+    //}
+//
+    //// - Launch Sign-In Activity for Facebook
+    //private void startSignInActivityForFacebook(){
+    //    startActivityForResult(
+    //            AuthUI.getInstance()
+    //                    .createSignInIntentBuilder()
+    //                    .setAvailableProviders(
+    //                            Collections.singletonList(new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build())) //FACEBOOK
+    //                    .setIsSmartLockEnabled(false, true)
+    //                    .build(), RC_SIGN_IN);
+    //}
 
     private void createUserFireStore(){
         if(UserHelper.getCurrentUser() != null) {
@@ -133,9 +137,9 @@ public class AuthenticationActivity extends BaseActivity {
             } else { // ERRORS
                 if (response == null) {
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_authentication_canceled), Toast.LENGTH_SHORT).show();
-                } else if (response.getErrorCode() == ErrorCodes.NO_NETWORK) {
+                } else if (response.getError().getErrorCode() == ErrorCodes.NO_NETWORK) {
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_no_internet), Toast.LENGTH_SHORT).show();
-                } else if (response.getErrorCode() == ErrorCodes.UNKNOWN_ERROR) {
+                } else if (response.getError().getErrorCode() == ErrorCodes.UNKNOWN_ERROR) {
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_unknown_error), Toast.LENGTH_SHORT).show();
                 }
             }

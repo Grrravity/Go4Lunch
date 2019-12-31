@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.error.grrravity.go4lunch.BuildConfig;
 import com.error.grrravity.go4lunch.R;
 import com.error.grrravity.go4lunch.controllers.MainActivity;
 import com.error.grrravity.go4lunch.controllers.RestaurantDetailActivity;
@@ -56,7 +57,7 @@ public class GoogleMapsFragment extends BaseFragment implements
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
-    private static final String apiKey = "AIzaSyBLNawqR6INuBQAcUd3ljzjnVkBWOhtHhA";
+    private static final String apiKey = BuildConfig.API_KEY;
 
     //vars
     private boolean mLocationPermissionsGranted = false;
@@ -74,6 +75,8 @@ public class GoogleMapsFragment extends BaseFragment implements
     private LatLng mMyLatLng;
     private Location mMyLocation;
     private String mPosition;
+
+    private String restaurantIDForMarker;
 
     private boolean firstLC = true;
 
@@ -120,14 +123,13 @@ public class GoogleMapsFragment extends BaseFragment implements
             googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                 @Override
                 public void onInfoWindowClick(Marker marker) {
-
                     //TODO lui passer le placeID
-                    //String placeID = mResult.getPlaceId();
-                    //User user = (User) marker.getTag();
-                    //Intent restaurantDetailActivity = new Intent(getContext(),
-                    //        RestaurantDetailActivity.class);
-                    //restaurantDetailActivity.putExtra(ID, placeID);
-                    //startActivity(restaurantDetailActivity);
+                    if (restaurantIDForMarker != null){
+                        Intent restaurantDetailActivity = new Intent(getContext(),
+                                RestaurantDetailActivity.class);
+                    restaurantDetailActivity.putExtra(ID, restaurantIDForMarker);
+                    startActivity(restaurantDetailActivity);
+                    }
                 }
             });
         });
@@ -177,12 +179,11 @@ public class GoogleMapsFragment extends BaseFragment implements
     }
 
 
-    //TODO trouver comment gérer le onclick : un clic montre les détail, un deuxieme clic lance l'activité détail.
     @Override
     public boolean onMarkerClick(Marker marker) {
+        restaurantIDForMarker = marker.getId();
         return false;
     }
-
 
 
     @Override
@@ -281,6 +282,21 @@ public class GoogleMapsFragment extends BaseFragment implements
 
     @Override
     public boolean onMyLocationButtonClick() {
+
+        final FusedLocationProviderClient mFusedLocationClient = LocationServices
+                .getFusedLocationProviderClient(Objects.requireNonNull(getContext()));
+
+        mMyLatLng = new LatLng(mGPS.getLatitude(), mGPS.getLongitude());
+        mPosition = mGPS.getLatitude() + "," + mGPS.getLongitude();
+
+        mFusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
+
+            //CameraPosition cameraPosition = new CameraPosition.Builder().target(mMyLatLng).zoom(12).build();
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mMyLatLng, 15));
+        });
+
+        this.executeHttpRequestWithRetrofit();
+
         return false;
     }
 
