@@ -24,6 +24,8 @@ import com.error.grrravity.go4lunch.R;
 import com.error.grrravity.go4lunch.controllers.MainActivity;
 import com.error.grrravity.go4lunch.controllers.RestaurantDetailActivity;
 import com.error.grrravity.go4lunch.controllers.base.BaseFragment;
+import com.error.grrravity.go4lunch.models.autocomplete.Prediction;
+import com.error.grrravity.go4lunch.models.details.ResultDetail;
 import com.error.grrravity.go4lunch.models.places.Google;
 import com.error.grrravity.go4lunch.models.places.NearbyResult;
 import com.error.grrravity.go4lunch.utils.GPS;
@@ -40,6 +42,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -65,7 +68,7 @@ public class GoogleMapsFragment extends BaseFragment implements
     private SupportMapFragment mMapFragment;
     private GoogleMap mMap;
 
-    public List<NearbyResult> mNearbyResultList;
+    private List<NearbyResult> mNearbyResultList, mStoredResultList;
 
     private GPS mGPS;
     private MarkerOptions mMarkerOptions;
@@ -76,19 +79,27 @@ public class GoogleMapsFragment extends BaseFragment implements
     private Location mMyLocation;
     private String mPosition;
 
-    private String restaurantIDForMarker;
+    private String restaurantIDForMarker, restaurantName;
 
     private boolean firstLC = true;
 
     // TODO : créer un marqueurs + verrif crash eventuel
     //TODO : fragment + recicler view pour requete google places (API)
 
-    public static GoogleMapsFragment newInstance() {  return new GoogleMapsFragment(); }
+    public static GoogleMapsFragment newInstance(){
+        return new GoogleMapsFragment();
+    }
+
+    public static GoogleMapsFragment newInstance(List<ResultDetail> results) {
+        GoogleMapsFragment fragment = new GoogleMapsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("result", (Serializable) results);
+        fragment.setArguments(bundle);
+        return fragment; }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle("Maps");
         getLocationPermission();
     }
 
@@ -103,8 +114,9 @@ public class GoogleMapsFragment extends BaseFragment implements
 
         mGPS = new GPS(getContext());
         mNearbyResultList = new ArrayList<>();
+        mStoredResultList = new ArrayList<>();
         mMarkerOptions = new MarkerOptions();
-        showRestaurants();
+
         return view;
     }
 
@@ -181,7 +193,18 @@ public class GoogleMapsFragment extends BaseFragment implements
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        restaurantIDForMarker = marker.getId();
+        restaurantName = marker.getTitle();
+        int size = mStoredResultList.size()-1;
+        int index = -3;
+        for (int i=0; i<size; i++){
+            if (mStoredResultList.get(i).getName().equals(restaurantName)){
+                index = i;
+                break;
+            }
+        }
+        if (index != -3) {
+            restaurantIDForMarker = mStoredResultList.get(index).getPlaceId();
+        }
         return false;
     }
 
@@ -227,7 +250,9 @@ public class GoogleMapsFragment extends BaseFragment implements
     }
 
     public void updateUI(List<NearbyResult> nearbyResultList){
-
+        if(mMap != null) {
+            mMap.clear();
+        }
         // display all restaurants
         for(NearbyResult mResult : nearbyResultList){
             LatLng restaurant = new LatLng(mResult.getGeometry().getLocation().getLat(),
@@ -267,6 +292,7 @@ public class GoogleMapsFragment extends BaseFragment implements
         @Override
         public void onNext(Google google) {
             mNearbyResultList.addAll(google.getResults());
+            mStoredResultList.addAll(google.getResults());
             updateUI(mNearbyResultList);
         }
 
@@ -311,9 +337,25 @@ public class GoogleMapsFragment extends BaseFragment implements
                 .setLatLngBounds(mMap.getProjection().getVisibleRegion().latLngBounds);
     }
 
-    public void showRestaurants(){
+    public void updateRestaurantList (List<Prediction> newList) {
+        ArrayList<NearbyResult> nearbyResults = new ArrayList<>();
+        for (NearbyResult nearbyResult : mStoredResultList) {
+            for (Prediction prediction: newList) {
+                if(prediction.getPlaceId().equals(nearbyResult.getPlaceId())){
+                    nearbyResults.add(nearbyResult);
+                    break;
+                }
+            }
+        }
+        mNearbyResultList.clear();
+        mNearbyResultList.addAll(nearbyResults);
         updateUI(mNearbyResultList);
     }
 
+    public void resetList(){
+        mNearbyResultList.clear();
+        mNearbyResultList.addAll(mStoredResultList);
+        updateUI(mNearbyResultList);
+    }
 
 }

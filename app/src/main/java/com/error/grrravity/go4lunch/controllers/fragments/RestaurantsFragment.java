@@ -2,7 +2,6 @@ package com.error.grrravity.go4lunch.controllers.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,8 @@ import com.error.grrravity.go4lunch.BuildConfig;
 import com.error.grrravity.go4lunch.R;
 import com.error.grrravity.go4lunch.controllers.RestaurantDetailActivity;
 import com.error.grrravity.go4lunch.controllers.base.BaseFragment;
+import com.error.grrravity.go4lunch.models.autocomplete.Prediction;
+import com.error.grrravity.go4lunch.models.details.ResultDetail;
 import com.error.grrravity.go4lunch.models.places.Google;
 import com.error.grrravity.go4lunch.models.places.NearbyResult;
 import com.error.grrravity.go4lunch.utils.GPS;
@@ -24,6 +25,7 @@ import com.error.grrravity.go4lunch.utils.ItemClickHelper;
 import com.error.grrravity.go4lunch.utils.api.APIStreams;
 import com.error.grrravity.go4lunch.views.RestaurantsAdapter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,11 +43,19 @@ public class RestaurantsFragment extends BaseFragment {
     RecyclerView mRecyclerView;
     private String mPosition;
 
-    public List<NearbyResult> mNearbyResultList;
-    public RestaurantsAdapter mRestaurantsAdapter;
+    private List<NearbyResult> mNearbyResultList, mStoredResultList;
+    private RestaurantsAdapter mRestaurantsAdapter;
 
     public static RestaurantsFragment newInstance(){
         return new RestaurantsFragment();
+    }
+
+    public static RestaurantsFragment newInstance(List< ResultDetail > results){
+            RestaurantsFragment fragment = new RestaurantsFragment();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("result", (Serializable) results);
+            fragment.setArguments(bundle);
+            return fragment;
     }
 
     @Override
@@ -65,6 +75,8 @@ public class RestaurantsFragment extends BaseFragment {
 
         GPS gps = new GPS(getContext());
         mPosition = gps.getLatitude() + "," + gps.getLongitude();
+
+        mStoredResultList = new ArrayList<>();
 
         this.configureRecyclerView();
         this.configureClickOnRecyclerViewItem();
@@ -98,20 +110,27 @@ public class RestaurantsFragment extends BaseFragment {
                                                  DividerItemDecoration.VERTICAL));
         }
 
-        public void showRestaurants(){
-        mRestaurantsAdapter.refreshAdapter(mNearbyResultList);
-        }
-
-        public void refreshRestaurants(List<NearbyResult> nearbyResultList){
-        mRestaurantsAdapter.refreshAdapter(nearbyResultList);
+        public void updateRestaurantList(List<Prediction> newList) {
+            ArrayList<NearbyResult> nearbyResults = new ArrayList<>();
+            for (NearbyResult nearbyResult : mStoredResultList) {
+                for (Prediction prediction: newList) {
+                    if(prediction.getPlaceId().equals(nearbyResult.getPlaceId())){
+                        nearbyResults.add(nearbyResult);
+                        break;
+                    }
+                }
+            }
+            mNearbyResultList.clear();
+            mNearbyResultList.addAll(nearbyResults);
+            mRestaurantsAdapter.notifyDataSetChanged();
         }
 
     private void executeHttpRequestWithRetrofit() {
-        Log.d("mPosition fragments", "executeHttpRequestWithRetrofit: " + mPosition + " " + RESTAURANT );
         mDisposable = APIStreams.getInstance().streamFetchGooglePlaces(mPosition, 1000, RESTAURANT, apiKey).subscribeWith(new DisposableObserver<Google>() {
             @Override
             public void onNext(Google google) {
                 mNearbyResultList.addAll(google.getResults());
+                mStoredResultList.addAll(google.getResults());
             }
 
             @Override
@@ -121,7 +140,15 @@ public class RestaurantsFragment extends BaseFragment {
             @Override
             public void onComplete() {
                 mRestaurantsAdapter.notifyItemRangeChanged(0, mNearbyResultList.size());
+                //todo changer notifydatasetchanged (clear + addall)
             }
         });
     }
+
+    public void resetList(){
+        mNearbyResultList.clear();
+        mNearbyResultList.addAll(mStoredResultList);
+        mRestaurantsAdapter.notifyDataSetChanged();
+    }
 }
+//TODO ajouter notifyDataSetChange pour reload fragment quand recherche

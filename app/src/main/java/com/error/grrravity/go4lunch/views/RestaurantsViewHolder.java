@@ -54,7 +54,7 @@ public class RestaurantsViewHolder extends RecyclerView.ViewHolder {
 
     public void updateWithGoogle(NearbyResult result, String userLocation) {
 
-        // ------------- NAME ------------
+        // ------------- ID ------------
         this.restaurantName.setText(result.getName());
         // ------------- ADDRESS ----------
         this.restaurantAdress.setText(result.getVicinity());

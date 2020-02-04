@@ -41,9 +41,10 @@ import io.reactivex.observers.DisposableObserver;
 public class RestaurantDetailActivity extends BaseActivity {
 
     private static final String ID = "ID";
+    private static final String NAME = "NAME";
     private static final String JOINING = "JOINING";
     private static final String UNJOIN = "UNJOIN";
-    private static final String TEL = "TEL";
+    private static final String TEL = "tel:";
     private static final String PICTURE_URL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&maxheight=150&photoreference=";
     private static final String RESTAURANT_ID = "RESID";
     private static final String GET_RESTAURANT_ID = "restaurantId";
@@ -71,15 +72,17 @@ public class RestaurantDetailActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         placeID = getIntent().getStringExtra(ID);
+
         Log.d("resdetail activity", "onCreate: " + placeID);
 
         this.configureRecyclerView();
         this.executeHttpRequestWithRetrofit();
+
     }
 
     private void configureRecyclerView() {
         this.mUserList = new ArrayList<>();
-        this.mCoworkerAdapter = new CoworkerAdapter(mUserList);
+        this.mCoworkerAdapter = new CoworkerAdapter(mUserList,2);
         this.mRecyclerView.setAdapter(this.mCoworkerAdapter);
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -255,15 +258,19 @@ public class RestaurantDetailActivity extends BaseActivity {
 
     @OnClick(R.id.resdetail_rescall)
     public void callRestaurant(){
-        if(mResult.getWebsite() != null){
-            //TODO : fix call
-            Intent callIntent = new Intent(Intent.ACTION_CALL,
-                    Uri.fromParts(TEL, mResult.getFormattedPhoneNumber(), null));
-            startActivity(callIntent);
-        }
-        else {
-            Toast.makeText(this, getResources().getString(R.string.error_unknown_error), Toast.LENGTH_SHORT).show();
-        }
+        Intent callIntent = new Intent(Intent.ACTION_CALL,
+                Uri.parse(TEL + mResult.getFormattedPhoneNumber()));
+        startActivity(callIntent);
+        //if(ActivityCompat.checkSelfPermission(Objects.requireNonNull(getActivity()),
+        //        Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED){
+        //    //TODO : fix call
+        //    Intent callIntent = new Intent(Intent.ACTION_CALL,
+        //            Uri.fromParts(TEL, mResult.getFormattedPhoneNumber(), null));
+        //    startActivity(callIntent);
+        //}
+        //else {
+        //    Toast.makeText(this, getResources().getString(R.string.error_unknown_error), Toast.LENGTH_SHORT).show();
+        //}
 
     }
 

@@ -16,6 +16,7 @@ public abstract class BaseFragment extends Fragment {
     public static final String ID = "ID";
 
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,11 +26,6 @@ public abstract class BaseFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        //TODO if internet ok
-      //  if ( OK ) {
-      //      getActivity().finish();
-      //      getActivity().recreate();
-      //  }
     }
 
     @Override

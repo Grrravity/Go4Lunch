@@ -56,7 +56,17 @@ public class AuthenticationActivity extends BaseActivity {
             this.logSucceed();
         } else {
             //this.startSignInActivityForGoogle();
-            this.signInInitiate();
+            this.signInInitiateGoogle();
+        }
+    }
+
+    @OnClick(R.id.auth_fb_login_btn)
+    public void onClickFbButton() {
+        if (UserHelper.isCurrentUserLogged()) {
+            this.logSucceed();
+        } else {
+            //this.startSignInActivityForGoogle();
+            this.signInInitiateFB();
         }
     }
 
@@ -67,12 +77,21 @@ public class AuthenticationActivity extends BaseActivity {
         this.handleResponseAfterSignIn(requestCode, resultCode, data);
     }
 
-    private void signInInitiate(){
+    private void signInInitiateGoogle(){
         startActivityForResult(
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
-                        .setAvailableProviders(Arrays.asList(
-                                new AuthUI.IdpConfig.GoogleBuilder().build(),
+                        .setAvailableProviders(Collections.singletonList(
+                                new AuthUI.IdpConfig.GoogleBuilder().build()))
+                        .build(),
+                RC_SIGN_IN);
+    }
+
+    private void signInInitiateFB(){
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setAvailableProviders(Collections.singletonList(
                                 new AuthUI.IdpConfig.FacebookBuilder().build()))
                         .build(),
                 RC_SIGN_IN);

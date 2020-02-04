@@ -1,5 +1,6 @@
 package com.error.grrravity.go4lunch.utils.api;
 
+import com.error.grrravity.go4lunch.models.autocomplete.Predictions;
 import com.error.grrravity.go4lunch.models.details.Details;
 import com.error.grrravity.go4lunch.models.details.Result;
 import com.error.grrravity.go4lunch.models.places.Google;
@@ -35,6 +36,13 @@ public class APIStreams {
 
     public Observable<Details> streamFetchGoogleDetailsInfo (String placeId, String apiKey) {
         return sAPIService.getGoogleDetailsInfo(placeId, apiKey)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .timeout(500, TimeUnit.SECONDS);
+    }
+
+    public Observable<Predictions> getPlacesAutoComplete (String query, String location, int radius, String apiKey){
+        return sAPIService.getPlacesAutoComplete(query, location, radius, apiKey)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .timeout(500, TimeUnit.SECONDS);

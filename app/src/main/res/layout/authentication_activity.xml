@@ -68,14 +68,40 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/app_name" />
 
-        <com.google.android.gms.common.SignInButton
+        <Button
             android:id="@+id/auth_google_login_btn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="80dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="30dp"
             android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
-            android:padding="5dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:background="@color/white"
+            android:drawableStart="@drawable/googleg_standard_color_18"
+            android:text="Continuer avec Google"
+            android:textColor="@color/quantum_grey700"
+            android:textSize="18sp"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/auth_fb_login_btn" />
+
+        <Button
+            android:id="@+id/auth_fb_login_btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:background="#3C5A99"
+            android:drawableStart="@drawable/fui_ic_facebook_white_22dp"
+            android:text="Continuer avec Facebook"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
