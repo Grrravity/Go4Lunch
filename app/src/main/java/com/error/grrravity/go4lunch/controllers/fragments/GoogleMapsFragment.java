@@ -83,8 +83,6 @@ public class GoogleMapsFragment extends BaseFragment implements
 
     private boolean firstLC = true;
 
-    // TODO : créer un marqueurs + verrif crash eventuel
-    //TODO : fragment + recicler view pour requete google places (API)
 
     public static GoogleMapsFragment newInstance(){
         return new GoogleMapsFragment();
@@ -135,7 +133,6 @@ public class GoogleMapsFragment extends BaseFragment implements
             googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                 @Override
                 public void onInfoWindowClick(Marker marker) {
-                    //TODO lui passer le placeID
                     if (restaurantIDForMarker != null){
                         Intent restaurantDetailActivity = new Intent(getContext(),
                                 RestaurantDetailActivity.class);

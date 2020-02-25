@@ -1,5 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- TODO theme -->
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -46,6 +47,5 @@
         <item name="colorControlNormal">@color/quantum_grey700</item>
         <item name="colorControlActivated">@color/colorAccent</item>
     </style>
-
 
 </resources>

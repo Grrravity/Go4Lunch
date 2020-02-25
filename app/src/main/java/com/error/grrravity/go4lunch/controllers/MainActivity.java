@@ -29,6 +29,7 @@ import com.error.grrravity.go4lunch.controllers.base.BaseActivity;
 import com.error.grrravity.go4lunch.controllers.fragments.CoworkerFragment;
 import com.error.grrravity.go4lunch.controllers.fragments.GoogleMapsFragment;
 import com.error.grrravity.go4lunch.controllers.fragments.RestaurantsFragment;
+import com.error.grrravity.go4lunch.controllers.fragments.SettingsFragment;
 import com.error.grrravity.go4lunch.models.autocomplete.Prediction;
 import com.error.grrravity.go4lunch.models.autocomplete.Predictions;
 import com.error.grrravity.go4lunch.utils.GPS;
@@ -107,6 +108,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
 
         }
+        ////Set alarm if restaurant booked
+        //UserHelper.getBookingRestaurant(UserHelper.getCurrentUser().getUid()).addOnCompleteListener(task -> {
+        //    if (task.isSuccessful()) {
+        //        String restaurantId = task.getResult().getString(GET_RESTAURANT_ID);
+        //        if (restaurantId != null) {
+        //            this.setAlarm(true);
+        //        } else {
+        //            this.setAlarm(false);
+        //        }
+        //    }
+        //});
+
         showFragment(GoogleMapsFragment.newInstance());
     }
 
@@ -206,8 +219,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 break;
             case R.id.main_activity_drawer_settings:
-               // Intent settingsIntent = new Intent(this, ProfileActivity.class);
-               // startActivity(settingsIntent);
+                showFragment(SettingsFragment.newInstance());
+                //Intent settingsIntent = new Intent(this, SettingsFragment.class);
+                //startActivity(settingsIntent);
                 break;
             case R.id.main_activity_drawer_logout:
                 this.LogOut();

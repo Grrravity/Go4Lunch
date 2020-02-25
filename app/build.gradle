@@ -35,6 +35,9 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
 
+    //Worker
+    implementation 'androidx.work:work-runtime:2.3.1'
+
     // EASY PERMISSIONS
     implementation 'pub.devrel:easypermissions:2.0.1'
 

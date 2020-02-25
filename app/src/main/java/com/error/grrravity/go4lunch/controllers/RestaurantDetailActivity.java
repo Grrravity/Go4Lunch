@@ -40,6 +40,7 @@ import io.reactivex.observers.DisposableObserver;
 
 public class RestaurantDetailActivity extends BaseActivity {
 
+    //TODO passer ça en fragment
     private static final String ID = "ID";
     private static final String NAME = "NAME";
     private static final String JOINING = "JOINING";
@@ -198,7 +199,11 @@ public class RestaurantDetailActivity extends BaseActivity {
     public void onClickFAB(View v){
         if(JOINING.equals(mJoinFAB.getTag())){
             this.joinRestaurant();
-        } else {this.leaveRestaurant();}
+            setAlarm(true);
+        } else {
+            this.leaveRestaurant();
+            setAlarm(false);
+        }
     }
 
     public void joinRestaurant(){
@@ -263,7 +268,6 @@ public class RestaurantDetailActivity extends BaseActivity {
         startActivity(callIntent);
         //if(ActivityCompat.checkSelfPermission(Objects.requireNonNull(getActivity()),
         //        Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED){
-        //    //TODO : fix call
         //    Intent callIntent = new Intent(Intent.ACTION_CALL,
         //            Uri.fromParts(TEL, mResult.getFormattedPhoneNumber(), null));
         //    startActivity(callIntent);
