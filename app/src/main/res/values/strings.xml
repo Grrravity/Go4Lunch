@@ -8,28 +8,30 @@
     <!-- GLOBAL -->
     <string name="goforfood_logo_description">Go4Food logo</string>
     <string name="goforfood_logo_full_description">Go4Food full logo</string>
+    <string name="toolbar_title">J\'ai faim !</string>
 
     <!-- MAIN ACTIVITY -->
-    <string name="button_login_text_logged">Show profile</string>
-    <string name="button_login_text_not_logged">Connecting</string>
-    <string name="connection_succeed">Authentication succeed</string>
+    <string name="button_login_text_logged">Voir mon profil</string>
+    <string name="button_login_text_not_logged">Connexion</string>
+    <string name="connection_succeed">Authentification réussie</string>
+    <string name="search_hint">que cherchez vous ?…</string>
 
 
     <!-- PROFILE ACTIVITY-->
-    <string name="text_input_username">User name</string>
-    <string name="text_view_mail_address">Mail address: </string>
-    <string name="button_update_account">Update account</string>
-    <string name="button_sign_out">Sign out</string>
-    <string name="button_delete_account">Delete account</string>
-    <string name="profile_image_description">User profile image</string>
+    <string name="text_input_username">Nom d\'utilisateur</string>
+    <string name="text_view_mail_address">"adresse email : "</string>
+    <string name="button_update_account">Mettre a jour le compte</string>
+    <string name="button_sign_out">Déconnexion</string>
+    <string name="button_delete_account">Supprimer mon compte</string>
+    <string name="profile_image_description">Image de profil</string>
 
     <!-- LOGIN ACTIVITY -->
-    <string name="toolbar_title_login_activity">Your profile</string>
-    <string name="info_no_email_found">No mail address</string>
-    <string name="info_no_username_found">No user name</string>
-    <string name="popup_confirmation_delete_account">Do you really want to delete your account ?</string>
-    <string name="popup_choice_yes">Yes !</string>
-    <string name="popup_choice_no">No !</string>
+    <string name="toolbar_title_login_activity">Votre profil</string>
+    <string name="info_no_email_found">Pas d\'adresse email</string>
+    <string name="info_no_username_found">Pas de nom d\'utilisateur</string>
+    <string name="popup_confirmation_delete_account">Voulez-vous vraiment supprimer votre compte?</string>
+    <string name="popup_choice_yes">Oui !</string>
+    <string name="popup_choice_no">Non !</string>
 
 
     <!-- BOTTOM NAVIGATION VIEW -->
@@ -38,28 +40,29 @@
     <string name="bottom_navigation_menu_coworkers">Co-Workers</string>
 
     <!-- DRAWER -->
-    <string name="menu_lunch">Your lunch</string>
-    <string name="menu_settings">Settings</string>
-    <string name="menu_logout">Logout</string>
-    <string name="open">Open !</string>
-    <string name="close">Closed !</string>
+    <string name="menu_lunch">Votre déjeuner</string>
+    <string name="menu_settings">Paramètres</string>
+    <string name="menu_logout">Déconnexion</string>
+    <string name="open">Ouvert !</string>
+    <string name="close">Fermé !</string>
 
     <!-- MAP -->
-    <string name="list_unit_distance">%1$sm</string>
-    <string name="time_unavailable">Opening hours not provided</string>
-    <string name="restaurant_mates_number">(%1$d)</string>
+    <string name="list_unit_distance" translatable="false">%1$sm</string>
+    <string name="time_unavailable">Heures d\'ouverture non renseignées</string>
+    <string name="restaurant_mates_number" translatable="false">(%1$d)</string>
 
     <!-- ERROR -->
-    <string name="error_location_permission">Please grant location permission</string>
-    <string name="error_authentication_canceled">Authentication canceled…</string>
-    <string name="error_no_internet">No network</string>
-    <string name="error_unknown_error">Unknown error occurred…</string>
-    <string name="error_user_creation">An error as occured while creating your profile.</string>
+    <string name="error_location_permission">Veuillez donner la permission de localisation</string>
+    <string name="error_authentication_canceled">Authentification stoppée</string>
+    <string name="error_no_internet">Pas de connection</string>
+    <string name="error_unknown_error">Une erreure inconnue est arrivée</string>
+    <string name="error_user_creation">Une erreure est arrivée pendant la création de votre profil…</string>
 
     <!-- SUCCESS-->
-
-    <string name="success_connection">Connection succeed</string>
-    <string name="will_eat">%1$s déjeunera ici.</string>
+    <string name="success_connection">Connexion réussie</string>
+    <string name="will_eat">%1$s déjeunera ici: %2$s</string>
+    <string name="not_decided">%1$s n\'a pas encore décidé.</string>
+    <string name="is_eating">%1$s déjeunera ici.</string>
     <string name="joining">Votre participation est bien prise en compte</string>
     <string name="leaving">Votre participation a bien été annulée</string>
     <string name="liked">Restaurant liké !</string>

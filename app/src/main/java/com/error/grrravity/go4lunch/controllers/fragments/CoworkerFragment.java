@@ -55,7 +55,7 @@ public class CoworkerFragment extends BaseFragment {
 
     private void configureRecyclerView() {
         this.mUserList = new ArrayList<>();
-        this.mCoworkerAdapter = new CoworkerAdapter(mUserList);
+        this.mCoworkerAdapter = new CoworkerAdapter(mUserList, 1);
         this.mRecyclerView.setAdapter(this.mCoworkerAdapter);
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

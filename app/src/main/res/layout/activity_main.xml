@@ -11,92 +11,61 @@
     <!-- tools:openDrawer="start" -->
 
     <!-- RootView -->
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/activity_welcome_coordinator_layout"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+
+        <!-- Top menu -->
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="0dp" />
 
-            <!-- Toolbar Importation -->
-            <androidx.appcompat.widget.Toolbar
-
-                android:id="@+id/toolbar"
+        <androidx.appcompat.widget.SearchView
+                android:id="@+id/search_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/mainBackground"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
-                android:minHeight="?attr/actionBarSize"
-
-                android:theme="@style/ToolbarTheme"
-                app:titleTextAppearance="@style/Toolbar.TitleText">
-
-                <AutoCompleteTextView
-                    android:id="@+id/myEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:drawableEnd="@drawable/search_white"
-                    android:hint="Search"
-                    android:imeOptions="actionDone"
-                    android:inputType="text"
-                    android:textColorHint="#FFF"
-                    android:textCursorDrawable="@null"
-
-                    tools:ignore="HardcodedText" />
-            </androidx.appcompat.widget.Toolbar>
-
-            <!-- Body layout -->
-            <RelativeLayout
-                android:id="@+id/fragment_holder"
+            <FrameLayout
+                android:id="@+id/activity_main_content_frame_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/activity_main_botnav"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
+            <ListView
+                android:id="@+id/result_Listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="@android:color/darker_gray"
+                android:clickable="true"
+                android:focusable="true"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/toolbar">
+            </ListView>
 
-                <!-- TODO Put in constraint -->
-                <com.google.android.material.bottomnavigation.BottomNavigationView
-                    android:id="@+id/activity_main_botnav"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_gravity="bottom"
-                    android:background="@android:color/white"
-                    app:itemIconTint="@drawable/bottom_navigation_colors"
-                    app:itemTextColor="@drawable/bottom_navigation_colors"
-                    app:menu="@menu/bottom_navigation_menu" />
+            <!-- bot nav -->
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/activity_main_botnav"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom"
+                android:background="@android:color/white"
+                app:itemIconTint="@drawable/bottom_navigation_colors"
+                app:itemTextColor="@drawable/bottom_navigation_colors"
+                app:menu="@menu/bottom_navigation_menu"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
-                <FrameLayout
-                    android:id="@+id/AM_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-
-                <Button
-                    android:id="@+id/btn_find_restaurant"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:paddingEnd="5dp"
-                    android:text="find restaurant"
-                    android:textColor="@color/quantum_black_100"
-                    android:drawableStart="@drawable/restaurant_menu_black"
-                    android:background="@color/quantum_yellow"
-                    android:textAllCaps="false"
-                    android:fadingEdge="horizontal"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="80dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="30dp"
-                    android:visibility="gone"
-                    />
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 

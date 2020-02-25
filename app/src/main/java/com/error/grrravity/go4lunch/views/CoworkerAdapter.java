@@ -15,9 +15,11 @@ import java.util.List;
 public class CoworkerAdapter extends RecyclerView.Adapter<CoworkerViewHolder> {
 
     private List<User> mUser;
+    private int mOrigin;
 
-    public CoworkerAdapter(List<User> user){
+    public CoworkerAdapter(List<User> user, int origin){
         this.mUser = user;
+        this.mOrigin = origin;
     }
 
     @NonNull
@@ -29,7 +31,7 @@ public class CoworkerAdapter extends RecyclerView.Adapter<CoworkerViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull CoworkerViewHolder holder, int position) {
-        holder.updateData(mUser.get(position));
+        holder.updateData(mUser.get(position), mOrigin);
     }
 
     @Override

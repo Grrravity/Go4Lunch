@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class UserHelper {
 
@@ -117,10 +118,11 @@ public class UserHelper {
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
+                        List<DocumentSnapshot> myListOfDocuments = Objects.requireNonNull(task.getResult()).getDocuments();
                         for (DocumentSnapshot documentSnapshot : myListOfDocuments) {
                             User user = documentSnapshot.toObject(User.class);
-                            if (!user.getUid().equals(getCurrentUser().getUid())) {
+                            assert user != null;
+                            if (!user.getUid().equals(Objects.requireNonNull(getCurrentUser()).getUid())) {
                                 users.add(user);
                             }
                         }
