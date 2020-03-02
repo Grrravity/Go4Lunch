@@ -24,7 +24,7 @@ public class NotifyWorker extends Worker {
     public Result doWork() {
         // Method to trigger an instant notification
         triggerNotification();
-        Log.d("WORKER", "doWork: Triggered");
+        Log.d("NotifyWorker", "doWork: Triggered");
 
         //TODO : delet participation after 3pm
         //if (UserHelper.getCurrentUser()!=null) {
