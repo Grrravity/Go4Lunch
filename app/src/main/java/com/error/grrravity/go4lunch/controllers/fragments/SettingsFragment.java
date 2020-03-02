@@ -1,11 +1,15 @@
 package com.error.grrravity.go4lunch.controllers.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +22,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.error.grrravity.go4lunch.R;
-import com.error.grrravity.go4lunch.controllers.MainActivity;
 import com.error.grrravity.go4lunch.utils.auth.AuthenticationActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,8 +41,11 @@ public class SettingsFragment extends Fragment {
     @BindView(R.id.spinner)
     Spinner spinner;
 
-    private boolean check = false;
     private static final String currentLang = "current_lang";
+    private String language;
+
+    private static final String PREFS = "PREFS" ;
+    private SharedPreferences prefs;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -47,15 +53,19 @@ public class SettingsFragment extends Fragment {
 
     public static SettingsFragment newInstance() {
         // Create new fragment
+
         return new SettingsFragment();
     }
 
+    @SuppressLint("CommitPrefEdits")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         ButterKnife.bind(this, view);
+        prefs = Objects.requireNonNull(getContext()).getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+        language = prefs.getString("language", "");
         configureSpinner();
         return view;
     }
@@ -64,9 +74,25 @@ public class SettingsFragment extends Fragment {
     private void configureSpinner() {
         List<String> list = new ArrayList<>();
 
-        list.add("selectionnez");
-        list.add("Anglais");
-        list.add("Français");
+        Log.d("prefs", "configureSpinner: " + language);
+
+        assert language != null;
+        switch (language){
+                case "":
+                    list.add(getString(R.string.selection));
+                    list.add(getString(R.string.english));
+                    list.add(getString(R.string.french));
+                    break;
+                case "en":
+                    list.add(getString(R.string.english));
+                    list.add(getString(R.string.french));
+                    break;
+                case "fr":
+                    list.add(getString(R.string.french));
+                    list.add(getString(R.string.english));
+                    break;
+
+        }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<
                 >(Objects.requireNonNull(getActivity()), android.R.layout.simple_spinner_item, list);
@@ -76,15 +102,22 @@ public class SettingsFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+
                 switch (position) {
                     case 0:
                         break;
                     case 1:
-                        //TODO set dans les sharedprefs
-                        setLocale("en");
+                        if(language.equals("en")){
+                            setLocale("fr");
+                        } else if (language.equals("fr")){
+                            setLocale("en");
+                        }
                         break;
                     case 2:
-                        setLocale("fr");
+                        if(language.equals("")) {
+                            setLocale("fr");
+                        }
+
                         break;
                 }
             }
@@ -96,6 +129,10 @@ public class SettingsFragment extends Fragment {
 
     // Apply choice
     private void setLocale(String localeName) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("language", localeName);
+        editor.apply();
+
         Locale myLocale = new Locale(localeName);
         Resources res = getResources();
         DisplayMetrics dm = res.getDisplayMetrics();
@@ -109,9 +146,9 @@ public class SettingsFragment extends Fragment {
     private void showDialogToRestart(String localeName) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
         // Setting Dialog Title
-        alertDialog.setTitle("Redémarrage recquis");
+        alertDialog.setTitle(getString(R.string.reboot));
         // Setting Dialog Message
-        alertDialog.setMessage("Redémarrer maintenant?");
+        alertDialog.setMessage(getString(R.string.restart));
         // On pressing Settings button
         alertDialog.setPositiveButton(getResources().getString(R.string.popup_choice_yes), (dialog, which) -> signOutUserFromFirebase(localeName));
         // on pressing cancel button

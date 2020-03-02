@@ -67,5 +67,12 @@
     <string name="leaving">Votre participation a bien été annulée</string>
     <string name="liked">Restaurant liké !</string>
     <string name="unliked">Like du restaurant retiré :(</string>
+    <string name="selection">selectionnez</string>
+    <string name="english">Anglais</string>
+    <string name="french">Français</string>
+    <string name="reboot">Redémarrage recquis</string>
+    <string name="restart">Redémarrer maintenant?</string>
+    <string name="go4food_logo">Logo de Go4Food</string>
+    <string name="pitch">Trouvez un restaurant sympa et rejoignez vos collègues au déjeuner !</string>
 
 </resources>

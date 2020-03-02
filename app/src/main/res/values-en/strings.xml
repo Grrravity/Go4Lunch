@@ -64,5 +64,12 @@
     <string name="not_decided">%1$s hasn\'t decided yet.</string>
     <string name="search_hint">looking for ?...</string>
     <string name="toolbar_title">I\'m hungry !</string>
+    <string name="selection">select</string>
+    <string name="english">English</string>
+    <string name="french">French</string>
+    <string name="reboot">Reboot required</string>
+    <string name="restart">Reboot now ?</string>
+    <string name="go4food_logo">Go4Food Logo</string>
+    <string name="pitch">Find a nice restaurant and join your co-worker for lunch!</string>
 
 </resources>
