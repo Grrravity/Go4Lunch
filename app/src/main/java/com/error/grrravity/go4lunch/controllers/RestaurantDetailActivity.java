@@ -162,11 +162,12 @@ public class RestaurantDetailActivity extends BaseActivity {
                 String restaurantId = task.getResult().getString(GET_RESTAURANT_ID);
                 if(restaurantId != null && restaurantId.equals(mResult.getPlaceId())){
                     mJoinFAB.setImageDrawable(getResources().getDrawable(R.drawable.check_circle_black));
+                    mJoinFAB.setRippleColor(getResources().getColor(R.color.validColor));
                     mJoinFAB.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                     mJoinFAB.setTag(UNJOIN);
                 } else {
                     mJoinFAB.setImageDrawable(getResources().getDrawable(R.drawable.goforfood_front_logo));
-                    mJoinFAB.setBackgroundColor(getResources().getColor(R.color.white));
+                    mJoinFAB.setBackgroundColor(getResources().getColor(R.color.themeWhite));
                     mJoinFAB.setTag(JOINING);
                 }
             }
@@ -213,6 +214,7 @@ public class RestaurantDetailActivity extends BaseActivity {
                     mResult.getPlaceId(),
                     mResult.getVicinity());
             mJoinFAB.setImageDrawable(getResources().getDrawable(R.drawable.check_circle_black));
+            mJoinFAB.setRippleColor(getResources().getColor(R.color.validColor));
             mJoinFAB.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             Toast.makeText(this, getResources().getString(R.string.joining), Toast.LENGTH_SHORT).show();
             mJoinFAB.setTag(UNJOIN);

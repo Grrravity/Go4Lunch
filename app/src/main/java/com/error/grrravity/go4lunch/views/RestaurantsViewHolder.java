@@ -68,14 +68,14 @@ public class RestaurantsViewHolder extends RecyclerView.ViewHolder {
         if (result.getOpeningHours() != null) {
             if (result.getOpeningHours().getOpenNow()) {
                 restaurantOpenClose.setText(R.string.open);
-                restaurantOpenClose.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.quantum_lightgreen));
+                restaurantOpenClose.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.validColor));
             } else {
                 restaurantOpenClose.setText(R.string.close);
-                restaurantOpenClose.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.buttonMainColor));
+                restaurantOpenClose.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.colorAccent));
             }
         } else {
             restaurantOpenClose.setText(itemView.getContext().getString(R.string.time_unavailable));
-            restaurantOpenClose.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.quantum_black_100));
+            restaurantOpenClose.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.primaryTextColor));
         }
 
         // -------------- PICTURE ------------------

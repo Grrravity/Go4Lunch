@@ -9,6 +9,10 @@
     <color name="secondaryLightColor">#7feaff</color>
     <color name="secondaryDarkColor">#0088cb</color>
 
+    <color name="colorAccent">#F44336</color>
+    <color name="validColor">#009937</color>
+    <color name="starsColor">#ffd149</color>
+
     <color name="primaryTextColor">#000000</color>
     <color name="secondaryTextColor">#ffff</color>
 

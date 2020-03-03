@@ -38,13 +38,13 @@ public class CoworkerViewHolder extends RecyclerView.ViewHolder {
                 mCoworkerName.setText(itemView.getContext().getString(R.string.is_eating, user.getUsername()));
             }
             mCoworkerName.setTypeface(mCoworkerName.getTypeface(), Typeface.NORMAL);
-            mCoworkerName.setTextColor(itemView.getContext().getColor(R.color.quantum_black_100));
+            mCoworkerName.setTextColor(itemView.getContext().getColor(R.color.primaryTextColor));
             mCoworkerName.setAlpha((float) 1);
 
         } else {
             mCoworkerName.setText(itemView.getContext().getString(R.string.not_decided, user.getUsername()));
             mCoworkerName.setTypeface(mCoworkerName.getTypeface(), Typeface.ITALIC);
-            mCoworkerName.setTextColor(itemView.getContext().getColor(R.color.quantum_grey700));
+            mCoworkerName.setTextColor(itemView.getContext().getColor(R.color.themeGrey));
             mCoworkerName.setAlpha((float) 0.5);
         }
 
