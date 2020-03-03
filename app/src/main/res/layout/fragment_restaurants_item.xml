@@ -16,7 +16,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         tools:text="NAME_RESTAURANT"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/primaryDarkColor"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="DISTANCE"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/primaryDarkColor"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toStartOf="@id/item_imageview_main_pic"

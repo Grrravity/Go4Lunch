@@ -1,6 +1,7 @@
 *.iml
 .gradle
 /local.properties
+/apikey.properties
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
@@ -9,6 +10,7 @@
 /.idea/assetWizardSettings.xml
 /gradle.properties
 /app/google-services.json
+/app/google-services-old.json
 .DS_Store
 /build
 /captures

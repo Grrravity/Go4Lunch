@@ -12,9 +12,10 @@
     app:navigationIcon="@drawable/menu_white"
     app:titleTextAppearance="@style/Toolbar.TitleText">
         <TextView
-        android:id="@+id/toolbar_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-        android:layout_gravity="center" />
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/secondaryDarkColor"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_gravity="center" />
 </androidx.appcompat.widget.Toolbar>
