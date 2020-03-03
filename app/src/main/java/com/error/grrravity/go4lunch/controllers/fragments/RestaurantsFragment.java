@@ -1,6 +1,8 @@
 package com.error.grrravity.go4lunch.controllers.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,13 +10,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.error.grrravity.go4lunch.BuildConfig;
 import com.error.grrravity.go4lunch.R;
-import com.error.grrravity.go4lunch.controllers.RestaurantDetailActivity;
 import com.error.grrravity.go4lunch.controllers.base.BaseFragment;
 import com.error.grrravity.go4lunch.models.autocomplete.Prediction;
 import com.error.grrravity.go4lunch.models.details.ResultDetail;
@@ -28,6 +30,7 @@ import com.error.grrravity.go4lunch.views.RestaurantsAdapter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,10 +41,12 @@ public class RestaurantsFragment extends BaseFragment {
     //TODO collection.sort pour sort les restaurants suivant la distance
 
     private static final String apiKey = BuildConfig.API_KEY;
+    private static final String PREFS = "PREFS" ;
 
     @BindView(R.id.restaurants_rv)
     RecyclerView mRecyclerView;
     private String mPosition;
+    private SharedPreferences prefs;
 
     private List<NearbyResult> mNearbyResultList, mStoredResultList;
     private RestaurantsAdapter mRestaurantsAdapter;
@@ -78,6 +83,8 @@ public class RestaurantsFragment extends BaseFragment {
 
         mStoredResultList = new ArrayList<>();
 
+        prefs = Objects.requireNonNull(getContext()).getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+
         this.configureRecyclerView();
         this.configureClickOnRecyclerViewItem();
         this.executeHttpRequestWithRetrofit();
@@ -92,10 +99,17 @@ public class RestaurantsFragment extends BaseFragment {
         ItemClickHelper.addTo(mRecyclerView)
                 .setOnItemClickListener((mRecyclerView, position, v) -> {
                     String placeID = mRestaurantsAdapter.getResultList().get(position).getPlaceId();
-                    Intent restaurantDetailActivity = new Intent(getContext(),
-                            RestaurantDetailActivity.class);
-                    restaurantDetailActivity.putExtra(ID, placeID);
-                    startActivity(restaurantDetailActivity);
+                    RestaurantDetailFragment detailFragment = new RestaurantDetailFragment();
+                    Bundle args = new Bundle();
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("id", placeID);
+                    editor.apply();
+                    detailFragment.setArguments(args);
+                    assert getFragmentManager() != null;
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.activity_welcome_drawer_layout, detailFragment);
+                    fragmentTransaction.commitAllowingStateLoss();
+                    fragmentTransaction.addToBackStack(null);
                 });
     }
 

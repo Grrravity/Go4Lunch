@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 
@@ -22,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.error.grrravity.go4lunch.R;
+import com.error.grrravity.go4lunch.controllers.MainActivity;
 import com.error.grrravity.go4lunch.utils.auth.AuthenticationActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,6 +35,7 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class SettingsFragment extends Fragment {
 
@@ -43,6 +46,7 @@ public class SettingsFragment extends Fragment {
 
     private static final String currentLang = "current_lang";
     private String language;
+    private boolean notif;
 
     private static final String PREFS = "PREFS" ;
     private SharedPreferences prefs;
@@ -66,8 +70,28 @@ public class SettingsFragment extends Fragment {
         ButterKnife.bind(this, view);
         prefs = Objects.requireNonNull(getContext()).getSharedPreferences(PREFS, Context.MODE_PRIVATE);
         language = prefs.getString("language", "");
+        notif = prefs.getBoolean("notif", true);
         configureSpinner();
+        configureSwitch();
         return view;
+    }
+
+    private void configureSwitch(){
+        if (notif ){
+            aSwitch.setChecked(true);
+        } else {
+            aSwitch.setChecked(false);
+        }
+
+        aSwitch.setOnCheckedChangeListener(new  CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean("notif", b);
+                    editor.apply();
+            }
+        });
     }
 
     // Spinner to language choice
@@ -173,5 +197,4 @@ public class SettingsFragment extends Fragment {
             startActivity(refresh);
         };
     }
-
 }

@@ -32,7 +32,8 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
         <activity android:name="com.error.grrravity.go4lunch.utils.auth.AuthenticationActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -42,7 +43,8 @@
 
         <activity android:name="com.error.grrravity.go4lunch.controllers.MainActivity"
             android:screenOrientation="portrait"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
@@ -50,11 +52,6 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-
-        <activity android:name="com.error.grrravity.go4lunch.utils.auth.ProfileActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".controllers.RestaurantDetailActivity" />
 
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_application_id"

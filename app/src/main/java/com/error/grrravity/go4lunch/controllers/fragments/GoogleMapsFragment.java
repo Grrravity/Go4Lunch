@@ -1,7 +1,9 @@
 package com.error.grrravity.go4lunch.controllers.fragments;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -18,11 +20,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.error.grrravity.go4lunch.BuildConfig;
 import com.error.grrravity.go4lunch.R;
 import com.error.grrravity.go4lunch.controllers.MainActivity;
-import com.error.grrravity.go4lunch.controllers.RestaurantDetailActivity;
 import com.error.grrravity.go4lunch.controllers.base.BaseFragment;
 import com.error.grrravity.go4lunch.models.autocomplete.Prediction;
 import com.error.grrravity.go4lunch.models.details.ResultDetail;
@@ -56,6 +58,7 @@ public class GoogleMapsFragment extends BaseFragment implements
         Filterable, OnMapReadyCallback {
 
     private static final String TAG = "MapsFragment";
+    private static final String PREFS = "PREFS";
 
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -67,6 +70,8 @@ public class GoogleMapsFragment extends BaseFragment implements
 
     private SupportMapFragment mMapFragment;
     private GoogleMap mMap;
+
+    private SharedPreferences prefs;
 
     private List<NearbyResult> mNearbyResultList, mStoredResultList;
 
@@ -115,6 +120,9 @@ public class GoogleMapsFragment extends BaseFragment implements
         mStoredResultList = new ArrayList<>();
         mMarkerOptions = new MarkerOptions();
 
+        prefs = Objects.requireNonNull(getContext()).getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+
+
         return view;
     }
 
@@ -134,10 +142,18 @@ public class GoogleMapsFragment extends BaseFragment implements
                 @Override
                 public void onInfoWindowClick(Marker marker) {
                     if (restaurantIDForMarker != null){
-                        Intent restaurantDetailActivity = new Intent(getContext(),
-                                RestaurantDetailActivity.class);
-                    restaurantDetailActivity.putExtra(ID, restaurantIDForMarker);
-                    startActivity(restaurantDetailActivity);
+                        RestaurantDetailFragment detailFragment = new RestaurantDetailFragment();
+                        Bundle args = new Bundle();
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putString("id", restaurantIDForMarker);
+                        editor.apply();
+                        detailFragment.setArguments(args);
+                        assert getFragmentManager() != null;
+                        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.activity_welcome_drawer_layout, detailFragment);
+                        fragmentTransaction.commitAllowingStateLoss();
+                        fragmentTransaction.addToBackStack(null);
+
                     }
                 }
             });

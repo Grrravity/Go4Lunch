@@ -2,15 +2,16 @@ package com.error.grrravity.go4lunch.controllers;
 
 import android.app.Activity;
 import android.app.SearchManager;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,11 +24,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.error.grrravity.go4lunch.BuildConfig;
 import com.error.grrravity.go4lunch.R;
 import com.error.grrravity.go4lunch.controllers.base.BaseActivity;
 import com.error.grrravity.go4lunch.controllers.fragments.CoworkerFragment;
 import com.error.grrravity.go4lunch.controllers.fragments.GoogleMapsFragment;
+import com.error.grrravity.go4lunch.controllers.fragments.RestaurantDetailFragment;
 import com.error.grrravity.go4lunch.controllers.fragments.RestaurantsFragment;
 import com.error.grrravity.go4lunch.controllers.fragments.SettingsFragment;
 import com.error.grrravity.go4lunch.models.autocomplete.Prediction;
@@ -37,6 +41,7 @@ import com.error.grrravity.go4lunch.utils.alarm_and_receiver.NetworkReceiver;
 import com.error.grrravity.go4lunch.utils.api.APIStreams;
 import com.error.grrravity.go4lunch.utils.auth.AuthenticationActivity;
 import com.error.grrravity.go4lunch.utils.helper.NetworkChecker;
+import com.error.grrravity.go4lunch.utils.helper.User;
 import com.error.grrravity.go4lunch.utils.helper.UserHelper;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -76,7 +81,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private static final String GET_RESTAURANT_ID = "restaurantId";
     public static final String RESTAURANT = "restaurant";
     private static final String apiKey = BuildConfig.API_KEY;
+    private static final String PREFS = "PREFS" ;
 
+    SharedPreferences prefs;
+    private String username, usermail, uid, urlPicture;
     private LatLngBounds latLngBounds;
     private Menu menu;
     private String location;
@@ -94,6 +102,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getCurrentUser();
         this.configureToolbar();
         this.configureNavBar();
         this.configureBottomNavBar();
@@ -108,18 +117,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
 
         }
-        ////Set alarm if restaurant booked
-        //UserHelper.getBookingRestaurant(UserHelper.getCurrentUser().getUid()).addOnCompleteListener(task -> {
-        //    if (task.isSuccessful()) {
-        //        String restaurantId = task.getResult().getString(GET_RESTAURANT_ID);
-        //        if (restaurantId != null) {
-        //            this.setAlarm(true);
-        //        } else {
-        //            this.setAlarm(false);
-        //        }
-        //    }
-        //});
-
+        prefs = Objects.requireNonNull(this.getSharedPreferences(PREFS, MODE_PRIVATE));
         showFragment(GoogleMapsFragment.newInstance());
     }
 
@@ -137,7 +135,40 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void configureNavBar() {
         mNavigationView.setNavigationItemSelectedListener(this);
+        View hView = mNavigationView.getHeaderView(0);
+        TextView nav_user_name = hView.findViewById(R.id.navigation_header_user_name);
+        TextView nav_user_mail = hView.findViewById(R.id.navigation_header_user_email);
+        ImageView nav_user_img = hView.findViewById(R.id.navigation_header_user_image);
+
+        if (uid != null) {
+            nav_user_name.setText(username);
+            nav_user_mail.setText(usermail);
+            if (urlPicture != null) {
+                Glide.with(this)
+                        .load(urlPicture).apply(RequestOptions.circleCropTransform()).into(nav_user_img);
+            }
+        }
     }
+
+    private void getCurrentUser() {
+        if (UserHelper.getCurrentUser() != null) {
+            urlPicture = (UserHelper.getCurrentUser().getPhotoUrl() != null) ? UserHelper.getCurrentUser().getPhotoUrl().toString() : null;
+            username = UserHelper.getCurrentUser().getDisplayName();
+            usermail = UserHelper.getCurrentUser().getEmail();
+            uid = UserHelper.getCurrentUser().getUid();
+        }
+        else {
+            Intent i = getBaseContext().
+                    getPackageManager().
+                    getLaunchIntentForPackage(getBaseContext().getPackageName());
+            assert i != null;
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//clear the stack
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            finish();//don`t forget to finish before starting again
+            startActivity(i);
+        }
+    }
+
 
     private void configureBottomNavBar() {
         mBottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
@@ -153,9 +184,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     showFragment(RestaurantsFragment.newInstance());
                     break;
                 case R.id.action_coworkers:
-                    if(item != null) {
                         item.setVisible(false);
-                    }
                     showFragment(CoworkerFragment.newInstance());
                     break;
                 default:
@@ -178,10 +207,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    private void showFragment(Fragment newInstante) {
+    private void showFragment(Fragment newInstance) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.activity_main_content_frame_layout, newInstante);
+        fragmentTransaction.replace(R.id.activity_main_content_frame_layout, newInstance);
         fragmentTransaction.commitAllowingStateLoss();
+        fragmentTransaction.disallowAddToBackStack();
+    }
+
+    private void showFullSizeFragment(Fragment newInstance) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.activity_welcome_drawer_layout, newInstance);
+        fragmentTransaction.commitAllowingStateLoss();
+        fragmentTransaction.addToBackStack(null);
     }
 
 
@@ -206,11 +243,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.main_activity_drawer_lunch:
                 UserHelper.getBookingRestaurant(UserHelper.getCurrentUser().getUid()).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        String restaurantId = task.getResult().getString(GET_RESTAURANT_ID);
+                        String restaurantId = Objects.requireNonNull(task.getResult()).getString(GET_RESTAURANT_ID);
                         if (restaurantId != null) {
-                            Intent intent = new Intent(this, RestaurantDetailActivity.class);
-                            intent.putExtra(ID, restaurantId);
-                            startActivity(intent);
+                            RestaurantDetailFragment detailFragment = new RestaurantDetailFragment();
+                            Bundle args = new Bundle();
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putString("id", restaurantId);
+                            editor.apply();
+                            detailFragment.setArguments(args);
+                            showFullSizeFragment(RestaurantDetailFragment.newInstance());
                         } else {
                             Toast.makeText(this, "Pas de restaurant réservé !", Toast.LENGTH_SHORT).show();
                         }
@@ -219,7 +260,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 break;
             case R.id.main_activity_drawer_settings:
-                showFragment(SettingsFragment.newInstance());
+                showFullSizeFragment(SettingsFragment.newInstance());
                 //Intent settingsIntent = new Intent(this, SettingsFragment.class);
                 //startActivity(settingsIntent);
                 break;
@@ -233,6 +274,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         return true;
     }
+
     //Request for signin out
 
     private void LogOut() {
