@@ -11,11 +11,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
 
-        def apikeyPropertiesFile = rootProject.file("apikey.properties")
-        def apikeyProperties = new Properties()
-        apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
-        buildConfigField("String", "API_KEY", apikeyProperties['API_KEY'])
-        buildConfigField("String", "API_KEY2", apikeyProperties['API_KEY2'])
+        buildConfigField("String", "API_KEY", API_KEY)
+        buildConfigField("String", "API_KEY2", API_KEY2)
 
     }
     buildTypes {

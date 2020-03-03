@@ -1,7 +1,6 @@
 *.iml
 .gradle
 /local.properties
-/apikey.properties
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
@@ -16,4 +15,4 @@
 /captures
 .externalNativeBuild
 /app/build/generated/source/buildConfig/debug/com/error/grrravity/go4lunch
-apikey.properties
+gradle.properties
