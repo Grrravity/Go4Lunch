@@ -8,7 +8,6 @@
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
 /gradle.properties
-/app/google-services.json
 /app/google-services-old.json
 .DS_Store
 /build
