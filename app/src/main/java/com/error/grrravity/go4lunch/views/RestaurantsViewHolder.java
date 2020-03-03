@@ -82,7 +82,9 @@ public class RestaurantsViewHolder extends RecyclerView.ViewHolder {
         if (!(result.getPhotos() == null)) {
             if (!(result.getPhotos().isEmpty())) {
                 Glide.with(itemView)
-                        .load("https://maps.googleapis.com/maps/api/place/photo" + "?maxwidth=" + 75 + "&maxheight=" + 75 + "&photoreference=" + result.getPhotos().get(0).getPhotoReference() + "&key="+ APIKEY2 )
+                        .load("https://maps.googleapis.com/maps/api/place/photo"
+                                + "?maxwidth=" + 75 + "&maxheight=" + 75 + "&photoreference="
+                                + result.getPhotos().get(0).getPhotoReference() + "&key="+ APIKEY2 )
                         .into(restaurantPicture);
             }
         } else {

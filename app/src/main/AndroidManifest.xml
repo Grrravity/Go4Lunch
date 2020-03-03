@@ -51,9 +51,6 @@
                 android:resource="@xml/searchable" />
         </activity>
 
-        <activity android:name="com.error.grrravity.go4lunch.utils.auth.ProfileActivity"
-            android:screenOrientation="portrait"
-            />
         <activity android:name=".controllers.RestaurantDetailActivity" />
 
         <meta-data android:name="com.facebook.sdk.ApplicationId"

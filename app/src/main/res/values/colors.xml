@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+
+    <color name="primaryColor">#ffa000</color>
+    <color name="primaryLightColor">#ffd149</color>
+    <color name="primaryDarkColor">#c67100</color>
+
+    <color name="secondaryColor">#3cb8ff</color>
+    <color name="secondaryLightColor">#7feaff</color>
+    <color name="secondaryDarkColor">#0088cb</color>
+
+    <color name="primaryTextColor">#000000</color>
+    <color name="secondaryTextColor">#ffff</color>
 
     <!-- Base Color-->
-    <color name="white">#ffff</color>
+    <color name="themeWhite">#ffff</color>
+    <color name="themeGrey">#696969</color>
 
     <!-- Background color -->
     <color name="mainBackground">#DFA80D</color>
     <color name="mainBackgroundSmooth">#D8C07D</color>
     <color name="backgroundSmoothGrey">#E6E5E2</color>
 
-    <!-- Text color -->
-    <color name="mainText">#354499</color>
-    <color name="mainTextHighlight">#9C27B0</color>
-    <color name="textSmoothColor">#393F5E</color>
-
     <!-- Button color -->
-    <color name="buttonMainColor">#4CAF50</color>
-    <color name="buttonSecondColor">#3F51B5</color>
+    <color name="buttonMainColor">#3cb8ff</color>
+    <color name="buttonSecondColor">#c67100</color>
     <color name="buttonAccentColor">#F44336</color>
 
     <!-- Bottom bar color -->
-    <color name="bottomBarSelected">#E6E5E2</color>
-    <color name="bottomBarNotSelected">#00574B</color>
+    <color name="bottomBarSelected">#ffd149</color>
+    <color name="bottomBarNotSelected">#696969</color>
 
 </resources>

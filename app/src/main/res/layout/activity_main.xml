@@ -79,7 +79,7 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/main_activity_nav_header"
         app:itemIconTint="@color/buttonSecondColor"
-        app:itemTextColor="@color/mainText"
+        app:itemTextColor="@color/primaryTextColor"
         app:menu="@menu/main_activity_menu_drawer" />
 
 

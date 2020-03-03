@@ -4,23 +4,23 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorAccent">@color/secondaryColor</item>
     </style>
 
     <!-- STYLE SIGN-IN ACTIVITY -->
     <style name="LoginTheme" parent="AppTheme">
-        <item name="colorPrimary">@color/mainBackground</item>
-        <item name="colorPrimaryDark">@color/mainBackgroundSmooth</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorButtonNormal">@color/buttonMainColor</item>
-        <item name="colorControlNormal">@android:color/darker_gray</item>
-        <item name="colorControlActivated">@android:color/darker_gray</item>
-        <item name="colorControlHighlight">@android:color/darker_gray</item>
-        <item name="android:textColor">@color/mainText</item>
-        <item name="android:textColorPrimary">@color/mainText</item>
-        <item name="android:textColorSecondary">@color/mainTextHighlight</item>
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorAccent">@color/secondaryColor</item>
+        <item name="colorButtonNormal">@color/secondaryDarkColor</item>
+        <item name="colorControlNormal">@color/backgroundSmoothGrey</item>
+        <item name="colorControlActivated">@color/backgroundSmoothGrey</item>
+        <item name="colorControlHighlight">@color/backgroundSmoothGrey</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:textColorPrimary">@color/primaryTextColor</item>
+        <item name="android:textColorSecondary">@color/secondaryTextColor</item>
         <item name="android:windowBackground">@color/backgroundSmoothGrey</item>
     </style>
 
@@ -28,7 +28,7 @@
     <style name="ToolbarTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 
         <!-- Color of the title text in the Toolbar -->
-        <item name="android:textColorPrimary">@color/mainText</item>
+        <item name="android:textColorPrimary">@color/primaryTextColor</item>
     </style>
 
     <!-- TOOLBAR TITLE THEME -->
@@ -39,13 +39,13 @@
 
     <style name="italic" tools:keep="@style/italic">
         <item name="android:fontStyle" tools:targetApi="o">italic</item>
-        <item name="android:color">#696969</item>
+        <item name="android:color">@color/themeGrey</item>
     </style>
 
     <!-- Rating style -->
     <style name="RatingBar" parent="Theme.AppCompat">
-        <item name="colorControlNormal">@color/quantum_grey700</item>
-        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/themeGrey</item>
+        <item name="colorControlActivated">@color/secondaryColor</item>
     </style>
 
 </resources>
