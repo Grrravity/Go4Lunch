@@ -15,6 +15,8 @@ import android.provider.Settings;
 
 import androidx.core.content.ContextCompat;
 
+import com.error.grrravity.go4lunch.R;
+
 public class GPS extends Service implements LocationListener {
 
     private final Context mContext;
@@ -33,9 +35,8 @@ public class GPS extends Service implements LocationListener {
     private static final long MIN_DISTANCE_UPDATES = 10;
     private static final long MIN_TIME_UPDATE = 1000 * 60;
 
-    public GPS(Context context){
-        this.mContext = context;
-        getLocation();
+    public GPS(Context context) {
+        mContext = context;
     }
 
     public Location getLocation(){
@@ -132,13 +133,13 @@ public class GPS extends Service implements LocationListener {
     public void showParamAlert(){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
 
-        alertDialog.setTitle("Activez votre GPS");
-        alertDialog.setMessage("Votre GPS est desactivez, voulez-vous l'activer dans vos paramètres?");
-        alertDialog.setPositiveButton("Paramètres", (dialog, which) -> {
+        alertDialog.setTitle(R.string.enableGPS);
+        alertDialog.setMessage(R.string.enableGPSMessage);
+        alertDialog.setPositiveButton(R.string.menu_settings, (dialog, which) -> {
             Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             mContext.startActivity(intent);
         });
-        alertDialog.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+        alertDialog.setNegativeButton(R.string.cancel, (dialog, which) -> dialog.cancel());
         alertDialog.show();
     }
 
