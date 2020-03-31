@@ -19,7 +19,7 @@ import com.error.grrravity.go4lunch.R;
 
 public class GPS extends Service implements LocationListener {
 
-    private final Context mContext;
+    private Context mContext;
 
     private boolean isGPSEnable = false;
     private boolean isNetworkEnable = false;
@@ -37,6 +37,9 @@ public class GPS extends Service implements LocationListener {
 
     public GPS(Context context) {
         mContext = context;
+    }
+
+    public GPS() {
     }
 
     public Location getLocation(){
