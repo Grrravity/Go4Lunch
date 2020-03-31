@@ -18,7 +18,7 @@ public class TimeHelperTest {
         ArrayList<Long> testDelays = TimeHelper.getDelays();
         assertEquals(testDelays.get(1) - testDelays.get(0),
                 TimeUnit.HOURS.toMillis(3));
-        assertTrue(testDelays.get(0) < targetTime);
+        assertTrue(testDelays.get(0) > targetTime);
     }
 }
 
