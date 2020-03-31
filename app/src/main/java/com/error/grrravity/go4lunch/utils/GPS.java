@@ -15,18 +15,19 @@ import android.provider.Settings;
 
 import androidx.core.content.ContextCompat;
 
-import com.error.grrravity.go4lunch.R;
-
 public class GPS extends Service implements LocationListener {
 
     private final Context mContext;
 
+    private boolean isGPSEnable = false;
+    private boolean isNetworkEnable = false;
     private boolean canLocalize = false;
 
     private double mLatitude;
     private double mLongitude;
 
     private Location mLocation;
+    protected LocationManager mLocationManager;
 
     // MIN TIME AND DISTANCE BETWEEN UPDATES
     private static final long MIN_DISTANCE_UPDATES = 10;
@@ -37,15 +38,15 @@ public class GPS extends Service implements LocationListener {
         getLocation();
     }
 
-    private void getLocation(){
+    public Location getLocation(){
         try {
-            LocationManager locationManager = (LocationManager) mContext
+            mLocationManager = (LocationManager) mContext
                     .getSystemService(LOCATION_SERVICE);
 
-            boolean isGPSEnable = locationManager
+            isGPSEnable = mLocationManager
                     .isProviderEnabled(LocationManager.GPS_PROVIDER);
 
-            boolean isNetworkEnable = locationManager
+            isNetworkEnable = mLocationManager
                     .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
             if (!isGPSEnable && !isNetworkEnable){
@@ -59,17 +60,19 @@ public class GPS extends Service implements LocationListener {
                             == PackageManager.PERMISSION_GRANTED){
 
                         //get last known location
-                        mLocation = locationManager
-                                .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                        if (mLocationManager != null){
+                            mLocation = mLocationManager
+                                    .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                        }
                         // take saved location
                         if (mLocation != null){
                             mLatitude = mLocation.getLatitude();
                             mLongitude = mLocation.getLongitude();
                         }
-                        // request a new location from existing location manager
+                        // request a new location from existing locationmanager
                         else {
-                            locationManager.requestLocationUpdates(
-                                    LocationManager.NETWORK_PROVIDER,
+                            mLocationManager.requestLocationUpdates(
+                                    mLocationManager.NETWORK_PROVIDER,
                                     MIN_TIME_UPDATE,
                                     MIN_DISTANCE_UPDATES,
                                     this);
@@ -81,7 +84,9 @@ public class GPS extends Service implements LocationListener {
             //Get location from GPS
             if (isGPSEnable){
                 //get last known location
-                mLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                if (mLocationManager != null){
+                    mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                }
                 // take saved location
                 if(mLocation != null) {
                     mLatitude = mLocation.getLatitude();
@@ -89,16 +94,19 @@ public class GPS extends Service implements LocationListener {
                 }
                 //request new location
                 else{
-                    locationManager.requestLocationUpdates(
-                            LocationManager.GPS_PROVIDER,
+                    mLocationManager.requestLocationUpdates(
+                            mLocationManager.GPS_PROVIDER,
                             MIN_TIME_UPDATE,
                             MIN_DISTANCE_UPDATES,
                             this);
                 }
             }
+        } catch (NullPointerException e){
+            e.printStackTrace();
         } catch (Exception e){
             e.printStackTrace();
         }
+        return mLocation;
     }
 
     // GETTERS
@@ -121,16 +129,16 @@ public class GPS extends Service implements LocationListener {
         return this.canLocalize;
     }
 
-    private void showParamAlert(){
+    public void showParamAlert(){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
 
-        alertDialog.setTitle(R.string.enableGPS);
-        alertDialog.setMessage(R.string.enableGPSMessage);
-        alertDialog.setPositiveButton(R.string.menu_settings, (dialog, which) -> {
+        alertDialog.setTitle("Activez votre GPS");
+        alertDialog.setMessage("Votre GPS est desactivez, voulez-vous l'activer dans vos paramètres?");
+        alertDialog.setPositiveButton("Paramètres", (dialog, which) -> {
             Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             mContext.startActivity(intent);
         });
-        alertDialog.setNegativeButton(R.string.cancel, (dialog, which) -> dialog.cancel());
+        alertDialog.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
         alertDialog.show();
     }
 
