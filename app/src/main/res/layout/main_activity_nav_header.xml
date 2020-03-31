@@ -72,8 +72,7 @@
                         android:maxLines="1"
                         android:ellipsize="end"
                         android:textColor="@android:color/white"
-                        android:hint="Grrravity"
-                        tools:ignore="HardcodedText" />
+                        android:hint="@string/info_no_username_found"/>
 
                     <!-- User Email -->
                     <TextView
@@ -85,8 +84,7 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:textColor="@android:color/white"
-                        android:hint="julienne.prof@gmail.com"
-                        tools:ignore="HardcodedText" />
+                        android:hint="@string/info_no_email_found"/>
 
                 </LinearLayout>
 

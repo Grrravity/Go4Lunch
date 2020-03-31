@@ -3,16 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ma_coordinator_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.error.grrravity.go4lunch.controllers.MainActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/backgroung_login"
+        android:background="@drawable/background_login"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -54,7 +52,6 @@
             app:layout_constraintTop_toBottomOf="@+id/logo"/>
 
         <TextView
-            android:id="@+id/app_subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -80,7 +77,7 @@
             android:paddingEnd="20dp"
             android:background="@color/themeWhite"
             android:drawableStart="@drawable/googleg_standard_color_18"
-            android:text="Continuer avec Google"
+            android:text="@string/continue_ggl"
             android:textColor="@color/quantum_grey700"
             android:textSize="18sp"
             android:textAllCaps="false"
@@ -99,7 +96,7 @@
             android:paddingEnd="20dp"
             android:background="#3C5A99"
             android:drawableStart="@drawable/fui_ic_facebook_white_22dp"
-            android:text="Continuer avec Facebook"
+            android:text="@string/continue_fb"
             android:textColor="@color/themeWhite"
             android:textSize="18sp"
             android:textAllCaps="false"

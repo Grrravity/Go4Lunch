@@ -85,6 +85,7 @@ public class UserHelper {
         return UserHelper.getUsersCollection().document(uid).get();
     }
 
+    @SuppressWarnings({"unused"})
     public static Task<QuerySnapshot> getAllUsernames() {
         return UserHelper.getUsersCollection().get();
     }
@@ -97,12 +98,12 @@ public class UserHelper {
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        List<DocumentSnapshot> myListOfDocuments = task.getResult().getDocuments();
+                        List<DocumentSnapshot> myListOfDocuments = Objects.requireNonNull(task.getResult()).getDocuments();
                         for (DocumentSnapshot documentSnapshot : myListOfDocuments) {
                             User user = documentSnapshot.toObject(User.class);
-                            user.setJoinedRestaurant(result.getName());
+                            Objects.requireNonNull(user).setJoinedRestaurant(result.getName());
                             user.setRestaurantId(result.getPlaceId());
-                            if (!user.getUid().equals(getCurrentUser().getUid())) {
+                            if (!user.getUid().equals(Objects.requireNonNull(getCurrentUser()).getUid())) {
                                 users.add(user);
                             }
                         }
@@ -133,21 +134,22 @@ public class UserHelper {
 
     // --- UPDATE ---
 
-    public static Task<Void> updateUsername(String username, String uid, String urlPicture) {
-        return UserHelper.getUsersCollection().document(uid).update(GET_USERNAME, username, GET_URL_PICTURE, urlPicture);
+    public static void updateUsername(String username, String uid, String urlPicture) {
+        UserHelper.getUsersCollection().document(uid).update(GET_USERNAME, username, GET_URL_PICTURE, urlPicture);
     }
 
-    public static Task<Void> updateUserAtRestaurant(String userId, String joinedRestaurant, String restaurantId, String vicinity) {
-        return UserHelper.getUsersCollection().document(userId).update(GET_JOINED_RESTAURANT, joinedRestaurant, GET_RESTAURANT_ID, restaurantId, GET_VICINITY, vicinity);
+    public static void updateUserAtRestaurant(String userId, String joinedRestaurant, String restaurantId, String vicinity) {
+        UserHelper.getUsersCollection().document(userId).update(GET_JOINED_RESTAURANT, joinedRestaurant, GET_RESTAURANT_ID, restaurantId, GET_VICINITY, vicinity);
     }
 
     // --- DELETE ---
-
+    @SuppressWarnings({"unused"})
     public static Task<Void> deleteUser(String uid) {
         return UserHelper.getUsersCollection().document(uid).delete();
     }
 
-    public static Boolean deleteLike(String restaurantId, String userId) {
+    @SuppressWarnings("SameReturnValue")
+    public static void deleteLike(String restaurantId, String userId) {
         UserHelper.getRestaurantLike(restaurantId).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Map<String, Object> update = new HashMap<>();
@@ -155,15 +157,14 @@ public class UserHelper {
                 UserHelper.getLikedCollection().document(restaurantId).update(update);
             }
         });
-        return true;
     }
 
-    public static Task<Void> deleteUserAtRestaurant(String userId) {
+    public static void deleteUserAtRestaurant(String userId) {
         Map<String, Object> update = new HashMap<>();
         update.put(GET_JOINED_RESTAURANT, FieldValue.delete());
         update.put(GET_RESTAURANT_ID, FieldValue.delete());
         update.put(GET_VICINITY, FieldValue.delete());
-        return UserHelper.getUsersCollection().document(userId).update(update);
+        UserHelper.getUsersCollection().document(userId).update(update);
     }
 
 

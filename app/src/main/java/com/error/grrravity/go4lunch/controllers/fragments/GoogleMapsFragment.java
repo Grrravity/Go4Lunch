@@ -2,7 +2,6 @@ package com.error.grrravity.go4lunch.controllers.fragments;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -57,7 +56,6 @@ public class GoogleMapsFragment extends BaseFragment implements
         GoogleMap.OnMarkerClickListener, GoogleMap.OnCameraIdleListener,
         Filterable, OnMapReadyCallback {
 
-    private static final String TAG = "MapsFragment";
     private static final String PREFS = "PREFS";
 
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
@@ -77,22 +75,19 @@ public class GoogleMapsFragment extends BaseFragment implements
 
     private GPS mGPS;
     private MarkerOptions mMarkerOptions;
-    private int height = 90;
-    private int width = 90;
+    private final int height = 90;
+    private final int width = 90;
 
     private LatLng mMyLatLng;
-    private Location mMyLocation;
     private String mPosition;
 
-    private String restaurantIDForMarker, restaurantName;
-
-    private boolean firstLC = true;
-
+    private String restaurantIDForMarker;
 
     public static GoogleMapsFragment newInstance(){
         return new GoogleMapsFragment();
     }
 
+    @SuppressWarnings("unused")
     public static GoogleMapsFragment newInstance(List<ResultDetail> results) {
         GoogleMapsFragment fragment = new GoogleMapsFragment();
         Bundle bundle = new Bundle();
@@ -137,34 +132,28 @@ public class GoogleMapsFragment extends BaseFragment implements
         super.onViewCreated(view, savedInstanceState);
 
         mMapFragment.getMapAsync(this);
-        mMapFragment.getMapAsync(googleMap -> {
-            googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-                @Override
-                public void onInfoWindowClick(Marker marker) {
-                    if (restaurantIDForMarker != null){
-                        RestaurantDetailFragment detailFragment = new RestaurantDetailFragment();
-                        Bundle args = new Bundle();
-                        SharedPreferences.Editor editor = prefs.edit();
-                        editor.putString("id", restaurantIDForMarker);
-                        editor.apply();
-                        detailFragment.setArguments(args);
-                        assert getFragmentManager() != null;
-                        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.activity_welcome_drawer_layout, detailFragment);
-                        fragmentTransaction.commitAllowingStateLoss();
-                        fragmentTransaction.addToBackStack(null);
+        mMapFragment.getMapAsync(googleMap -> googleMap.setOnInfoWindowClickListener(marker -> {
+            if (restaurantIDForMarker != null){
+                RestaurantDetailFragment detailFragment = new RestaurantDetailFragment();
+                Bundle args = new Bundle();
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("id", restaurantIDForMarker);
+                editor.apply();
+                detailFragment.setArguments(args);
+                FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.activity_welcome_drawer_layout, detailFragment);
+                fragmentTransaction.commitAllowingStateLoss();
+                fragmentTransaction.addToBackStack(null);
 
-                    }
-                }
-            });
-        });
+            }
+        }));
     }
 
     private void getLocationPermission() {
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION};
 
-        if (ContextCompat.checkSelfPermission(this.getActivity().getApplicationContext(),
+        if (ContextCompat.checkSelfPermission(Objects.requireNonNull(this.getActivity()).getApplicationContext(),
                 FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             if (ContextCompat.checkSelfPermission(this.getActivity().getApplicationContext(),
                     COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -183,17 +172,14 @@ public class GoogleMapsFragment extends BaseFragment implements
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         mLocationPermissionsGranted = false;
-        switch (requestCode) {
-            case LOCATION_PERMISSION_REQUEST_CODE: {
-                if (grantResults.length > 0) {
-                    for (int i = 0; i < grantResults.length; i++) {
-                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                            mLocationPermissionsGranted = false;
-                            return;
-                        }
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0) {
+                for (int grantResult : grantResults) {
+                    if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                        return;
                     }
-                    mLocationPermissionsGranted = true;
                 }
+                mLocationPermissionsGranted = true;
             }
         }
     }
@@ -206,7 +192,7 @@ public class GoogleMapsFragment extends BaseFragment implements
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        restaurantName = marker.getTitle();
+        String restaurantName = marker.getTitle();
         int size = mStoredResultList.size()-1;
         int index = -3;
         for (int i=0; i<size; i++){
@@ -248,7 +234,7 @@ public class GoogleMapsFragment extends BaseFragment implements
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mMyLatLng, 15));
                 });
 
-        View myLocationButton = ((View) mMapFragment.getView()
+        View myLocationButton = ((View) Objects.requireNonNull(mMapFragment.getView())
                 .findViewById(Integer.parseInt("1")).getParent())
                 .findViewById(Integer.parseInt("2"));
         RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams)
@@ -262,7 +248,7 @@ public class GoogleMapsFragment extends BaseFragment implements
 
     }
 
-    public void updateUI(List<NearbyResult> nearbyResultList){
+    private void updateUI(List<NearbyResult> nearbyResultList){
         if(mMap != null) {
             mMap.clear();
         }
@@ -277,7 +263,7 @@ public class GoogleMapsFragment extends BaseFragment implements
                     mMarkerOptions.title(mResult.getName());
                     mMarkerOptions.snippet(mResult.getVicinity());
                     if (getContext() != null){
-                        if(task.getResult().isEmpty()){
+                        if(Objects.requireNonNull(task.getResult()).isEmpty()){
                             BitmapDrawable bitmapDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.restaurant_pin_orange);
                             Bitmap bitmap = bitmapDrawable.getBitmap();
                             Bitmap iconSize = Bitmap.createScaledBitmap(bitmap, width, height, false);
@@ -301,7 +287,7 @@ public class GoogleMapsFragment extends BaseFragment implements
     // RETROFIT
 
     private void executeHttpRequestWithRetrofit() {
-            mDisposable = APIStreams.getInstance().streamFetchGooglePlaces(mPosition, 1000, RESTAURANT, apiKey).subscribeWith(new DisposableObserver<Google>() {
+            mDisposable = APIStreams.getInstance().streamFetchGooglePlaces(mPosition, 10000, RESTAURANT, apiKey).subscribeWith(new DisposableObserver<Google>() {
         @Override
         public void onNext(Google google) {
             mNearbyResultList.addAll(google.getResults());
@@ -346,7 +332,7 @@ public class GoogleMapsFragment extends BaseFragment implements
 
     @Override
     public void onCameraIdle() {
-        ((MainActivity) getActivity())
+        ((MainActivity) Objects.requireNonNull(getActivity()))
                 .setLatLngBounds(mMap.getProjection().getVisibleRegion().latLngBounds);
     }
 

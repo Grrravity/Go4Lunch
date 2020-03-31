@@ -1,5 +1,6 @@
 package com.error.grrravity.go4lunch.controllers.fragments;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -42,36 +43,37 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.observers.DisposableObserver;
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class RestaurantDetailFragment extends BaseFragment {
 
-    //TODO passer ça en fragment
-    private static final String ID = "ID";
     private static final String JOINING = "JOINING";
     private static final String UNJOIN = "UNJOIN";
     private static final String TEL = "tel:";
     private static final String PICTURE_URL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&maxheight=150&photoreference=";
     private static final String GET_RESTAURANT_ID = "restaurantId";
+    private static final String TAG = "RestaurantDetail";
     private static final String APIKEY = BuildConfig.API_KEY;
 
     private static final String PREFS = "PREFS" ;
+    private static final int RC_CALL = 333;
 
+    private SharedPreferences prefs;
 
-    @BindView(R.id.resdetail_respict) ImageView mResPicture;
-    @BindView(R.id.resdetail_resadress) TextView mResAdress;
-    @BindView(R.id.resdetail_resname) TextView mResName;
-    @BindView(R.id.resdetail_resrecycler) RecyclerView mRecyclerView;
-    @BindView(R.id.resdetail_resrate) RatingBar mRatingBar;
-    @BindView(R.id.resdetail_reslike) Button mLikeBtn;
-    @BindView(R.id.resdetail_rescall) Button mCallBtn;
-    @BindView(R.id.resdetail_resweb) Button mWebBtn;
-    @BindView(R.id.resdetail_join_FAB) FloatingActionButton mJoinFAB;
+    @BindView(R.id.restaurant_detail_picture) ImageView mResPicture;
+    @BindView(R.id.restaurant_detail_address) TextView mResAdress;
+    @BindView(R.id.restaurant_detail_name) TextView mResName;
+    @BindView(R.id.restaurant_detail_recycler) RecyclerView mRecyclerView;
+    @BindView(R.id.restaurant_detail_rate) RatingBar mRatingBar;
+    @BindView(R.id.restaurant_detail_like) Button mLikeBtn;
+    @BindView(R.id.restaurant_detail_call) Button mCallBtn;
+    @BindView(R.id.restaurant_detail_web) Button mWebBtn;
+    @BindView(R.id.restaurant_detail_FAB) FloatingActionButton mJoinFAB;
 
     private String placeID;
     private List<User> mUserList;
     private Result mResult;
     private CoworkerAdapter mCoworkerAdapter;
-    private SharedPreferences prefs;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,7 +90,7 @@ public class RestaurantDetailFragment extends BaseFragment {
                 false);
         ButterKnife.bind(this, view);
 
-        Log.d("resdetail activity", "onCreate: " + placeID);
+        Log.d(TAG, "onCreate: " + placeID);
 
         prefs = Objects.requireNonNull(getContext()).getSharedPreferences(PREFS, Context.MODE_PRIVATE);
         placeID = prefs.getString("id", "");
@@ -156,8 +158,7 @@ public class RestaurantDetailFragment extends BaseFragment {
 
         //restaurant rating
         if(mResult.getRating() != 0){
-            double googleRating = mResult.getRating();
-            double rating = googleRating / 5 * 3;
+            double rating = calculateStars(mResult.getRating());
             this.mRatingBar.setRating((float) rating);
             this.mRatingBar.setVisibility(View.VISIBLE);
         }
@@ -181,9 +182,9 @@ public class RestaurantDetailFragment extends BaseFragment {
     }
 
     private void updateJoin() {
-        UserHelper.getBookingRestaurant(UserHelper.getCurrentUser().getUid()).addOnCompleteListener(task -> {
+        UserHelper.getBookingRestaurant(Objects.requireNonNull(UserHelper.getCurrentUser()).getUid()).addOnCompleteListener(task -> {
             if(task.isSuccessful()){
-                String restaurantId = task.getResult().getString(GET_RESTAURANT_ID);
+                String restaurantId = Objects.requireNonNull(task.getResult()).getString(GET_RESTAURANT_ID);
                 if(restaurantId != null && restaurantId.equals(mResult.getPlaceId())){
                     mJoinFAB.setImageDrawable(getResources().getDrawable(R.drawable.check_circle_black));
                     mJoinFAB.setRippleColor(getResources().getColor(R.color.validColor));
@@ -199,19 +200,19 @@ public class RestaurantDetailFragment extends BaseFragment {
     }
 
     private void updateLike() {
-        UserHelper.getLike(UserHelper.getCurrentUser().getUid()).addOnCompleteListener(task -> {
+        UserHelper.getLike(Objects.requireNonNull(UserHelper.getCurrentUser()).getUid()).addOnCompleteListener(task -> {
             if(task.isSuccessful()){
-                if(task.getResult().isEmpty()){
-                    mLikeBtn.setText("Like");
+                if(Objects.requireNonNull(task.getResult()).isEmpty()){
+                    mLikeBtn.setText(R.string.like);
                 } else {
                     for (DocumentSnapshot restaurant : task.getResult()){
                         if(mResult.getPlaceId().equals(restaurant.getId())){
                             mLikeBtn.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.star_rate_yellow), null, null);
-                            mLikeBtn.setText("Unlike");
+                            mLikeBtn.setText(R.string.dislike);
                             break;
                         } else {
                             mLikeBtn.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.star_rate_black), null, null);
-                            mLikeBtn.setText("Like");
+                            mLikeBtn.setText(R.string.like);
                         }
                     }
                 }
@@ -220,13 +221,24 @@ public class RestaurantDetailFragment extends BaseFragment {
     }
 
     //OnClicks
-    @OnClick(R.id.resdetail_join_FAB)
+    @OnClick(R.id.restaurant_detail_FAB)
+    @SuppressWarnings("unused")
     void onClickFAB(View v){
         if(JOINING.equals(mJoinFAB.getTag())){
             this.joinRestaurant();
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("restaurantName",mResult.getName());
+            editor.putString("restaurantAddress",mResult.getFormattedAddress());
+            editor.putString("restaurantCoworker",mUserList.isEmpty() ? "empty" : mUserList.toString());
+            editor.apply();
             setAlarm(true);
         } else {
             this.leaveRestaurant();
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("restaurantName","empty");
+            editor.putString("restaurantAddress","empty");
+            editor.putString("restaurantCoworker","empty");
+            editor.apply();
             setAlarm(false);
         }
     }
@@ -254,7 +266,8 @@ public class RestaurantDetailFragment extends BaseFragment {
         }
     }
 
-    @OnClick(R.id.resdetail_reslike)
+    @OnClick(R.id.restaurant_detail_like)
+    @SuppressWarnings({"unused"})
     void onClickLike(View v){
         if (mLikeBtn.getText().equals("Like")){
             this.likeRestaurant();
@@ -266,7 +279,7 @@ public class RestaurantDetailFragment extends BaseFragment {
             UserHelper.createLike(mResult.getPlaceId(), UserHelper.getCurrentUser().getUid()).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     Toast.makeText(getContext(), getResources().getString(R.string.liked), Toast.LENGTH_SHORT).show();mLikeBtn.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.star_rate_yellow), null, null);
-                    mLikeBtn.setText("Unlike");
+                    mLikeBtn.setText(R.string.dislike);
                 }
             });
         } else {
@@ -278,20 +291,28 @@ public class RestaurantDetailFragment extends BaseFragment {
     private void unlikeRestaurant(){
         if (UserHelper.getCurrentUser() != null){
             UserHelper.deleteLike(mResult.getPlaceId(),UserHelper.getCurrentUser().getUid());
-            Toast.makeText(getContext(), getResources().getString(R.string.unliked), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getResources().getString(R.string.disliked), Toast.LENGTH_SHORT).show();
             mLikeBtn.setCompoundDrawablesWithIntrinsicBounds(null,getResources().getDrawable(R.drawable.star_rate_black), null, null);
-            mLikeBtn.setText("Like");
+            mLikeBtn.setText(R.string.like);
         } else {
             Toast.makeText(getContext(), getResources().getString(R.string.error_unknown_error), Toast.LENGTH_SHORT).show();
         }
 
     }
 
-    @OnClick(R.id.resdetail_rescall)
+    @OnClick(R.id.restaurant_detail_call)
     void callRestaurant(){
-        Intent callIntent = new Intent(Intent.ACTION_CALL,
-                Uri.parse(TEL + mResult.getFormattedPhoneNumber()));
-        startActivity(callIntent);
+        if (!hasCallPermission()){
+            EasyPermissions.requestPermissions(
+                    this,
+                    "We need your authorization to call from your device",
+                    RC_CALL,
+                    Manifest.permission.CALL_PHONE);
+        } else {
+            Intent callIntent = new Intent(Intent.ACTION_CALL,
+                    Uri.parse(TEL + mResult.getFormattedPhoneNumber()));
+            startActivity(callIntent);
+        }
         //if(ActivityCompat.checkSelfPermission(Objects.requireNonNull(getActivity()),
         //        Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED){
         //    Intent callIntent = new Intent(Intent.ACTION_CALL,
@@ -304,7 +325,11 @@ public class RestaurantDetailFragment extends BaseFragment {
 
     }
 
-    @OnClick(R.id.resdetail_resweb)
+    static double calculateStars(double gglRate){
+        return (gglRate / 5) * 3;
+    }
+
+    @OnClick(R.id.restaurant_detail_web)
     void goToWebSite(){
         if(mResult.getWebsite() != null){
             Intent websiteIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mResult.getWebsite()));
@@ -313,5 +338,7 @@ public class RestaurantDetailFragment extends BaseFragment {
             Toast.makeText(getContext(), getResources().getString(R.string.error_unknown_error), Toast.LENGTH_SHORT).show();
         }
     }
-
-}
+        private boolean hasCallPermission() {
+            return EasyPermissions.hasPermissions(Objects.requireNonNull(getContext()), Manifest.permission.CALL_PHONE);
+        }
+    }

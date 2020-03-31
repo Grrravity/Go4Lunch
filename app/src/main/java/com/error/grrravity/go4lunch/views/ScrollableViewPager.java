@@ -17,6 +17,7 @@ public class ScrollableViewPager extends ViewPager {
         super(context, attrs);
     }
 
+    @SuppressWarnings({"unused"})
     public void setCanScroll(boolean canScroll) {
         this.canScroll = canScroll;
     }

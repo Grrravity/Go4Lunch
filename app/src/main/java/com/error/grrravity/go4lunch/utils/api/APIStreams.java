@@ -2,10 +2,8 @@ package com.error.grrravity.go4lunch.utils.api;
 
 import com.error.grrravity.go4lunch.models.autocomplete.Predictions;
 import com.error.grrravity.go4lunch.models.details.Details;
-import com.error.grrravity.go4lunch.models.details.Result;
 import com.error.grrravity.go4lunch.models.places.Google;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;

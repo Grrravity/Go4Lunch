@@ -2,7 +2,7 @@ package com.error.grrravity.go4lunch.models.autocomplete;
 
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
-
+@SuppressWarnings({"unused"})
 public class Predictions {
 
     @SerializedName("status")

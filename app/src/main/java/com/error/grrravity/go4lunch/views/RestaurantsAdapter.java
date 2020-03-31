@@ -15,9 +15,9 @@ import java.util.List;
 
 public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsViewHolder> {
 
-    private List<NearbyResult> mResultList;
-    private Context mContext;
-    private String location;
+    private final List<NearbyResult> mResultList;
+    private final Context mContext;
+    private final String location;
 
     public RestaurantsAdapter(Context context, List<NearbyResult> result, String location) {
         this.mContext = context;
@@ -43,10 +43,11 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsViewHold
         return this.mResultList.size();
     }
 
-    public void refreshAdapter(List<NearbyResult> nearbyResults) {
-        mResultList = nearbyResults;
-        notifyDataSetChanged();
-    }
+
+    //public void refreshAdapter(List<NearbyResult> nearbyResults) {
+    //    mResultList = nearbyResults;
+    //    notifyDataSetChanged();
+    //}
 
     public List<NearbyResult> getResultList() {
         return mResultList;

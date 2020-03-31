@@ -6,30 +6,17 @@
     <string name="facebook_login_protocol_scheme" translatable="false">fb339289337000848</string>
 
     <!-- GLOBAL -->
-    <string name="goforfood_logo_description">Go4Food logo</string>
-    <string name="goforfood_logo_full_description">Go4Food full logo</string>
     <string name="toolbar_title">J\'ai faim !</string>
 
     <!-- MAIN ACTIVITY -->
-    <string name="button_login_text_logged">Voir mon profil</string>
-    <string name="button_login_text_not_logged">Connexion</string>
-    <string name="connection_succeed">Authentification réussie</string>
-    <string name="search_hint">que cherchez vous ?…</string>
+    <string name="search_hint">que cherchez-vous ?…</string>
 
 
     <!-- PROFILE ACTIVITY-->
-    <string name="text_input_username">Nom d\'utilisateur</string>
-    <string name="text_view_mail_address">"adresse email : "</string>
-    <string name="button_update_account">Mettre a jour le compte</string>
-    <string name="button_sign_out">Déconnexion</string>
-    <string name="button_delete_account">Supprimer mon compte</string>
-    <string name="profile_image_description">Image de profil</string>
 
     <!-- LOGIN ACTIVITY -->
-    <string name="toolbar_title_login_activity">Votre profil</string>
     <string name="info_no_email_found">Pas d\'adresse email</string>
     <string name="info_no_username_found">Pas de nom d\'utilisateur</string>
-    <string name="popup_confirmation_delete_account">Voulez-vous vraiment supprimer votre compte?</string>
     <string name="popup_choice_yes">Oui !</string>
     <string name="popup_choice_no">Non !</string>
 
@@ -47,7 +34,8 @@
     <string name="close">Fermé !</string>
 
     <!-- MAP -->
-    <string name="list_unit_distance" translatable="false">%1$sm</string>
+    <string name="list_unit_distance_M" translatable="false">%1$sm</string>
+    <string name="list_unit_distance_KM" translatable="false">%1$skm</string>
     <string name="time_unavailable">Heures d\'ouverture non renseignées</string>
     <string name="restaurant_mates_number" translatable="false">(%1$d)</string>
 
@@ -55,24 +43,48 @@
     <string name="error_location_permission">Veuillez donner la permission de localisation</string>
     <string name="error_authentication_canceled">Authentification stoppée</string>
     <string name="error_no_internet">Pas de connection</string>
-    <string name="error_unknown_error">Une erreure inconnue est arrivée</string>
-    <string name="error_user_creation">Une erreure est arrivée pendant la création de votre profil…</string>
+    <string name="error_unknown_error">Une erreur inconnue est arrivée</string>
+    <string name="error_user_creation">Une erreur est arrivée pendant la création de votre profil…</string>
 
     <!-- SUCCESS-->
     <string name="success_connection">Connexion réussie</string>
     <string name="will_eat">%1$s déjeunera ici: %2$s</string>
-    <string name="not_decided">%1$s n\'a pas encore décidé.</string>
+    <string name="not_decided">%1$s n\'a pas encore décidé(e).</string>
     <string name="is_eating">%1$s déjeunera ici.</string>
     <string name="joining">Votre participation est bien prise en compte</string>
     <string name="leaving">Votre participation a bien été annulée</string>
     <string name="liked">Restaurant liké !</string>
-    <string name="unliked">Like du restaurant retiré :(</string>
+    <string name="disliked">Like du restaurant retiré :(</string>
     <string name="selection">selectionnez</string>
     <string name="english">Anglais</string>
     <string name="french">Français</string>
-    <string name="reboot">Redémarrage recquis</string>
+    <string name="reboot">Redémarrage requis</string>
     <string name="restart">Redémarrer maintenant?</string>
     <string name="go4food_logo">Logo de Go4Food</string>
     <string name="pitch">Trouvez un restaurant sympa et rejoignez vos collègues au déjeuner !</string>
+    <string name="like">Like</string>
+    <string name="dislike">Un-liker</string>
+    <string name="tel">Tel</string>
+    <string name="site">Site</string>
+    <string name="continue_ggl">Continuer avec Google</string>
+    <string name="continue_fb">Continuer avec Facebook</string>
+    <string name="distance" translatable="false">DISTANCE</string>
+    <string name="opening_time">Heure D\'ouverture</string>
+    <string name="notificationSettings">Paramètres de notification</string>
+    <string name="activateNotification">Activer les notification</string>
+    <string name="chooseLanguage">Choisisez votre langue</string>
+    <string name="search">Recherche</string>
+    <string name="infoNoAddress">pas d\'adresse disponible</string>
+    <string name="notificationPref">notif</string>
+    <string name="invalidDelay">délais invalides</string>
+    <string name="enableGPS">Activez votre GPS</string>
+    <string name="enableGPSMessage">Votre GPS est désactivé, voulez-vous l\'activer dans vos paramètres?</string>
+    <string name="cancel">Annuler</string>
+    <string name="notificationTitle">Go4Food: N\'oubliez pas votre repas chez %1$s</string>
+    <string name="notificationTitle0">Go4Food: N\'oubliez pas votre repas !</string>
+    <string name="notificationText">%1$s vous attend(ent) au %2$s</string>
+    <string name="notificationText00">ça à l\'air très bon !</string>
+    <string name="notificationText10">%1$s vous attend(ent) !</string>
+    <string name="notificationText01">rendez-vous au %1$s !</string>
 
 </resources>

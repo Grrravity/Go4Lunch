@@ -5,7 +5,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class AddressComponent {
+@SuppressWarnings("ALL")
+class AddressComponent {
 
     @SerializedName("long_name")
     @Expose

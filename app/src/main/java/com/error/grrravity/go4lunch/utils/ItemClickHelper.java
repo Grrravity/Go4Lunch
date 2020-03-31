@@ -6,12 +6,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.error.grrravity.go4lunch.R;
 
+import org.jetbrains.annotations.NotNull;
+
 public class ItemClickHelper {
 
     private final RecyclerView mRecyclerView;
     private OnItemClickListener mOnItemClickListener;
     private OnItemLongClickListener mOnItemLongClickListener;
-    private View.OnClickListener mOnClickListener = new View.OnClickListener() {
+    private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
 
         @Override
         public void onClick(View v) {
@@ -21,7 +23,7 @@ public class ItemClickHelper {
             }
         }
     };
-    private View.OnLongClickListener mOnLongClickListener = new View.OnLongClickListener() {
+    private final View.OnLongClickListener mOnLongClickListener = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(View v) {
             if (mOnItemLongClickListener != null) {
@@ -31,10 +33,10 @@ public class ItemClickHelper {
             return false;
         }
     };
-    private RecyclerView.OnChildAttachStateChangeListener mAttachListener
+    private final RecyclerView.OnChildAttachStateChangeListener mAttachListener
             = new RecyclerView.OnChildAttachStateChangeListener() {
         @Override
-        public void onChildViewAttachedToWindow(View view) {
+        public void onChildViewAttachedToWindow(@NotNull View view) {
             if (mOnItemClickListener != null) {
                 view.setOnClickListener(mOnClickListener);
             }
@@ -44,7 +46,7 @@ public class ItemClickHelper {
         }
 
         @Override
-        public void onChildViewDetachedFromWindow(View view) {
+        public void onChildViewDetachedFromWindow(@NotNull View view) {
 
         }
     };
@@ -63,6 +65,7 @@ public class ItemClickHelper {
         return support;
     }
 
+    @SuppressWarnings({"unused"})
     public static ItemClickHelper removeFrom(RecyclerView view) {
         ItemClickHelper support = (ItemClickHelper) view.getTag(R.id.item_click_support);
         if (support != null) {
@@ -71,11 +74,11 @@ public class ItemClickHelper {
         return support;
     }
 
-    public ItemClickHelper setOnItemClickListener(OnItemClickListener listener) {
+    public void setOnItemClickListener(OnItemClickListener listener) {
         mOnItemClickListener = listener;
-        return this;
     }
 
+    @SuppressWarnings({"unused"})
     public ItemClickHelper setOnItemLongClickListener(OnItemLongClickListener listener) {
         mOnItemLongClickListener = listener;
         return this;
@@ -91,7 +94,7 @@ public class ItemClickHelper {
         void onItemClicked(RecyclerView recyclerView, int position, View v);
     }
 
-    public interface OnItemLongClickListener {
+    interface OnItemLongClickListener {
 
         boolean onItemLongClicked(RecyclerView recyclerView, int position, View v);
     }

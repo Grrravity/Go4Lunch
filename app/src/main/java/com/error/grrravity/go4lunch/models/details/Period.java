@@ -3,9 +3,8 @@ package com.error.grrravity.go4lunch.models.details;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
-public class Period {
+@SuppressWarnings({"unused"})
+class Period {
 
     @SerializedName("close")
     @Expose

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.List;
-
+@SuppressWarnings({"unused"})
 public class ResultDetail implements Serializable {
 
     @SerializedName("address_components")
@@ -25,13 +25,13 @@ public class ResultDetail implements Serializable {
     private Geometry geometry;
     @SerializedName("icon")
     @Expose
-    public String icon;
+    private String icon;
     @SerializedName("id")
     @Expose
-    public String id;
+    private String id;
     @SerializedName("name")
     @Expose
-    public String name;
+    private String name;
     @SerializedName("opening_hours")
     @Expose
     private OpeningHours openingHours;

@@ -4,28 +4,15 @@
     <!-- FB -->
 
     <!-- GLOBAL -->
-    <string name="goforfood_logo_description">Go4Food logo</string>
-    <string name="goforfood_logo_full_description">Go4Food full logo</string>
 
     <!-- MAIN ACTIVITY -->
-    <string name="button_login_text_logged">Show profile</string>
-    <string name="button_login_text_not_logged">Connecting</string>
-    <string name="connection_succeed">Authentication succeed</string>
 
 
     <!-- PROFILE ACTIVITY-->
-    <string name="text_input_username">User name</string>
-    <string name="text_view_mail_address">Mail address: </string>
-    <string name="button_update_account">Update account</string>
-    <string name="button_sign_out">Sign out</string>
-    <string name="button_delete_account">Delete account</string>
-    <string name="profile_image_description">User profile image</string>
 
     <!-- LOGIN ACTIVITY -->
-    <string name="toolbar_title_login_activity">Your profile</string>
     <string name="info_no_email_found">No mail address</string>
     <string name="info_no_username_found">No user name</string>
-    <string name="popup_confirmation_delete_account">Do you really want to delete your account ?</string>
     <string name="popup_choice_yes">Yes !</string>
     <string name="popup_choice_no">No !</string>
 
@@ -60,9 +47,9 @@
     <string name="joining">Participation succeed</string>
     <string name="leaving">Participation canceled</string>
     <string name="liked">Restaurant liked !</string>
-    <string name="unliked">Restaurtant disliked :(</string>
-    <string name="not_decided">%1$s hasn\'t decided yet.</string>
-    <string name="search_hint">looking for ?...</string>
+    <string name="disliked">Restaurant disliked :(</string>
+    <string name="not_decided">%1$s has not decided yet.</string>
+    <string name="search_hint">looking for ?…</string>
     <string name="toolbar_title">I\'m hungry !</string>
     <string name="selection">select</string>
     <string name="english">English</string>
@@ -71,5 +58,28 @@
     <string name="restart">Reboot now ?</string>
     <string name="go4food_logo">Go4Food Logo</string>
     <string name="pitch">Find a nice restaurant and join your co-worker for lunch!</string>
+    <string name="like">Like</string>
+    <string name="dislike">Dislike</string>
+    <string name="tel">Phone</string>
+    <string name="site">Website</string>
+    <string name="continue_ggl">Continue with Google</string>
+    <string name="continue_fb">Continue with Facebook</string>
+    <string name="opening_time">Opening hours</string>
+    <string name="notificationSettings">Notification settings</string>
+    <string name="activateNotification">Enable notifications</string>
+    <string name="chooseLanguage">Choose your language</string>
+    <string name="search">Search</string>
+    <string name="infoNoAddress">no address provided</string>
+    <string name="notificationPref">notif</string>
+    <string name="invalidDelay">invalid delays</string>
+    <string name="cancel">Cancel</string>
+    <string name="enableGPS">Enable your GPS</string>
+    <string name="enableGPSMessage">Your GPS is disabled, do you want to enable it?</string>
+    <string name="notificationTitle">Go4Food: Don\'t forget your lunch at %1$s</string>
+    <string name="notificationTitle0">Go4Food: Don\'t forget your lunch !</string>
+    <string name="notificationText">%1$s is/are waiting for you at %2$s</string>
+    <string name="notificationText00">looks yummy !</string>
+    <string name="notificationText01">%1$s is/are waiting for you !</string>
+    <string name="notificationText10">\"rendez-vous\" at %1$s !</string>
 
 </resources>

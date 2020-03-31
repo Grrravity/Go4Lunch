@@ -3,8 +3,8 @@ package com.error.grrravity.go4lunch.models.autocomplete;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-
-public class Term implements Serializable {
+@SuppressWarnings({"unused"})
+class Term implements Serializable {
 
     @SerializedName("offset")
     private int offset;

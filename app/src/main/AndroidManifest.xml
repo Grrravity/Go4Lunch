@@ -31,7 +31,7 @@
 
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
-        <activity android:name="com.error.grrravity.go4lunch.utils.auth.AuthenticationActivity"
+        <activity android:name=".controllers.base.auth.AuthenticationActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
@@ -65,8 +65,8 @@
             android:value="@integer/google_play_services_version"
             />
 
-        
 
+        <service android:name=".utils.GPS" />
     </application>
 
 </manifest>

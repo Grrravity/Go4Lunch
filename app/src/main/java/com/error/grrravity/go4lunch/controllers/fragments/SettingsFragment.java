@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 
@@ -23,8 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.error.grrravity.go4lunch.R;
-import com.error.grrravity.go4lunch.controllers.MainActivity;
-import com.error.grrravity.go4lunch.utils.auth.AuthenticationActivity;
+import com.error.grrravity.go4lunch.controllers.base.auth.AuthenticationActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -35,7 +33,6 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class SettingsFragment extends Fragment {
 
@@ -83,14 +80,10 @@ public class SettingsFragment extends Fragment {
             aSwitch.setChecked(false);
         }
 
-        aSwitch.setOnCheckedChangeListener(new  CompoundButton.OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.putBoolean("notif", b);
-                    editor.apply();
-            }
+        aSwitch.setOnCheckedChangeListener((compoundButton, b) -> {
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putBoolean("notif", b);
+                editor.apply();
         });
     }
 

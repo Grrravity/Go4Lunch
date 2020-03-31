@@ -2,7 +2,7 @@ package com.error.grrravity.go4lunch.models.places;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
+@SuppressWarnings({"unused"})
 public class Location {
 
     @SerializedName("lat")

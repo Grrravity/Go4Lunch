@@ -5,6 +5,14 @@
       <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
     </configurations>
   </component>
+  <component name="EntryPointsManager">
+    <entry_points version="2.0">
+      <entry_point TYPE="field" FQNAME="com.error.grrravity.go4lunch.controllers.base.auth.AuthenticationActivity TAG" />
+    </entry_points>
+    <pattern value="com.error.grrravity.go4lunch.controllers.base.auth.AuthenticationActivity" />
+    <pattern value="com.error.grrravity.go4lunch.controllers.base.auth.AuthenticationActivity" method="showSnackBar" />
+    <pattern value="com.error.grrravity.go4lunch.controllers.base.auth.AuthenticationActivity" method="getFragmentLayout" />
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

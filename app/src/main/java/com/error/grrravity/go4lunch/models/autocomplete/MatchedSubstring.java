@@ -3,8 +3,8 @@ package com.error.grrravity.go4lunch.models.autocomplete;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-
-public class MatchedSubstring implements Serializable {
+@SuppressWarnings({"unused"})
+class MatchedSubstring implements Serializable {
 
     @SerializedName("length")
     private int length;

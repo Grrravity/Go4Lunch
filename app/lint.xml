@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="IconDipSize">
+        <ignore path="src/main/res/drawable-hdpi/profile_icon.png" />
+        <ignore path="src/main/res/drawable-mdpi/profile_icon.png" />
+        <ignore path="src/main/res/drawable-xhdpi/profile_icon.png" />
+        <ignore path="src/main/res/drawable-xhdpi/profile_icon.png" />
+        <ignore path="src/main/res/drawable-xxhdpi/profile_icon.png" />
+        <ignore path="src/main/res/drawable-xxxhdpi/profile_icon.png" />
+    </issue>
+    <issue id="IconDuplicatesConfig">
+        <ignore path="src/main/res/drawable-xxhdpi/goforfood_front_logo.png" />
+        <ignore path="src/main/res/drawable-xxxhdpi/profile_icon.png" />
+        <ignore path="src/main/res/drawable/goforfood_front_logo.png" />
+        <ignore path="src/main/res/drawable/profile_icon.png" />
+    </issue>
+    <issue id="IconLocation">
+        <ignore path="src/main/res/drawable/backgroung_login.png" />
+        <ignore path="src/main/res/drawable/call_black.png" />
+        <ignore path="src/main/res/drawable/check_circle_black.png" />
+        <ignore path="src/main/res/drawable/goforfood_front_logo.png" />
+        <ignore path="src/main/res/drawable/map_white.png" />
+        <ignore path="src/main/res/drawable/menu_white.png" />
+        <ignore path="src/main/res/drawable/people_white.png" />
+        <ignore path="src/main/res/drawable/power_settings_new_white.png" />
+        <ignore path="src/main/res/drawable/profile_icon.png" />
+        <ignore path="src/main/res/drawable/public_black.png" />
+        <ignore path="src/main/res/drawable/restaurant_menu_white.png" />
+        <ignore path="src/main/res/drawable/restaurant_pin_green.png" />
+        <ignore path="src/main/res/drawable/restaurant_pin_orange.png" />
+        <ignore path="src/main/res/drawable/search_white.png" />
+        <ignore path="src/main/res/drawable/search_white.png" />
+        <ignore path="src/main/res/drawable/search_white.png" />
+        <ignore path="src/main/res/drawable/search_white.png" />
+        <ignore path="src/main/res/drawable/search_white.png" />
+        <ignore path="src/main/res/drawable/search_white.png" />
+        <ignore path="src/main/res/drawable/search_white.png" />
+        <ignore path="src/main/res/drawable/search_white.png" />
+        <ignore path="src/main/res/drawable/search_white.png" />
+        <ignore path="src/main/res/drawable/search_white.png" />
+        <ignore path="src/main/res/drawable/search_white.png" />
+        <ignore path="src/main/res/drawable/search_white.png" />
+        <ignore path="src/main/res/drawable/search_white.png" />
+        <ignore path="src/main/res/drawable/search_white.png" />
+        <ignore path="src/main/res/drawable/search_white.png" />
+        <ignore path="src/main/res/drawable/search_white.png" />
+        <ignore path="src/main/res/drawable/search_white.png" />
+        <ignore path="src/main/res/drawable/search_white.png" />
+        <ignore path="src/main/res/drawable/settings_white.png" />
+        <ignore path="src/main/res/drawable/star_rate_black.png" />
+        <ignore path="src/main/res/drawable/star_rate_yellow.png" />
+        <ignore path="src/main/res/drawable/view_list_white.png" />
+    </issue>
+</lint>

@@ -3,8 +3,7 @@ package com.error.grrravity.go4lunch.utils.helper;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.annotation.Nullable;
-
+@SuppressWarnings({"unused"})
 public class User implements Parcelable {
 
     private String uid;

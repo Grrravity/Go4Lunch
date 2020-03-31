@@ -8,7 +8,8 @@
     android:background="@color/quantum_grey50"
     android:clickable="true"
     android:focusable="true"
-    tools:context=".controllers.fragments.SettingsFragment">
+    tools:context=".controllers.fragments.SettingsFragment"
+    tools:ignore="Overdraw">
 
     <TextView
         android:id="@+id/textViewNotifications"
@@ -18,7 +19,7 @@
         android:padding="8dp"
         android:textStyle="italic"
         android:gravity="center"
-        android:text="Paramètres de notification"
+        android:text="@string/notificationSettings"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         app:layout_constraintTop_toTopOf="parent" />
@@ -42,7 +43,7 @@
         android:layout_marginEnd="20dp"
         android:padding="10dp"
         android:textColor="@android:color/holo_orange_dark"
-        android:text="Activer les notification"
+        android:text="@string/activateNotification"
         android:backgroundTint="@android:color/holo_orange_dark"
         tools:targetApi="lollipop" />
 
@@ -65,7 +66,7 @@
         android:padding="8dp"
         android:textStyle="italic"
         android:gravity="center"
-        android:text="Choisisez votre langue"
+        android:text="@string/chooseLanguage"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         app:layout_constraintTop_toTopOf="@+id/view3" />
@@ -91,7 +92,6 @@
         app:layout_constraintTop_toTopOf="@+id/view5" />
 
     <View
-        android:id="@+id/view4"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginStart="15dp"

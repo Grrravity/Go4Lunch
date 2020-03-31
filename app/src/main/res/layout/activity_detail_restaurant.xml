@@ -5,11 +5,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/resdetail_constlyt"
     android:orientation="vertical">
 
     <ScrollView
-        android:id="@+id/resdetail_mainscroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/mainBackground">
@@ -26,34 +24,33 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/themeWhite"
-                android:id="@+id/resdetail_content_constlyt">
+                android:background="@color/themeWhite">
 
                 <ImageView
-                    android:id="@+id/resdetail_respict"
+                    android:id="@+id/restaurant_detail_picture"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:background="@drawable/borders"
-                    />
+                    tools:ignore="ContentDescription" />
 
                 <LinearLayout
-                    android:id="@+id/resdetail_banner_lin"
+                    android:id="@+id/restaurant_detail_banner_layout"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/resdetail_respict">
+                    app:layout_constraintTop_toBottomOf="@id/restaurant_detail_picture">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <TextView
-                            android:id="@+id/resdetail_resname"
+                            android:id="@+id/restaurant_detail_name"
                             android:textSize="15sp"
                             android:layout_marginTop="16dp"
                             android:layout_marginStart="16dp"
@@ -65,11 +62,11 @@
                             tools:text="Le Baron"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/resdetail_resrate"
+                            app:layout_constraintEnd_toStartOf="@id/restaurant_detail_rate"
                             app:layout_constraintBottom_toBottomOf="parent"/>
 
                         <androidx.appcompat.widget.AppCompatRatingBar
-                            android:id="@+id/resdetail_resrate"
+                            android:id="@+id/restaurant_detail_rate"
                             android:theme="@style/RatingBar"
                             android:layout_width="50dp"
                             android:layout_height="wrap_content"
@@ -81,13 +78,13 @@
                             style="?android:attr/ratingBarStyleSmall"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/resdetail_resname"
+                            app:layout_constraintStart_toEndOf="@id/restaurant_detail_name"
                             app:layout_constraintBottom_toBottomOf="parent"/>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
-                        android:id="@+id/resdetail_resadress"
+                        android:id="@+id/restaurant_detail_address"
                         android:textSize="15sp"
                         android:layout_marginTop="8dp"
                         android:layout_marginStart="16dp"
@@ -96,12 +93,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/quantum_black_100"
-                        tools:text="14 rue du planit"/>
+                        tools:text="@string/infoNoAddress"/>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/resdetail_btns"
+                    android:id="@+id/restaurant_detail_button_box"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -111,20 +108,20 @@
                     android:layout_marginBottom="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/resdetail_banner_lin">
+                    app:layout_constraintTop_toBottomOf="@id/restaurant_detail_banner_layout">
 
                     <TableRow
-                        android:id="@+id/tableRow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center">
+                        android:gravity="center"
+                        style="?android:attr/buttonBarStyle">
 
                         <Button
-                            android:id="@+id/resdetail_rescall"
+                            android:id="@+id/restaurant_detail_call"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Tel"
+                            android:text="@string/tel"
                             android:drawableTop="@drawable/call_black"
                             android:background="@color/fui_transparent"
                             android:layout_marginStart="12dp"
@@ -132,14 +129,14 @@
                             android:layout_marginEnd="12dp"
                             android:layout_marginBottom="12dp"
                             android:textColor="@color/quantum_grey700"
-                            />
+                            style="?android:attr/buttonBarButtonStyle" />
 
                         <Button
-                            android:id="@+id/resdetail_reslike"
+                            android:id="@+id/restaurant_detail_like"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Like"
+                            android:text="@string/like"
                             android:drawableTop="@drawable/star_rate_black"
                             android:background="@color/fui_transparent"
                             android:layout_marginStart="12dp"
@@ -147,14 +144,14 @@
                             android:layout_marginEnd="12dp"
                             android:layout_marginBottom="12dp"
                             android:textColor="@color/quantum_grey700"
-                            />
+                            style="?android:attr/buttonBarButtonStyle"/>
 
                         <Button
-                            android:id="@+id/resdetail_resweb"
+                            android:id="@+id/restaurant_detail_web"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Site"
+                            android:text="@string/site"
                             android:drawableTop="@drawable/public_black"
                             android:background="@color/fui_transparent"
                             android:layout_marginStart="12dp"
@@ -162,24 +159,23 @@
                             android:layout_marginEnd="12dp"
                             android:layout_marginBottom="12dp"
                             android:textColor="@color/quantum_grey700"
-                            />
+                            style="?android:attr/buttonBarButtonStyle"/>
                     </TableRow>
 
                 </LinearLayout>
 
                 <View
-                    android:id="@+id/resdetail_separator"
+                    android:id="@+id/restaurant_detail_separator"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_margin="10dp"
                     android:background="@color/quantum_grey700"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/resdetail_btns"/>
+                    app:layout_constraintTop_toBottomOf="@id/restaurant_detail_button_box"/>
 
 
                 <LinearLayout
-                    android:id="@+id/recycler_linlay"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="40"
@@ -191,10 +187,10 @@
                     android:paddingBottom="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/resdetail_separator">
+                    app:layout_constraintTop_toBottomOf="@id/restaurant_detail_separator">
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/resdetail_resrecycler"
+                        android:id="@+id/restaurant_detail_recycler"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -207,7 +203,7 @@
                 </LinearLayout>
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/resdetail_join_FAB"
+                    android:id="@+id/restaurant_detail_FAB"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
@@ -217,14 +213,12 @@
                     android:focusable="true"
                     android:src="@drawable/goforfood_front_logo"
                     android:tag="JOIN"
-                    app:layout_constraintBottom_toBottomOf="@id/resdetail_respict"
-                    app:layout_constraintEnd_toEndOf="@+id/resdetail_respict"
-                    app:layout_constraintTop_toBottomOf="@+id/resdetail_respict"
+                    app:layout_constraintBottom_toBottomOf="@id/restaurant_detail_picture"
+                    app:layout_constraintEnd_toEndOf="@+id/restaurant_detail_picture"
+                    app:layout_constraintTop_toBottomOf="@+id/restaurant_detail_picture"
                     tools:targetApi="lollipop" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
         </LinearLayout>
 

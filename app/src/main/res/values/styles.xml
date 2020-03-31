@@ -1,6 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO theme -->
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -10,19 +9,6 @@
     </style>
 
     <!-- STYLE SIGN-IN ACTIVITY -->
-    <style name="LoginTheme" parent="AppTheme">
-        <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
-        <item name="colorAccent">@color/secondaryColor</item>
-        <item name="colorButtonNormal">@color/secondaryDarkColor</item>
-        <item name="colorControlNormal">@color/backgroundSmoothGrey</item>
-        <item name="colorControlActivated">@color/backgroundSmoothGrey</item>
-        <item name="colorControlHighlight">@color/backgroundSmoothGrey</item>
-        <item name="android:textColor">@color/primaryTextColor</item>
-        <item name="android:textColorPrimary">@color/primaryTextColor</item>
-        <item name="android:textColorSecondary">@color/secondaryTextColor</item>
-        <item name="android:windowBackground">@color/backgroundSmoothGrey</item>
-    </style>
 
     <!-- TOOLBAR THEME -->
     <style name="ToolbarTheme" parent="Theme.AppCompat.Light.DarkActionBar">

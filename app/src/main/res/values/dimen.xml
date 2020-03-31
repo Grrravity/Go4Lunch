@@ -7,9 +7,7 @@
     <dimen name="logo_top_margin" tools:keep="@dimen/logo_top_margin">75dip</dimen>
 
     <!-- Margin -->
-    <dimen name="short_margin">5dip</dimen>
     <dimen name="normal_margin">10dip</dimen>
-    <dimen name="middle_margin">15dip</dimen>
     <dimen name="big_margin">20dip</dimen>
     <dimen name="very_big_margin">50dip</dimen>
     <dimen name="top_margin" tools:keep="@dimen/top_margin">10dip</dimen>
@@ -33,10 +31,6 @@
     <dimen name="card_fab_image_size" tools:keep="@dimen/card_fab_image_size">32dip</dimen>
 
     <!-- Item recycler view -->
-    <dimen name="recycler_padding">1dip</dimen>
-    <dimen name="recycler_image_width">75dip</dimen>
-    <dimen name="recycler_image_height">75dip</dimen>
-    <dimen name="recycler_image_margin">5dip</dimen>
     <dimen name="recycler_text_margin" tools:keep="@dimen/recycler_text_margin">10dp</dimen>
 
 </resources>

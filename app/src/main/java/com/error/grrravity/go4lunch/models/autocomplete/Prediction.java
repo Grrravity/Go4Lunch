@@ -1,9 +1,12 @@
 package com.error.grrravity.go4lunch.models.autocomplete;
 
 import com.google.gson.annotations.SerializedName;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 import java.util.List;
-
+@SuppressWarnings({"unused"})
 public class Prediction implements Serializable {
 
     @SerializedName("description")
@@ -43,7 +46,7 @@ public class Prediction implements Serializable {
         this.id = id;
     }
 
-    public List<MatchedSubstring> getMatchedSubstrings() {
+    public List getMatchedSubstrings() {
         return this.matchedSubstrings;
     }
 
@@ -83,6 +86,7 @@ public class Prediction implements Serializable {
         this.types = types;
     }
 
+    @NotNull
     @Override
     public String toString() {
         return description;

@@ -1,5 +1,6 @@
 package com.error.grrravity.go4lunch.controllers;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
@@ -39,9 +40,8 @@ import com.error.grrravity.go4lunch.models.autocomplete.Predictions;
 import com.error.grrravity.go4lunch.utils.GPS;
 import com.error.grrravity.go4lunch.utils.alarm_and_receiver.NetworkReceiver;
 import com.error.grrravity.go4lunch.utils.api.APIStreams;
-import com.error.grrravity.go4lunch.utils.auth.AuthenticationActivity;
+import com.error.grrravity.go4lunch.controllers.base.auth.AuthenticationActivity;
 import com.error.grrravity.go4lunch.utils.helper.NetworkChecker;
-import com.error.grrravity.go4lunch.utils.helper.User;
 import com.error.grrravity.go4lunch.utils.helper.UserHelper;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -55,19 +55,19 @@ import java.util.Objects;
 import butterknife.BindView;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
+import pub.devrel.easypermissions.EasyPermissions;
 
-
-//TODO verif condition (recup dans onresume). si activé petit moment de latence
-
+@SuppressWarnings({"ALL"})
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener{
 
-    public static NetworkReceiver mNetworkStateReceiver;
+    private static final int RC_MEDIA_RECORD = 666;
+    private static NetworkReceiver mNetworkStateReceiver;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
-    @BindView(R.id.activity_main_botnav)
+    @BindView(R.id.activity_main_bottom_navigation)
     BottomNavigationView mBottomNavigationView;
     @BindView(R.id.main_activity_nav_view)
     NavigationView mNavigationView;
@@ -77,22 +77,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
     private static final int SIGN_OUT_TASK = 10;
-    public static final String ID = "ID";
     private static final String GET_RESTAURANT_ID = "restaurantId";
-    public static final String RESTAURANT = "restaurant";
     private static final String apiKey = BuildConfig.API_KEY;
     private static final String PREFS = "PREFS" ;
 
-    SharedPreferences prefs;
+    private SharedPreferences prefs;
     private String username, usermail, uid, urlPicture;
-    private LatLngBounds latLngBounds;
-    private Menu menu;
     private String location;
-    private Disposable mDisposable;
-    public List<Prediction> mResultAutocomplete = null;
-    MenuItem item;
+    private List<Prediction> mResultAutocomplete = null;
+    private MenuItem item;
 
-    // TODO Actionbar avec recherche (penser à l'ouvrir ET la refermer)
 
     @Override
     public int getFragmentLayout() {
@@ -109,13 +103,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         this.getGPS();
         this.handleIntent(getIntent());
 
-        if (!NetworkChecker.isNetworkAvailable(this)) {
-
-        } else {
+        if (NetworkChecker.isNetworkAvailable(this)) {
             mNetworkStateReceiver = new NetworkReceiver();
             IntentFilter filter = new IntentFilter();
             filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-
         }
         prefs = Objects.requireNonNull(this.getSharedPreferences(PREFS, MODE_PRIVATE));
         showFragment(GoogleMapsFragment.newInstance());
@@ -170,6 +161,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
 
+    @SuppressWarnings("SameReturnValue")
     private void configureBottomNavBar() {
         mBottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
 
@@ -221,14 +213,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         fragmentTransaction.addToBackStack(null);
     }
 
-
-    // TODO recup coords
-    public LatLngBounds getLatLngBounds() {
-        return latLngBounds;
-    }
-
+    @SuppressWarnings({"unused"})
     public void setLatLngBounds(LatLngBounds latLngBounds) {
-        this.latLngBounds = latLngBounds;
+        //TODO
     }
 
 
@@ -280,11 +267,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private void LogOut() {
         AuthUI.getInstance()
                 .signOut(this)
-                .addOnSuccessListener(this, this.updateUI(SIGN_OUT_TASK));
+                .addOnSuccessListener(this, this.updateUI());
     }
-    private OnSuccessListener<Void> updateUI(final int origin){
+    private OnSuccessListener<Void> updateUI(){
         return aVoid -> {
-            if (origin == SIGN_OUT_TASK) {
+            if (MainActivity.SIGN_OUT_TASK == SIGN_OUT_TASK) {
                 Intent intent = new Intent(this, AuthenticationActivity.class);
                 startActivity(intent);
                 finish();
@@ -326,7 +313,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void doSearch(String query) {
         if (query.length() > 2){
-            mDisposable = APIStreams.getInstance().getPlacesAutoComplete(query, location, 1000, apiKey).subscribeWith(new DisposableObserver<Predictions>() {
+            @SuppressWarnings({"unused"})
+            Disposable disposable = APIStreams.getInstance().getPlacesAutoComplete(query, location, 10000, apiKey).subscribeWith(new DisposableObserver<Predictions>() {
                 @Override
                 public void onNext(Predictions predictions) {
                     mResultAutocomplete = predictions.getPredictions();
@@ -385,14 +373,22 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            mSearchView.setQuery(query, false);
-            doSearch(query);
+            if (!hasMicPermission()){
+                EasyPermissions.requestPermissions(
+                        this,
+                        "We need to capture microphone to help your searching by voice",
+                        RC_MEDIA_RECORD,
+                        Manifest.permission.RECORD_AUDIO);
+            } else {
+                String query = intent.getStringExtra(SearchManager.QUERY);
+                mSearchView.setQuery(query, false);
+                doSearch(query);
+            }
         }
     }
 
     // Hide keyboard
-    public static void hideSoftKeyboard(Activity activity) {
+    private static void hideSoftKeyboard(Activity activity) {
         InputMethodManager inputMethodManager =
                 (InputMethodManager) activity.getSystemService(
                         Activity.INPUT_METHOD_SERVICE);
@@ -400,4 +396,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 Objects.requireNonNull(activity.getCurrentFocus()).getWindowToken(), 0);
     }
 
+    private boolean hasMicPermission() {
+        return EasyPermissions.hasPermissions(this, Manifest.permission.RECORD_AUDIO);
+    }
 }

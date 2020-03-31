@@ -15,7 +15,7 @@ import java.util.List;
 public class CoworkerAdapter extends RecyclerView.Adapter<CoworkerViewHolder> {
 
     private List<User> mUser;
-    private int mOrigin;
+    private final int mOrigin;
 
     public CoworkerAdapter(List<User> user, int origin){
         this.mUser = user;

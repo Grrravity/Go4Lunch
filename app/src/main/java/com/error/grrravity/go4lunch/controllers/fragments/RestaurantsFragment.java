@@ -1,7 +1,6 @@
 package com.error.grrravity.go4lunch.controllers.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -38,8 +37,6 @@ import io.reactivex.observers.DisposableObserver;
 
 public class RestaurantsFragment extends BaseFragment {
 
-    //TODO collection.sort pour sort les restaurants suivant la distance
-
     private static final String apiKey = BuildConfig.API_KEY;
     private static final String PREFS = "PREFS" ;
 
@@ -55,6 +52,7 @@ public class RestaurantsFragment extends BaseFragment {
         return new RestaurantsFragment();
     }
 
+    @SuppressWarnings({"unused"})
     public static RestaurantsFragment newInstance(List< ResultDetail > results){
             RestaurantsFragment fragment = new RestaurantsFragment();
             Bundle bundle = new Bundle();
@@ -105,8 +103,7 @@ public class RestaurantsFragment extends BaseFragment {
                     editor.putString("id", placeID);
                     editor.apply();
                     detailFragment.setArguments(args);
-                    assert getFragmentManager() != null;
-                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.activity_welcome_drawer_layout, detailFragment);
                     fragmentTransaction.commitAllowingStateLoss();
                     fragmentTransaction.addToBackStack(null);
@@ -140,7 +137,7 @@ public class RestaurantsFragment extends BaseFragment {
         }
 
     private void executeHttpRequestWithRetrofit() {
-        mDisposable = APIStreams.getInstance().streamFetchGooglePlaces(mPosition, 1000, RESTAURANT, apiKey).subscribeWith(new DisposableObserver<Google>() {
+        mDisposable = APIStreams.getInstance().streamFetchGooglePlaces(mPosition, 10000, RESTAURANT, apiKey).subscribeWith(new DisposableObserver<Google>() {
             @Override
             public void onNext(Google google) {
                 mNearbyResultList.addAll(google.getResults());
@@ -154,7 +151,6 @@ public class RestaurantsFragment extends BaseFragment {
             @Override
             public void onComplete() {
                 mRestaurantsAdapter.notifyItemRangeChanged(0, mNearbyResultList.size());
-                //todo changer notifydatasetchanged (clear + addall)
             }
         });
     }
@@ -165,4 +161,3 @@ public class RestaurantsFragment extends BaseFragment {
         mRestaurantsAdapter.notifyDataSetChanged();
     }
 }
-//TODO ajouter notifyDataSetChange pour reload fragment quand recherche

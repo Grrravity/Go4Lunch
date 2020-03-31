@@ -4,8 +4,8 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-
-public class Review implements Serializable {
+@SuppressWarnings({"unused"})
+class Review implements Serializable {
 
     @SerializedName("author_name")
     @Expose

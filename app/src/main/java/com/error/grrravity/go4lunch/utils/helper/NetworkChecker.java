@@ -6,7 +6,6 @@ import android.net.NetworkInfo;
 
 public class NetworkChecker {
 
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean isNetworkAvailable(Context mContext) {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);

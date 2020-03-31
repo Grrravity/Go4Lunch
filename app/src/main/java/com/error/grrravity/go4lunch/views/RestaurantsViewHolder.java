@@ -1,6 +1,5 @@
 package com.error.grrravity.go4lunch.views;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -18,34 +17,36 @@ import com.error.grrravity.go4lunch.models.places.NearbyResult;
 import com.error.grrravity.go4lunch.utils.helper.UserHelper;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RestaurantsViewHolder extends RecyclerView.ViewHolder {
 
-    @BindView(R.id.item_textview_name)
+    @BindView(R.id.item_TV_name)
     TextView restaurantName;
-    @BindView(R.id.item_textview_address)
+    @BindView(R.id.item_TV_address)
     TextView restaurantAdress;
-    @BindView(R.id.item_textview_opening)
+    @BindView(R.id.item_TV_opening)
     TextView restaurantOpenClose;
-    @BindView(R.id.item_textview_distance)
+    @BindView(R.id.item_TV_distance)
     TextView restaurantDistance;
-    @BindView(R.id.item_imageview_main_pic)
+    @BindView(R.id.item_IV_main_pic)
     ImageView restaurantPicture;
     @BindView(R.id.item_ratingBar)
     RatingBar restaurantRatingBar;
-    @BindView(R.id.item_imageview_mates)
+    @BindView(R.id.item_IV_mates)
     ImageView imageViewMates;
-    @BindView(R.id.item_textview_mates)
+    @BindView(R.id.item_TV_mates)
     TextView textViewMates;
 
     private static final String APIKEY2 = BuildConfig.API_KEY2;
 
-    private float[] distanceResults = new float[3];
+    private final float[] distanceResults = new float[3];
 
     public RestaurantsViewHolder(View itemView) {
         super(itemView);
@@ -62,8 +63,18 @@ public class RestaurantsViewHolder extends RecyclerView.ViewHolder {
         displayRating(result);
         // ----------- DISTANCE -----------
         displayDistance(userLocation, result.getGeometry().getLocation());
-        String distance = Integer.toString(Math.round(distanceResults[0]));
-        this.restaurantDistance.setText(itemView.getResources().getString(R.string.list_unit_distance, distance));
+        int dist = Math.round(distanceResults[0]);
+        String distanceString;
+        String distance;
+        if(dist>1000){
+            DecimalFormat dec = new DecimalFormat("#0.00");
+            distanceString = dec.format((double) dist/1000);
+            distance = itemView.getResources().getString(R.string.list_unit_distance_KM, distanceString);
+        } else {
+            distanceString = Integer.toString(dist);
+            distance = itemView.getResources().getString(R.string.list_unit_distance_M, distanceString);
+        }
+        this.restaurantDistance.setText(distance);
         // ---------- Opening -------------
         if (result.getOpeningHours() != null) {
             if (result.getOpeningHours().getOpenNow()) {
@@ -97,11 +108,11 @@ public class RestaurantsViewHolder extends RecyclerView.ViewHolder {
         // ----------- MATES -----------
         UserHelper.getRestaurantForList(result.getPlaceId()).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                if (task.getResult().size() > 0) {
+                if (Objects.requireNonNull(task.getResult()).size() > 0) {
                     List<String> resultList = new ArrayList<>();
                     for (DocumentSnapshot document : task.getResult().getDocuments()) {
                         String uid = document.getString("uid");
-                        if (!uid.equals(UserHelper.getCurrentUser().getUid()))
+                        if (!Objects.requireNonNull(uid).equals(Objects.requireNonNull(UserHelper.getCurrentUser()).getUid()))
                             resultList.add(uid);
                     }
                     if (resultList.size() > 0) {
