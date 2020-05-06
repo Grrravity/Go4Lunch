@@ -39,6 +39,10 @@ public class GPS extends Service implements LocationListener {
         getLocation();
     }
 
+    @SuppressWarnings("unused")
+    public GPS() {
+    }
+
     @SuppressWarnings("AccessStaticViaInstance")
     public Location getLocation(){
         try {
