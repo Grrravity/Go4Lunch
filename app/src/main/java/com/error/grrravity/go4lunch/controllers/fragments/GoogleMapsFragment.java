@@ -39,6 +39,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -83,11 +84,13 @@ public class GoogleMapsFragment extends BaseFragment implements
 
     private String restaurantIDForMarker;
 
+    private boolean firstLC = true;
+
+
     public static GoogleMapsFragment newInstance(){
         return new GoogleMapsFragment();
     }
 
-    @SuppressWarnings("unused")
     public static GoogleMapsFragment newInstance(List<ResultDetail> results) {
         GoogleMapsFragment fragment = new GoogleMapsFragment();
         Bundle bundle = new Bundle();
@@ -107,10 +110,10 @@ public class GoogleMapsFragment extends BaseFragment implements
         View view = inflater.inflate(R.layout.fragment_googlemaps, container, false);
 
         ButterKnife.bind(this, view);
-
+        mGPS = new GPS(getContext());
         mMapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.map);
 
-        mGPS = new GPS(getContext());
+
         mNearbyResultList = new ArrayList<>();
         mStoredResultList = new ArrayList<>();
         mMarkerOptions = new MarkerOptions();
@@ -124,29 +127,36 @@ public class GoogleMapsFragment extends BaseFragment implements
     @Override
     public void onResume() {
         super.onResume();
+        if(!firstLC) {
+            mMap.clear();
             updateUI(mNearbyResultList);
+        }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         mMapFragment.getMapAsync(this);
-        mMapFragment.getMapAsync(googleMap -> googleMap.setOnInfoWindowClickListener(marker -> {
-            if (restaurantIDForMarker != null){
-                RestaurantDetailFragment detailFragment = new RestaurantDetailFragment();
-                Bundle args = new Bundle();
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("id", restaurantIDForMarker);
-                editor.apply();
-                detailFragment.setArguments(args);
-                FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.activity_welcome_drawer_layout, detailFragment);
-                fragmentTransaction.commitAllowingStateLoss();
-                fragmentTransaction.addToBackStack(null);
+        mMapFragment.getMapAsync(googleMap -> {
+            googleMap.setOnInfoWindowClickListener(marker -> {
+                if (restaurantIDForMarker != null){
+                    RestaurantDetailFragment detailFragment = new RestaurantDetailFragment();
+                    Bundle args = new Bundle();
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("id", restaurantIDForMarker);
+                    editor.apply();
+                    detailFragment.setArguments(args);
+                    assert getFragmentManager() != null;
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.activity_welcome_drawer_layout, detailFragment);
+                    fragmentTransaction.commitAllowingStateLoss();
+                    fragmentTransaction.addToBackStack(null);
 
-            }
-        }));
+                }
+            });
+        });
     }
 
     private void getLocationPermission() {
@@ -176,10 +186,12 @@ public class GoogleMapsFragment extends BaseFragment implements
             if (grantResults.length > 0) {
                 for (int grantResult : grantResults) {
                     if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                        mLocationPermissionsGranted = false;
                         return;
+                    } else {
+                        mLocationPermissionsGranted = true;
                     }
                 }
-                mLocationPermissionsGranted = true;
             }
         }
     }
@@ -230,9 +242,10 @@ public class GoogleMapsFragment extends BaseFragment implements
 
         mFusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
 
-                    //CameraPosition cameraPosition = new CameraPosition.Builder().target(mMyLatLng).zoom(12).build();
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mMyLatLng, 15));
-                });
+            CameraPosition cameraPosition = new CameraPosition.Builder().target(mMyLatLng).zoom(12).build();
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mMyLatLng, 15));
+        });
 
         View myLocationButton = ((View) Objects.requireNonNull(mMapFragment.getView())
                 .findViewById(Integer.parseInt("1")).getParent())
@@ -244,7 +257,7 @@ public class GoogleMapsFragment extends BaseFragment implements
         rlp.setMargins(0, 0, 170, 190);
 
 
-            this.executeHttpRequestWithRetrofit();
+        this.executeHttpRequestWithRetrofit();
 
     }
 
@@ -252,10 +265,11 @@ public class GoogleMapsFragment extends BaseFragment implements
         if(mMap != null) {
             mMap.clear();
         }
+        firstLC = false;
         // display all restaurants
         for(NearbyResult mResult : nearbyResultList){
             LatLng restaurant = new LatLng(mResult.getGeometry().getLocation().getLat(),
-                                           mResult.getGeometry().getLocation().getLng());
+                    mResult.getGeometry().getLocation().getLng());
 
             UserHelper.getRestaurant(mResult.getPlaceId()).addOnCompleteListener(task -> {
                 if (task.isSuccessful()){
@@ -287,21 +301,21 @@ public class GoogleMapsFragment extends BaseFragment implements
     // RETROFIT
 
     private void executeHttpRequestWithRetrofit() {
-            mDisposable = APIStreams.getInstance().streamFetchGooglePlaces(mPosition, 10000, RESTAURANT, apiKey).subscribeWith(new DisposableObserver<Google>() {
-        @Override
-        public void onNext(Google google) {
-            mNearbyResultList.addAll(google.getResults());
-            mStoredResultList.addAll(google.getResults());
-            updateUI(mNearbyResultList);
-        }
+        mDisposable = APIStreams.getInstance().streamFetchGooglePlaces(mPosition, 10000, RESTAURANT, apiKey).subscribeWith(new DisposableObserver<Google>() {
+            @Override
+            public void onNext(Google google) {
+                mNearbyResultList.addAll(google.getResults());
+                mStoredResultList.addAll(google.getResults());
+                updateUI(mNearbyResultList);
+            }
 
-        @Override
-        public void onError(Throwable e) {
-        }
+            @Override
+            public void onError(Throwable e) {
+            }
 
-        @Override
-        public void onComplete() {
-        }
+            @Override
+            public void onComplete() {
+            }
         });
     }
 

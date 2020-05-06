@@ -44,9 +44,9 @@ public class UserHelper {
 
     // --- CREATE ---
 
-    public static Task<Void> createUser(String uid, String username, String urlPicture) {
+    public static Task<Void> createUser(String uid, String username, String urlPicture, String joinedRestaurant) {
         // 1 - Create Obj
-        User userToCreate = new User(uid, username, urlPicture);
+        User userToCreate = new User(uid, username, urlPicture,joinedRestaurant );
 
         return UserHelper.getUsersCollection()
                 .document(uid)
@@ -86,7 +86,7 @@ public class UserHelper {
     }
 
     @SuppressWarnings({"unused"})
-    public static Task<QuerySnapshot> getAllUsernames() {
+    public static Task<QuerySnapshot> getAllUserNames() {
         return UserHelper.getUsersCollection().get();
     }
 
@@ -124,6 +124,7 @@ public class UserHelper {
                             User user = documentSnapshot.toObject(User.class);
                             assert user != null;
                             if (!user.getUid().equals(Objects.requireNonNull(getCurrentUser()).getUid())) {
+                                user.setRestaurantId(documentSnapshot.getString("restaurantId"));
                                 users.add(user);
                             }
                         }

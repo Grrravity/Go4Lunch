@@ -17,12 +17,11 @@ import androidx.core.content.ContextCompat;
 
 import com.error.grrravity.go4lunch.R;
 
+
 public class GPS extends Service implements LocationListener {
 
     private Context mContext;
 
-    private boolean isGPSEnable = false;
-    private boolean isNetworkEnable = false;
     private boolean canLocalize = false;
 
     private double mLatitude;
@@ -36,21 +35,20 @@ public class GPS extends Service implements LocationListener {
     private static final long MIN_TIME_UPDATE = 1000 * 60;
 
     public GPS(Context context) {
-        mContext = context;
+        this.mContext = context;
+        getLocation();
     }
 
-    public GPS() {
-    }
-
+    @SuppressWarnings("AccessStaticViaInstance")
     public Location getLocation(){
         try {
             mLocationManager = (LocationManager) mContext
                     .getSystemService(LOCATION_SERVICE);
 
-            isGPSEnable = mLocationManager
+            boolean isGPSEnable = mLocationManager
                     .isProviderEnabled(LocationManager.GPS_PROVIDER);
 
-            isNetworkEnable = mLocationManager
+            boolean isNetworkEnable = mLocationManager
                     .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
             if (!isGPSEnable && !isNetworkEnable){
@@ -75,6 +73,7 @@ public class GPS extends Service implements LocationListener {
                         }
                         // request a new location from existing locationmanager
                         else {
+                            assert mLocationManager != null;
                             mLocationManager.requestLocationUpdates(
                                     mLocationManager.NETWORK_PROVIDER,
                                     MIN_TIME_UPDATE,
@@ -98,6 +97,7 @@ public class GPS extends Service implements LocationListener {
                 }
                 //request new location
                 else{
+                    assert mLocationManager != null;
                     mLocationManager.requestLocationUpdates(
                             mLocationManager.GPS_PROVIDER,
                             MIN_TIME_UPDATE,
@@ -105,8 +105,6 @@ public class GPS extends Service implements LocationListener {
                             this);
                 }
             }
-        } catch (NullPointerException e){
-            e.printStackTrace();
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -149,7 +147,9 @@ public class GPS extends Service implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
         if(this.canLocalize()){
+            mLocation.getLatitude();
             mLongitude = mLocation.getLongitude();
+            mLocation.getLongitude();
             mLatitude = mLocation.getLatitude();
         }
     }

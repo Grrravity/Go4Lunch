@@ -24,7 +24,7 @@ public class TimeHelper {
 
         //Setting delay as the difference of target time and current time
         notifyDelay = dueTime.getTimeInMillis() - currentTime.getTimeInMillis();
-        //Setting delet participation delay at 15pm
+        //Setting delete participation delay at 15pm
         dueTime.add(Calendar.HOUR_OF_DAY, 3);
         deleteDelay = dueTime.getTimeInMillis() - currentTime.getTimeInMillis();
 

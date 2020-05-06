@@ -245,7 +245,8 @@ public class RestaurantDetailFragment extends BaseFragment {
 
     private void joinRestaurant(){
         if (UserHelper.getCurrentUser()!=null) {
-            UserHelper.updateUserAtRestaurant(UserHelper.getCurrentUser().getUid(),
+            UserHelper.updateUserAtRestaurant(
+                    UserHelper.getCurrentUser().getUid(),
                     mResult.getName(),
                     mResult.getPlaceId(),
                     mResult.getVicinity());

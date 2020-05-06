@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.graphics.Typeface;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,9 +24,12 @@ public class CoworkerViewHolder extends RecyclerView.ViewHolder {
     TextView mCoworkerName;
     @BindView(R.id.coworker_picture)
     ImageView mCoworkerPict;
+    @BindView(R.id.coworker_box)
+    RelativeLayout mBox;
 
     CoworkerViewHolder(@NonNull View itemView) {
         super(itemView);
+
         ButterKnife.bind(this, itemView);
     }
 

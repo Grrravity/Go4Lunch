@@ -81,5 +81,8 @@
     <string name="notificationText00">looks yummy !</string>
     <string name="notificationText01">%1$s is/are waiting for you !</string>
     <string name="notificationText10">\"rendez-vous\" at %1$s !</string>
+    <string name="sortOpen">sort by opening</string>
+    <string name="sortRate">sort by rating</string>
+    <string name="sortDistance">sort by distance</string>
 
 </resources>

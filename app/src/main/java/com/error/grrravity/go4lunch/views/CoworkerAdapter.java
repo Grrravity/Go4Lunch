@@ -36,12 +36,16 @@ public class CoworkerAdapter extends RecyclerView.Adapter<CoworkerViewHolder> {
 
     @Override
     public int getItemCount() {
-        return mUser.size();
+        return this.mUser.size();
     }
 
     public void refreshAdapter(List<User> userList){
         mUser = userList;
         notifyDataSetChanged();
+    }
+
+    public List<User> getResultList() {
+        return mUser;
     }
 }
 

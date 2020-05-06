@@ -1,12 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:id="@+id/filters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mainBackground"
+        android:gravity="right"
+        tools:ignore="RtlHardcoded">
+        <Button
+            android:id="@+id/open_first_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="@string/sortOpen"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            android:background="@color/themeWhite"
+            android:drawableStart="@drawable/baseline_sort_white_18"
+            android:drawableTint="@color/mainBackground"
+            android:layout_margin="5dp"
+            android:padding="2dp"
+            style="@style/Widget.AppCompat.Button"
+            tools:targetApi="m" />
+        <Button
+            android:id="@+id/best_rating_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="@string/sortRate"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            android:background="@color/themeWhite"
+            android:drawableStart="@drawable/baseline_sort_white_18"
+            android:drawableTint="@color/mainBackground"
+            android:layout_margin="5dp"
+            android:padding="2dp"
+            style="@style/Widget.AppCompat.Button"
+            tools:targetApi="m" />
+        <Button
+            android:id="@+id/nearest_first_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="@string/sortDistance"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            android:background="@color/themeWhite"
+            android:drawableStart="@drawable/baseline_sort_white_18"
+            android:drawableTint="@color/mainBackground"
+            android:layout_margin="5dp"
+            android:padding="2dp"
+            style=""
+            tools:targetApi="m" />
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/restaurants_rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/filters"/>
 
 </RelativeLayout>

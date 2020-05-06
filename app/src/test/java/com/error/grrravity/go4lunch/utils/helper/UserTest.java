@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 public class UserTest {
 
-    private final User user = new User("999","OpenClassrooms","www.openclassrooms.fr");
+    private final User user = new User("999","OpenClassrooms","www.openclassrooms.fr", "Restaurant");
 
     @Test
     public void testGetUser() {

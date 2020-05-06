@@ -86,5 +86,8 @@
     <string name="notificationText00">ça à l\'air très bon !</string>
     <string name="notificationText10">%1$s vous attend(ent) !</string>
     <string name="notificationText01">rendez-vous au %1$s !</string>
+    <string name="sortOpen">Trier par ouverture</string>
+    <string name="sortRate">Trier par notation</string>
+    <string name="sortDistance">Trier par distance</string>
 
 </resources>

@@ -3,7 +3,7 @@ package com.error.grrravity.go4lunch.utils.helper;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-@SuppressWarnings({"unused"})
+
 public class User implements Parcelable {
 
     private String uid;
@@ -11,13 +11,24 @@ public class User implements Parcelable {
     private String urlPicture;
     private String joinedRestaurant;
     private String restaurantId;
+    private String vicinity;
 
     public User() { }
 
-    User(String uid, String username, String urlPicture) {
+    User(String uid, String username, String urlPicture, String joinedRestaurant) {
         this.uid = uid;
         this.username = username;
         this.urlPicture = urlPicture;
+        this.joinedRestaurant = joinedRestaurant;
+    }
+
+    User(String uid, String username, String urlPicture, String joinedRestaurant, String restaurantId, String vicinity) {
+        this.uid = uid;
+        this.username = username;
+        this.urlPicture = urlPicture;
+        this.joinedRestaurant = joinedRestaurant;
+        this.restaurantId = restaurantId;
+        this.vicinity = vicinity;
     }
 
     private User(Parcel in) {
@@ -26,6 +37,7 @@ public class User implements Parcelable {
         urlPicture = in.readString();
         joinedRestaurant = in.readString();
         restaurantId = in.readString();
+        vicinity = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -45,6 +57,8 @@ public class User implements Parcelable {
     public String getUsername() { return username; }
     public String getUrlPicture() { return urlPicture; }
     public String getJoinedRestaurant() { return joinedRestaurant; }
+    public String getJoinedRestaurantId() { return restaurantId; }
+    public String getVicinity() { return vicinity; }
 
     // --- SETTERS ---
     public void setUsername(String username) { this.username = username; }
@@ -52,6 +66,10 @@ public class User implements Parcelable {
     public void setUrlPicture(String urlPicture) { this.urlPicture = urlPicture; }
     public void setJoinedRestaurant(String joinedRestaurant) { this.joinedRestaurant = joinedRestaurant; }
     public void setRestaurantId(String restaurantId) { this.restaurantId = restaurantId; }
+
+    public void setVicinity(String vicinity) {
+        this.vicinity = vicinity;
+    }
 
     @Override
     public int describeContents() {
@@ -65,6 +83,7 @@ public class User implements Parcelable {
         dest.writeString(urlPicture);
         dest.writeString(joinedRestaurant);
         dest.writeString(restaurantId);
+        dest.writeString(vicinity);
     }
 
 }

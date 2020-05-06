@@ -132,7 +132,7 @@ public class AuthenticationActivity extends BaseActivity {
                         UserHelper.updateUsername(uid, username, urlPicture);
                         this.logSucceed();
                     } else {
-                        UserHelper.createUser(uid, username, urlPicture).addOnCompleteListener(task1 -> {
+                        UserHelper.createUser(uid, username, urlPicture, null).addOnCompleteListener(task1 -> {
                             this.logSucceed();
                         })
                                 .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_user_creation), Toast.LENGTH_SHORT).show());
